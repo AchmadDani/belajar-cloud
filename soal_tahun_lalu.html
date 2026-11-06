@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pembahasan Soal UTS Tahun Lalu | CloudStudy</title>
+  
+  <!-- Typography: Modern Ultra-Legible Sans-Serif (Plus Jakarta Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Styling -->
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .exam-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      background: var(--accent-coral-bg);
+      color: var(--accent-coral-text);
+      border: 1px solid var(--accent-coral-border);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .question-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      margin-bottom: 32px;
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .question-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .question-number {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sub-question {
+      background: var(--bg-primary);
+      border-left: 3px solid var(--primary-accent);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      padding: 16px 20px;
+      margin: 18px 0;
+    }
+    .sub-question-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .answer-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-sm);
+      padding: 20px;
+      margin-top: 14px;
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: var(--text-main);
+    }
+
+    .diagram-container {
+      background: #FFFFFF;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      margin: 18px 0;
+      overflow-x: auto;
+      text-align: center;
+    }
+    .diagram-caption {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 10px;
+      font-style: italic;
+    }
+
+    .vector-pill {
+      display: inline-block;
+      font-family: monospace;
+      font-weight: 700;
+      font-size: 0.88rem;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: #E0E7FF;
+      color: #3730A3;
+      border: 1px solid #C7D2FE;
+    }
+
+    .code-editor-box {
+      background: #1E293B;
+      color: #F8FAFC;
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      font-family: Consolas, Monaco, "Courier New", monospace;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      overflow-x: auto;
+      margin: 14px 0;
+    }
+    .code-comment { color: #94A3B8; font-style: italic; }
+    .code-keyword { color: #F472B6; font-weight: 700; }
+    .code-func { color: #60A5FA; }
+    .code-string { color: #34D399; }
+    .code-num { color: #FBBF24; }
+
+    .timeline-track {
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      margin: 14px 0;
+      font-family: monospace;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .track-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 8px 0;
+      border-bottom: 1px dashed #CBD5E1;
+      min-width: 520px;
+    }
+    .track-row:last-child {
+      border-bottom: none;
+    }
+    .proc-label {
+      font-weight: 800;
+      min-width: 40px;
+      color: #0F172A;
+    }
+    .op-chip {
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+    .op-write {
+      background: #FEE2E2;
+      color: #991B1B;
+      border: 1px solid #FECACA;
+    }
+    .op-read {
+      background: #DCFCE7;
+      color: #166534;
+      border: 1px solid #BBF7D0;
+    }
+
+    .mastery-checkbox {
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      user-select: none;
+    }
+    .mastery-checkbox input {
+      accent-color: var(--primary-accent);
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 600px) {
+      .question-card {
+        padding: 18px 14px;
+        margin-bottom: 20px;
+      }
+      .question-number {
+        font-size: 1.15rem;
+      }
+      .sub-question {
+        padding: 12px 14px;
+      }
+      .answer-box {
+        padding: 14px;
+        font-size: 0.92rem;
+      }
+      .diagram-container svg {
+        min-width: 540px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Site Navigation Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="CloudStudy Beranda">
+        <div class="brand-badge" aria-hidden="true">C</div>
+        <div>
+          <span class="brand-text">CloudStudy</span>
+          <span class="brand-sub">UTS Hub</span>
+        </div>
+      </a>
+
+      <nav aria-label="Navigasi Utama">
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">&larr; Kembali ke Beranda</a></li>
+          <li><a href="kisi_kisi.html" class="nav-link">Kisi-Kisi Dosen</a></li>
+          <li><a href="pekan1.html" class="nav-link">Materi Pekan 1-7</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Module Header -->
+  <div class="container">
+    <div class="module-header">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="index.html">Beranda</a>
+        <span aria-hidden="true">&rsaquo;</span>
+        <span style="color: var(--text-main); font-weight: 600;">Soal UTS Tahun Lalu</span>
+      </nav>
+
+      <h1 class="module-title">Pembahasan Lengkap Soal UTS Tahun Lalu</h1>
+      
+      <div class="module-meta">
+        <span class="meta-pill">
+          <strong>Sumber:</strong> Berkas Ujian Resmi Asli (7 Soal Esai, 15 Poin per Soal)
+        </span>
+        <span class="meta-pill">
+          <strong>Format:</strong> Singkat, Padat, Jelas + Visualisasi (Vector Clock, Arsitektur & Konsistensi)
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Layout (2-Kolom Grid: Sidebar Kiri + Konten Kanan) -->
+  <div class="container module-layout">
+    
+    <!-- Sticky Navigation Sidebar -->
+    <aside class="sticky-nav" aria-label="Daftar Soal Ujian">
+      <p class="nav-title">Daftar Soal UTS</p>
+      <ul class="toc-list">
+        <li><a href="#soal-1" class="toc-link">Soal 1: Sistem Terdistribusi</a></li>
+        <li><a href="#soal-2" class="toc-link">Soal 2: Arsitektur Sistem (Visual)</a></li>
+        <li><a href="#soal-3" class="toc-link">Soal 3: Proses (Python Thread)</a></li>
+        <li><a href="#soal-4" class="toc-link">Soal 4: Komunikasi (Transport & Broker)</a></li>
+        <li><a href="#soal-5" class="toc-link">Soal 5: Koordinasi & Vector Clock</a></li>
+        <li><a href="#soal-6" class="toc-link">Soal 6: Penamaan (DNS & Chord)</a></li>
+        <li><a href="#soal-7" class="toc-link">Soal 7: Konsistensi & Fault Tolerant</a></li>
+      </ul>
+    </aside>
+
+    <!-- Content Area -->
+    <main class="content-area">
+
+      <!-- ====================================================================
+           SOAL NO. 1
+           ==================================================================== -->
+      <section id="soal-1" class="question-card" aria-labelledby="title-soal-1">
+        <div class="question-header">
+          <div class="question-number">
+            <span class="exam-badge">Soal No. 1</span>
+            <span id="title-soal-1">Sistem Terdistribusi</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <span style="font-size: 0.9rem; font-weight: 700; color: var(--accent-coral-text);">Total: 15 Poin</span>
+            <label class="mastery-checkbox">
+              <input type="checkbox"> Selesai Dipelajari
+            </label>
+          </div>
+        </div>
+
+        <!-- 1.a -->
+        <div class="sub-question">
+          <div class="sub-question-title">a. Distribution Transparency (5 poin)</div>
+        </div>
+        <div class="answer-box">
+          <p>Transparency adalah kemampuan sistem terdistribusi menyembunyikan fakta bahwa proses dan resource tersebar di beberapa komputer.</p>
+          <p style="margin-top: 10px;"><strong>Tiga jenisnya:</strong></p>
+          <ol style="margin-left: 20px; margin-top: 6px;">
+            <li><strong>Access Transparency:</strong> menyembunyikan perbedaan cara mengakses dan representasi data.</li>
+            <li><strong>Location Transparency:</strong> menyembunyikan lokasi fisik suatu resource.</li>
+            <li><strong>Replication Transparency:</strong> menyembunyikan fakta bahwa suatu resource memiliki beberapa salinan (replica).</li>
+          </ol>
+        </div>
+
+        <!-- 1.b -->
+        <div class="sub-question">
+          <div class="sub-question-title">b. Scalability (5 poin)</div>
+        </div>
+        <div class="answer-box">
+          <p>Scalability adalah kemampuan sistem untuk berkembang dan menangani peningkatan pengguna, resource, atau cakupan tanpa penurunan performa yang signifikan.</p>
+          <p style="margin-top: 10px;"><strong>Tiga aspek scalability:</strong></p>
+          <ol style="margin-left: 20px; margin-top: 6px;">
+            <li><strong>Size Scalability:</strong> kemampuan sistem menangani peningkatan jumlah pengguna, komputer, atau resource.</li>
+            <li><strong>Geographical Scalability:</strong> kemampuan sistem beroperasi secara efektif ketika komputer tersebar di wilayah geografis yang lebih luas, misalnya dari LAN ke WAN.</li>
+            <li><strong>Administrative Scalability:</strong> kemampuan sistem mengatasi perbedaan kebijakan dan pengelolaan antar-domain administrasi atau organisasi.</li>
+          </ol>
+        </div>
+
+        <!-- 1.c -->
+        <div class="sub-question">
+          <div class="sub-question-title">c. Klasifikasi Sistem Terdistribusi (5 poin)</div>
+        </div>
+        <div class="answer-box">
+          <p><strong>Contoh:</strong> Cluster Computing, termasuk High-Performance Distributed Computing.</p>
+          <p style="margin-top: 8px;">Cluster Computing adalah kumpulan komputer (node) yang terhubung melalui jaringan dan bekerja sama menyelesaikan tugas komputasi.</p>
+          <p style="margin-top: 10px;"><strong>Termasuk sistem terdistribusi karena memenuhi tiga karakteristik:</strong></p>
+          <ol style="margin-left: 20px; margin-top: 6px;">
+            <li><strong>No Global Clock:</strong> setiap node memiliki clock lokal dan tidak ada satu global clock.</li>
+            <li><strong>Communication Between Processes:</strong> antar-node berkomunikasi dan bertukar pesan melalui jaringan.</li>
+            <li><strong>Resource Sharing:</strong> node berbagi resource seperti processing power dan storage.</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           SOAL NO. 2
+           ==================================================================== -->
+      <section id="soal-2" class="question-card" aria-labelledby="title-soal-2">
+        <div class="question-header">
+          <div class="question-number">
+            <span class="exam-badge">Soal No. 2</span>
+            <span id="title-soal-2">Arsitektur Sistem</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <span style="font-size: 0.9rem; font-weight: 700; color: var(--accent-coral-text);">Total: 15 Poin</span>
+            <label class="mastery-checkbox">
+              <input type="checkbox"> Selesai Dipelajari
+            </label>
+          </div>
+        </div>
+
+        <!-- 2.a -->
+        <div class="sub-question">
+          <div class="sub-question-title">a. Contoh Arsitektur Sistem (5 poin)</div>
+        </div>
+        <div class="answer-box">
+          <p><strong>Contoh:</strong> Three-Tier Architecture, yaitu arsitektur yang membagi sistem menjadi tiga lapisan.</p>
+
+          <!-- Visual Diagram SVG -->
+          <div class="diagram-container" aria-label="Diagram Three-Tier Architecture">
+            <svg viewBox="0 0 760 380" width="100%" height="auto" style="max-width: 680px; display: block; margin: 0 auto;" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="arrow-down-2" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="#4B5563"/>
+                </marker>
+              </defs>
+              <rect x="270" y="10" width="220" height="46" rx="8" fill="#F3F4F6" stroke="#9CA3AF" stroke-width="1.5"/>
+              <text x="380" y="38" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="700" fill="#1F2937" text-anchor="middle">Client / User</text>
+
+              <line x1="380" y1="56" x2="380" y2="92" stroke="#4B5563" stroke-width="2" marker-end="url(#arrow-down-2)"/>
+
+              <rect x="210" y="98" width="340" height="56" rx="8" fill="#EFF6FF" stroke="#3B82F6" stroke-width="2"/>
+              <text x="380" y="132" font-family="'Plus Jakarta Sans', sans-serif" font-size="15" font-weight="700" fill="#1E40AF" text-anchor="middle">Presentation Layer</text>
+
+              <line x1="380" y1="154" x2="380" y2="190" stroke="#4B5563" stroke-width="2" marker-end="url(#arrow-down-2)"/>
+
+              <rect x="210" y="196" width="340" height="56" rx="8" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2"/>
+              <text x="380" y="230" font-family="'Plus Jakarta Sans', sans-serif" font-size="15" font-weight="700" fill="#92400E" text-anchor="middle">Application / Processing Layer</text>
+
+              <line x1="380" y1="252" x2="380" y2="288" stroke="#4B5563" stroke-width="2" marker-end="url(#arrow-down-2)"/>
+
+              <rect x="210" y="294" width="340" height="56" rx="8" fill="#ECFDF5" stroke="#10B981" stroke-width="2"/>
+              <text x="380" y="328" font-family="'Plus Jakarta Sans', sans-serif" font-size="15" font-weight="700" fill="#065F46" text-anchor="middle">Data Layer (Database)</text>
+            </svg>
+            <p class="diagram-caption">Diagram Three-Tier Architecture (Presentation Layer &rarr; Application Layer &rarr; Data Layer)</p>
+          </div>
+
+          <p><strong>Penjelasan:</strong></p>
+          <ol style="margin-left: 20px; margin-top: 6px;">
+            <li><strong>Presentation Layer:</strong> menangani tampilan dan interaksi pengguna.</li>
+            <li><strong>Application Layer:</strong> memproses logika dan fungsi aplikasi.</li>
+            <li><strong>Data Layer:</strong> menyimpan dan mengelola data aplikasi.</li>
+          </ol>
+        </div>
+
+        <!-- 2.b -->
+        <div class="sub-question">
+          <div class="sub-question-title">b. Hybrid System Architectures (5 poin)</div>
+        </div>
+        <div class="answer-box">
+          <p>Hybrid system architecture adalah arsitektur yang menggabungkan beberapa pendekatan sistem untuk memperoleh keunggulan masing-masing.</p>
+          <p style="margin-top: 10px;"><strong>Jenis-jenisnya:</strong></p>
+          <ol style="margin-left: 20px; margin-top: 6px;">
+            <li>
+              <strong>Cloud Computing:</strong> menyediakan resource komputasi melalui internet dengan empat lapisan:
+              <ul style="margin-left: 20px; margin-top: 4px;">
+                <li><em>Hardware:</em> processor, router, dan perangkat fisik.</li>
+                <li><em>Infrastructure:</em> virtual server dan virtual storage.</li>
+                <li><em>Platform:</em> layanan dan abstraksi untuk pengembangan aplikasi.</li>
+                <li><em>Application:</em> aplikasi yang digunakan pengguna.</li>
+              </ul>
+            </li>
+            <li style="margin-top: 6px;">
+              <strong>Edge-Cloud Architecture:</strong> menggabungkan cloud dengan edge server yang ditempatkan lebih dekat ke pengguna untuk mengurangi latency dan mendukung kebutuhan bandwidth.
+            </li>
+            <li style="margin-top: 6px;">
+              <strong>Blockchain Architecture:</strong> sistem terdistribusi yang menyimpan data dalam blok yang saling terhubung dan bersifat immutable. Penambahan blok dilakukan melalui distributed consensus.
+            </li>
+          </ol>
+        </div>
+
+        <!-- 2.c -->
+        <div class="sub-question">
+          <div class="sub-question-title">c. Blockchain: Immutable dan Security (5 poin)</div>
+        </div>
+        <div class="answer-box">
+          <p>Blockchain bersifat immutable karena blok disusun dalam rantai append-only, sehingga data yang sudah tercatat tidak dapat diubah begitu saja.</p>
+          <p style="margin-top: 10px;"><strong>Keamanan blockchain didukung oleh:</strong></p>
+          <ol style="margin-left: 20px; margin-top: 6px;">
+            <li><strong>Cryptographic Hash:</strong> setiap blok memiliki hash yang terhubung dengan blok sebelumnya. Perubahan data akan mengubah hash dan merusak keterkaitan rantai.</li>
+            <li><strong>Distributed Consensus:</strong> penambahan blok harus melalui kesepakatan antarpartisipan.</li>
+            <li><strong>Replication:</strong> salinan blockchain disimpan oleh banyak node sehingga tidak bergantung pada satu server.</li>
+          </ol>
+          <p style="margin-top: 10px;">Dengan mekanisme tersebut, manipulasi data menjadi sangat sulit karena perubahan harus dapat diterima oleh jaringan.</p>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           SOAL NO. 3
+           ==================================================================== -->
+      <section id="soal-3" class="question-card" aria-labelledby="title-soal-3">
+        <div class="question-header">
+          <div class="question-number">
+            <span class="exam-badge">Soal No. 3</span>
+            <span id="title-soal-3">Proses (15 poin)</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <span style="font-size: 0.9rem; font-weight: 700; color: var(--accent-coral-text);">Total: 15 Poin</span>
+            <label class="mastery-checkbox">
+              <input type="checkbox"> Selesai Dipelajari
+            </label>
+          </div>
+        </div>
+
+        <!-- 3.a -->
+        <div class="sub-question">
+          <div class="sub-question-title">a. Empat Perbedaan Process dan Thread (5 poin)</div>
+        </div>
+        <div class="answer-box">
+          <ol style="margin-left: 20px;">
+            <li><strong>Address Space:</strong> Process memiliki ruang alamat (memory) sendiri, sedangkan thread dalam satu process berbagi address space.</li>
+            <li><strong>Resource:</strong> Process memiliki resource sendiri, sedangkan thread berbagi resource milik process.</li>
+            <li><strong>Context Switching:</strong> Perpindahan antar-thread lebih ringan, sedangkan perpindahan antar-process lebih mahal karena melibatkan kernel.</li>
+            <li><strong>Komunikasi:</strong> Antar-process membutuhkan mekanisme komunikasi khusus (IPC), sedangkan antar-thread dapat berkomunikasi melalui shared memory.</li>
+          </ol>
+        </div>
+
+        <!-- 3.b -->
+        <div class="sub-question">
+          <div class="sub-question-title">b. Kerja Sama Thread dan Kernel (5 poin)</div>
+        </div>
+        <div class="answer-box">
+          <p>Thread dan kernel bekerja sama untuk mengatur eksekusi thread dan penggunaan CPU.</p>
+          <p style="margin-top: 10px;"><strong>Contoh: Pada model kombinasi User-Level Thread dan Kernel-Level Thread:</strong></p>
+          <ol style="margin-left: 20px; margin-top: 6px;">
+            <li>User thread dijalankan melalui kernel thread.</li>
+            <li>Jika user thread melakukan system call yang blocking, kernel thread tersebut ikut terblokir.</li>
+            <li>Kernel dapat menjadwalkan kernel thread lain yang memiliki user thread siap dijalankan.</li>
+            <li>Dengan demikian, thread lain tetap dapat berjalan meskipun salah satu thread sedang menunggu I/O.</li>
+          </ol>
+          <p style="margin-top: 10px;"><strong>Contoh penggunaan:</strong> Web server menggunakan beberapa thread untuk melayani request client secara bersamaan. Kernel mengatur penjadwalan thread ketika terjadi operasi I/O.</p>
+        </div>
+
+        <!-- 3.c -->
+        <div class="sub-question">
+          <div class="sub-question-title">c. Aplikasi Menghitung Luas dan Keliling Lingkaran Menggunakan Thread (5 poin)</div>
+        </div>
+        <div class="answer-box">
+          <p>Contoh program Python menggunakan dua thread untuk menghitung luas dan keliling lingkaran secara bersamaan.</p>
+          
+          <div class="code-editor-box">
+<span class="code-keyword">import</span> threading
+<span class="code-keyword">import</span> math
+
+r = <span class="code-num">7</span>
+
+<span class="code-keyword">def</span> <span class="code-func">hitung_luas</span>():
+    luas = math.pi * r ** <span class="code-num">2</span>
+    <span class="code-keyword">print</span>(<span class="code-string">"Luas:"</span>, luas)
+
+<span class="code-keyword">def</span> <span class="code-func">hitung_keliling</span>():
+    keliling = <span class="code-num">2</span> * math.pi * r
+    <span class="code-keyword">print</span>(<span class="code-string">"Keliling:"</span>, keliling)
+
+t1 = threading.Thread(target=hitung_luas)
+t2 = threading.Thread(target=hitung_keliling)
+
+t1.start()
+t2.start()
+
+t1.join()
+t2.join()
+
+<span class="code-keyword">print</span>(<span class="code-string">"Perhitungan selesai"</span>)
+          </div>
+
+          <p><strong>Penjelasan:</strong></p>
+          <ol style="margin-left: 20px; margin-top: 6px;">
+            <li>Thread <code>t1</code> menghitung luas lingkaran.</li>
+            <li>Thread <code>t2</code> menghitung keliling lingkaran.</li>
+            <li><code>start()</code> menjalankan kedua thread.</li>
+            <li><code>join()</code> menunggu kedua thread selesai.</li>
+          </ol>
+          <p style="margin-top: 10px;"><strong>Rumus:</strong></p>
+          <ul style="margin-left: 20px; margin-top: 4px;">
+            <li>Luas = &pi; &times; r&sup2;</li>
+            <li>Keliling = 2 &times; &pi; &times; r</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           SOAL NO. 4
+           ==================================================================== -->
+      <section id="soal-4" class="question-card" aria-labelledby="title-soal-4">
+        <div class="question-header">
+          <div class="question-number">
+            <span class="exam-badge">Soal No. 4</span>
+            <span id="title-soal-4">Komunikasi (15 poin)</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <span style="font-size: 0.9rem; font-weight: 700; color: var(--accent-coral-text);">Total: 15 Poin</span>
+            <label class="mastery-checkbox">
+              <input type="checkbox"> Selesai Dipelajari
+            </label>
+          </div>
+        </div>
+
+        <!-- 4.a -->
+        <div class="sub-question">
+          <div class="sub-question-title">a. Dua Protokol pada Transport Layer (5 poin)</div>
+        </div>
+        <div class="answer-box">
+          <ol style="margin-left: 20px;">
+            <li><strong>TCP (Transmission Control Protocol):</strong> protokol connection-oriented yang menyediakan komunikasi reliable dan berbasis stream. Data dikirim secara berurutan dan memastikan pengiriman.</li>
+            <li><strong>UDP (User Datagram Protocol):</strong> protokol connectionless yang menggunakan datagram dengan mekanisme best-effort, sehingga tidak menjamin data sampai atau berurutan.</li>
+          </ol>
+        </div>
+
+        <!-- 4.b -->
+        <div class="sub-question">
+          <div class="sub-question-title">b. Transient dan Persistent Communication (5 poin)</div>
+        </div>
+        <div class="answer-box">
+          <ol style="margin-left: 20px;">
+            <li><strong>Transient Communication:</strong> pesan akan dibuang oleh communication server jika tidak dapat langsung diteruskan ke server berikutnya atau penerima. Pengirim dan penerima perlu aktif saat komunikasi berlangsung.</li>
+            <li><strong>Persistent Communication:</strong> pesan disimpan pada communication server sampai berhasil dikirimkan kepada penerima. Pengirim dan penerima tidak harus aktif secara bersamaan.</li>
+          </ol>
+        </div>
+
+        <!-- 4.c -->
+        <div class="sub-question">
+          <div class="sub-question-title">c. Message Broker (5 poin)</div>
+        </div>
+        <div class="answer-box">
+          <p>Message Broker adalah perantara komunikasi yang menangani pertukaran pesan antar-aplikasi dengan format atau protokol berbeda.</p>
+          <p style="margin-top: 10px;"><strong>Fungsi utamanya:</strong></p>
+          <ol style="margin-left: 20px; margin-top: 6px;">
+            <li><strong>Message Transformation:</strong> mengubah format pesan agar sesuai dengan aplikasi tujuan.</li>
+            <li><strong>Application Gateway:</strong> menjadi penghubung antar-aplikasi yang berbeda.</li>
+            <li><strong>Message Routing:</strong> mengarahkan pesan ke tujuan yang sesuai, termasuk berdasarkan subject (publish-subscribe).</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           SOAL NO. 5
+           ==================================================================== -->
+      <section id="soal-5" class="question-card" aria-labelledby="title-soal-5">
+        <div class="question-header">
+          <div class="question-number">
+            <span class="exam-badge">Soal No. 5</span>
+            <span id="title-soal-5">Koordinasi (15 poin)</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <span style="font-size: 0.9rem; font-weight: 700; color: var(--accent-coral-text);">Total: 15 Poin</span>
+            <label class="mastery-checkbox">
+              <input type="checkbox"> Selesai Dipelajari
+            </label>
+          </div>
+        </div>
+
+        <!-- 5.a -->
+        <div class="sub-question">
+          <div class="sub-question-title">a. Election Algorithm (5 poin)</div>
+        </div>
+        <div class="answer-box">
+          <p>Election algorithm adalah algoritma untuk memilih satu proses sebagai coordinator atau leader dalam sistem terdistribusi, biasanya ketika coordinator sebelumnya mengalami kegagalan.</p>
+          <p style="margin-top: 10px;"><strong>Contoh:</strong> Bully Algorithm.</p>
+          <p style="margin-top: 8px;"><strong>Cara kerja:</strong></p>
+          <ol style="margin-left: 20px; margin-top: 6px;">
+            <li>Proses mendeteksi coordinator mengalami kegagalan.</li>
+            <li>Proses mengirim pesan election kepada proses lain dengan ID lebih tinggi.</li>
+            <li>Jika tidak ada respons, proses tersebut menjadi coordinator.</li>
+            <li>Jika ada respons, proses menunggu proses dengan ID lebih tinggi melanjutkan election.</li>
+            <li>Proses aktif dengan ID tertinggi akan menjadi coordinator dan mengirim pesan pemberitahuan kepada proses lain.</li>
+          </ol>
+        </div>
+
+        <!-- 5.b -->
+        <div class="sub-question">
+          <div class="sub-question-title">b. Vector Clock (8 poin)</div>
+        </div>
+        <div class="answer-box">
+          <p>Vector clock digunakan untuk menentukan urutan kausal (causal ordering) antar-event dalam sistem terdistribusi.</p>
+          <p style="margin-top: 10px;"><strong>Aturan:</strong></p>
+          <ol style="margin-left: 20px; margin-top: 6px;">
+            <li>Setiap proses memiliki vector clock yang awalnya <code>[0,0,0]</code>.</li>
+            <li>Setiap event lokal atau pengiriman pesan menambah nilai komponen proses tersebut sebesar 1.</li>
+            <li>Saat menerima pesan, lakukan perbandingan nilai maksimum antara vector lokal dan vector pesan, kemudian tambahkan 1 pada komponen proses penerima.</li>
+          </ol>
+
+          <!-- Visual Timeline SVG -->
+          <div class="diagram-container" aria-label="Diagram Vector Clock">
+            <svg viewBox="0 0 820 400" width="100%" height="auto" style="max-width: 800px; display: block; margin: 0 auto;" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="arrow-v" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="#DC2626"/>
+                </marker>
+              </defs>
+
+              <text x="30" y="85" font-family="'Plus Jakarta Sans', sans-serif" font-size="20" font-weight="800" fill="#1E293B">P1</text>
+              <line x1="80" y1="80" x2="780" y2="80" stroke="#334155" stroke-width="2.5" marker-end="url(#arrow-v)"/>
+
+              <text x="30" y="205" font-family="'Plus Jakarta Sans', sans-serif" font-size="20" font-weight="800" fill="#1E293B">P2</text>
+              <line x1="80" y1="200" x2="780" y2="200" stroke="#334155" stroke-width="2.5" marker-end="url(#arrow-v)"/>
+
+              <text x="30" y="325" font-family="'Plus Jakarta Sans', sans-serif" font-size="20" font-weight="800" fill="#1E293B">P3</text>
+              <line x1="80" y1="320" x2="780" y2="320" stroke="#334155" stroke-width="2.5" marker-end="url(#arrow-v)"/>
+
+              <!-- Messages -->
+              <line x1="150" y1="200" x2="200" y2="84" stroke="#DC2626" stroke-width="2" marker-end="url(#arrow-v)"/>
+              <text x="160" y="140" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="700" fill="#DC2626">m1</text>
+
+              <line x1="300" y1="80" x2="350" y2="196" stroke="#2563EB" stroke-width="2" marker-end="url(#arrow-v)"/>
+              <text x="310" y="140" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="700" fill="#2563EB">m3</text>
+
+              <line x1="480" y1="200" x2="530" y2="316" stroke="#059669" stroke-width="2" marker-end="url(#arrow-v)"/>
+              <text x="490" y="260" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="700" fill="#059669">m4</text>
+
+              <line x1="570" y1="80" x2="660" y2="316" stroke="#D97706" stroke-width="2" marker-end="url(#arrow-v)"/>
+              <text x="600" y="190" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="700" fill="#D97706">m2</text>
+
+              <!-- Events -->
+              <circle cx="150" cy="200" r="6" fill="#1E293B"/>
+              <text x="150" y="225" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" text-anchor="middle" fill="#0F172A">a</text>
+              <rect x="115" y="235" width="70" height="22" rx="4" fill="#E0E7FF" stroke="#A5B4FC"/>
+              <text x="150" y="250" font-family="monospace" font-size="11" font-weight="700" fill="#3730A3" text-anchor="middle">[0,1,0]</text>
+
+              <circle cx="200" cy="80" r="6" fill="#1E293B"/>
+              <text x="200" y="60" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" text-anchor="middle" fill="#0F172A">b</text>
+              <rect x="165" y="25" width="70" height="22" rx="4" fill="#E0E7FF" stroke="#A5B4FC"/>
+              <text x="200" y="40" font-family="monospace" font-size="11" font-weight="700" fill="#3730A3" text-anchor="middle">[1,1,0]</text>
+
+              <circle cx="300" cy="80" r="6" fill="#1E293B"/>
+              <text x="300" y="60" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" text-anchor="middle" fill="#0F172A">c</text>
+              <rect x="265" y="25" width="70" height="22" rx="4" fill="#E0E7FF" stroke="#A5B4FC"/>
+              <text x="300" y="40" font-family="monospace" font-size="11" font-weight="700" fill="#3730A3" text-anchor="middle">[2,1,0]</text>
+
+              <rect x="420" y="70" width="20" height="20" rx="3" fill="#64748B"/>
+              <text x="430" y="60" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" text-anchor="middle" fill="#0F172A">d</text>
+              <rect x="395" y="25" width="70" height="22" rx="4" fill="#E0E7FF" stroke="#A5B4FC"/>
+              <text x="430" y="40" font-family="monospace" font-size="11" font-weight="700" fill="#3730A3" text-anchor="middle">[3,1,0]</text>
+
+              <circle cx="570" cy="80" r="6" fill="#1E293B"/>
+              <text x="570" y="60" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" text-anchor="middle" fill="#0F172A">e</text>
+              <rect x="535" y="25" width="70" height="22" rx="4" fill="#E0E7FF" stroke="#A5B4FC"/>
+              <text x="570" y="40" font-family="monospace" font-size="11" font-weight="700" fill="#3730A3" text-anchor="middle">[4,1,0]</text>
+
+              <circle cx="350" cy="200" r="6" fill="#1E293B"/>
+              <text x="350" y="225" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" text-anchor="middle" fill="#0F172A">f</text>
+              <rect x="315" y="235" width="70" height="22" rx="4" fill="#E0E7FF" stroke="#A5B4FC"/>
+              <text x="350" y="250" font-family="monospace" font-size="11" font-weight="700" fill="#3730A3" text-anchor="middle">[2,2,0]</text>
+
+              <circle cx="480" cy="200" r="6" fill="#1E293B"/>
+              <text x="480" y="225" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" text-anchor="middle" fill="#0F172A">g</text>
+              <rect x="445" y="235" width="70" height="22" rx="4" fill="#E0E7FF" stroke="#A5B4FC"/>
+              <text x="480" y="250" font-family="monospace" font-size="11" font-weight="700" fill="#3730A3" text-anchor="middle">[2,3,0]</text>
+
+              <circle cx="530" cy="320" r="6" fill="#1E293B"/>
+              <text x="530" y="345" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" text-anchor="middle" fill="#0F172A">h</text>
+              <rect x="495" y="355" width="70" height="22" rx="4" fill="#E0E7FF" stroke="#A5B4FC"/>
+              <text x="530" y="370" font-family="monospace" font-size="11" font-weight="700" fill="#3730A3" text-anchor="middle">[2,3,1]</text>
+
+              <circle cx="660" cy="320" r="6" fill="#1E293B"/>
+              <text x="660" y="345" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" text-anchor="middle" fill="#0F172A">i</text>
+              <rect x="625" y="355" width="70" height="22" rx="4" fill="#E0E7FF" stroke="#A5B4FC"/>
+              <text x="660" y="370" font-family="monospace" font-size="11" font-weight="700" fill="#3730A3" text-anchor="middle">[4,3,2]</text>
+            </svg>
+            <p class="diagram-caption">Diagram Ruang-Waktu Vector Clock untuk P1, P2, P3</p>
+          </div>
+
+          <p><strong>Hasil timestamp setiap event:</strong></p>
+          <div class="table-responsive" style="margin-top: 10px;">
+            <table class="comp-table">
+              <thead>
+                <tr>
+                  <th scope="col">Proses</th>
+                  <th scope="col">Event</th>
+                  <th scope="col">Vector Clock</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>P1</td>
+                  <td>b</td>
+                  <td><code>[1,1,0]</code></td>
+                </tr>
+                <tr>
+                  <td>P1</td>
+                  <td>c</td>
+                  <td><code>[2,1,0]</code></td>
+                </tr>
+                <tr>
+                  <td>P1</td>
+                  <td>d</td>
+                  <td><code>[3,1,0]</code></td>
+                </tr>
+                <tr>
+                  <td>P1</td>
+                  <td>e</td>
+                  <td><code>[4,1,0]</code></td>
+                </tr>
+                <tr>
+                  <td>P2</td>
+                  <td>a</td>
+                  <td><code>[0,1,0]</code></td>
+                </tr>
+                <tr>
+                  <td>P2</td>
+                  <td>f</td>
+                  <td><code>[2,2,0]</code></td>
+                </tr>
+                <tr>
+                  <td>P2</td>
+                  <td>g</td>
+                  <td><code>[2,3,0]</code></td>
+                </tr>
+                <tr>
+                  <td>P3</td>
+                  <td>h</td>
+                  <td><code>[2,3,1]</code></td>
+                </tr>
+                <tr>
+                  <td>P3</td>
+                  <td>i</td>
+                  <td><code>[4,3,2]</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p style="margin-top: 12px;"><strong>Keterangan:</strong></p>
+          <ul style="margin-left: 20px; margin-top: 4px;">
+            <li>a mengirim m1, kemudian b menerima m1.</li>
+            <li>c mengirim m3, kemudian f menerima m3.</li>
+            <li>e mengirim m2, kemudian i menerima m2.</li>
+            <li>g mengirim m4, kemudian h menerima m4.</li>
+            <li>d merupakan event internal pada P1.</li>
+          </ul>
+        </div>
+
+        <!-- 5.c -->
+        <div class="sub-question">
+          <div class="sub-question-title">c. Hubungan Kausal m2 dan m4 (2 poin)</div>
+        </div>
+        <div class="answer-box">
+          <p><strong>Tidak, m2 dan m4 tidak saling bergantung secara kausal (concurrent).</strong></p>
+          <p style="margin-top: 8px;">Alasannya, timestamp kedua event pengiriman adalah:</p>
+          <ul style="margin-left: 20px; margin-top: 4px;">
+            <li>m2 = <code>[4,1,0]</code></li>
+            <li>m4 = <code>[2,3,0]</code></li>
+          </ul>
+          <p style="margin-top: 8px;">Keduanya tidak dapat dibandingkan secara kausal karena komponen m2 lebih besar pada P1, sedangkan m4 lebih besar pada P2.</p>
+          <p style="margin-top: 8px;">Dengan demikian, tidak terdapat hubungan happened-before antara m2 dan m4.</p>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           SOAL NO. 6
+           ==================================================================== -->
+      <section id="soal-6" class="question-card" aria-labelledby="title-soal-6">
+        <div class="question-header">
+          <div class="question-number">
+            <span class="exam-badge">Soal No. 6</span>
+            <span id="title-soal-6">Penamaan (15 poin)</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <span style="font-size: 0.9rem; font-weight: 700; color: var(--accent-coral-text);">Total: 15 Poin</span>
+            <label class="mastery-checkbox">
+              <input type="checkbox"> Selesai Dipelajari
+            </label>
+          </div>
+        </div>
+
+        <!-- 6.a -->
+        <div class="sub-question">
+          <div class="sub-question-title">a. Perbedaan Flat Naming, Structured Naming, dan Attribute-Based Naming (5 poin)</div>
+        </div>
+        <div class="answer-box">
+          <ol style="margin-left: 20px;">
+            <li><strong>Flat Naming:</strong> menggunakan nama atau identifier tanpa struktur hierarkis. Pencarian dilakukan untuk menemukan lokasi entitas berdasarkan identifier.</li>
+            <li><strong>Structured Naming:</strong> menggunakan nama yang memiliki struktur hierarkis berupa node dan directory, sehingga pencarian dilakukan dengan menelusuri struktur nama.</li>
+            <li><strong>Attribute-Based Naming:</strong> mencari entitas berdasarkan atribut atau karakteristik tertentu, bukan berdasarkan nama atau identifier secara langsung.</li>
+          </ol>
+        </div>
+
+        <!-- 6.b -->
+        <div class="sub-question">
+          <div class="sub-question-title">b. Contoh Aplikasi Setiap Skema Penamaan (5 poin)</div>
+        </div>
+        <div class="answer-box">
+          <ol style="margin-left: 20px;">
+            <li><strong>Flat Naming:</strong> Chord (DHT), digunakan untuk mencari node atau data berdasarkan identifier melalui logical ring.</li>
+            <li><strong>Structured Naming:</strong> DNS (Domain Name System), digunakan untuk menerjemahkan nama domain menjadi alamat IP melalui struktur hierarkis.</li>
+            <li><strong>Attribute-Based Naming:</strong> LDAP (Lightweight Directory Access Protocol), digunakan untuk mencari pengguna berdasarkan atribut seperti nama, departemen, atau organisasi.</li>
+          </ol>
+        </div>
+
+        <!-- 6.c -->
+        <div class="sub-question">
+          <div class="sub-question-title">c. Perbedaan Iterative dan Recursive Name Resolution (5 poin)</div>
+        </div>
+        <div class="answer-box">
+          <ol style="margin-left: 20px;">
+            <li><strong>Iterative Name Resolution:</strong> client menghubungi name server secara bertahap. Jika server tidak memiliki informasi, server memberikan referensi ke server berikutnya untuk dihubungi client.</li>
+            <li><strong>Recursive Name Resolution:</strong> client mengirim permintaan ke satu name server, kemudian server tersebut meneruskan pencarian ke server lain hingga informasi ditemukan dan hasil dikembalikan ke client.</li>
+          </ol>
+          <p style="margin-top: 10px;"><strong>Perbedaan utama:</strong> pada iterative, client melanjutkan pencarian, sedangkan pada recursive, name server yang melanjutkan pencarian.</p>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           SOAL NO. 7
+           ==================================================================== -->
+      <section id="soal-7" class="question-card" aria-labelledby="title-soal-7">
+        <div class="question-header">
+          <div class="question-number">
+            <span class="exam-badge">Soal No. 7</span>
+            <span id="title-soal-7">Konsistensi dan Fault Tolerant (15 poin)</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <span style="font-size: 0.9rem; font-weight: 700; color: var(--accent-coral-text);">Total: 15 Poin</span>
+            <label class="mastery-checkbox">
+              <input type="checkbox"> Selesai Dipelajari
+            </label>
+          </div>
+        </div>
+
+        <!-- 7.a -->
+        <div class="sub-question">
+          <div class="sub-question-title">a. Sequential Consistency (5 poin)</div>
+        </div>
+        <div class="answer-box">
+          <div class="timeline-track">
+            <div class="track-row">
+              <span class="proc-label">P1</span>
+              <span style="width: 140px;"></span>
+              <span class="op-chip op-read">R(x)a</span>
+              <span style="width: 120px;"></span>
+              <span class="op-chip op-write">W(x)c</span>
+            </div>
+            <div class="track-row">
+              <span class="proc-label">P2</span>
+              <span class="op-chip op-write">W(x)a</span>
+              <span style="width: 100px;"></span>
+              <span class="op-chip op-write">W(x)b</span>
+            </div>
+            <div class="track-row">
+              <span class="proc-label">P3</span>
+              <span style="width: 320px;"></span>
+              <span class="op-chip op-read">R(x)c</span>
+              <span style="margin-left: 20px;"></span>
+              <span class="op-chip op-read">R(x)b</span>
+            </div>
+            <div class="track-row">
+              <span class="proc-label">P4</span>
+              <span style="width: 320px;"></span>
+              <span class="op-chip op-read">R(x)c</span>
+              <span style="margin-left: 20px;"></span>
+              <span class="op-chip op-read">R(x)b</span>
+            </div>
+          </div>
+
+          <p><strong>Ya, gambar tersebut sequentially consistent.</strong></p>
+          <p style="margin-top: 8px;">Alasannya, seluruh operasi dapat disusun dalam satu urutan global yang tetap mempertahankan urutan operasi setiap proses.</p>
+          <p style="margin-top: 10px;"><strong>Urutan yang memungkinkan:</strong></p>
+          <ol style="margin-left: 20px; margin-top: 6px;">
+            <li>P2: W(x)a</li>
+            <li>P1: R(x)a</li>
+            <li>P1: W(x)c</li>
+            <li>P3: R(x)c</li>
+            <li>P4: R(x)c</li>
+            <li>P2: W(x)b</li>
+            <li>P3: R(x)b</li>
+            <li>P4: R(x)b</li>
+          </ol>
+          <p style="margin-top: 10px;">Urutan tersebut valid karena seluruh proses membaca nilai sesuai urutan write yang terjadi, tanpa melanggar urutan program masing-masing proses.</p>
+        </div>
+
+        <!-- 7.b -->
+        <div class="sub-question">
+          <div class="sub-question-title">b. Causal Consistency (5 poin)</div>
+        </div>
+        <div class="answer-box">
+          <div class="timeline-track">
+            <div class="track-row">
+              <span class="proc-label">P1</span>
+              <span style="width: 120px;"></span>
+              <span class="op-chip op-read">R(x)a</span>
+              <span style="width: 140px;"></span>
+              <span class="op-chip op-write">W(x)c</span>
+            </div>
+            <div class="track-row">
+              <span class="proc-label">P2</span>
+              <span class="op-chip op-write">W(x)a</span>
+              <span style="width: 100px;"></span>
+              <span class="op-chip op-write">W(x)b</span>
+            </div>
+            <div class="track-row">
+              <span class="proc-label">P3</span>
+              <span style="width: 140px;"></span>
+              <span class="op-chip op-read">R(x)a</span>
+              <span style="margin-left: 20px;"></span>
+              <span class="op-chip op-read">R(x)b</span>
+              <span style="margin-left: 20px;"></span>
+              <span class="op-chip op-read">R(x)c</span>
+            </div>
+            <div class="track-row">
+              <span class="proc-label">P4</span>
+              <span style="width: 140px;"></span>
+              <span class="op-chip op-read">R(x)a</span>
+              <span style="margin-left: 20px;"></span>
+              <span class="op-chip op-read">R(x)c</span>
+              <span style="margin-left: 20px;"></span>
+              <span class="op-chip op-read">R(x)b</span>
+            </div>
+          </div>
+
+          <p><strong>Ya, gambar tersebut causally consistent.</strong></p>
+          <p style="margin-top: 8px;"><strong>Alasannya:</strong></p>
+          <ol style="margin-left: 20px; margin-top: 6px;">
+            <li>W(x)a terjadi sebelum W(x)b pada P2.</li>
+            <li>P1 membaca nilai a, kemudian melakukan W(x)c.</li>
+            <li>Dengan demikian, W(x)a memiliki hubungan kausal dengan W(x)b dan W(x)c.</li>
+            <li>W(x)b dan W(x)c tidak memiliki hubungan kausal satu sama lain sehingga dapat terlihat dalam urutan berbeda.</li>
+          </ol>
+          <p style="margin-top: 10px;">P3 membaca a &rarr; b &rarr; c, sedangkan P4 membaca a &rarr; c &rarr; b.</p>
+          <p style="margin-top: 8px;">Hal tersebut diperbolehkan karena W(x)b dan W(x)c merupakan concurrent writes.</p>
+        </div>
+
+        <!-- 7.c -->
+        <div class="sub-question">
+          <div class="sub-question-title">c. Konsistensi untuk Electronic Stock Market (5 poin)</div>
+        </div>
+        <div class="answer-box">
+          <p><strong>Saya memilih Linearizability karena electronic stock market membutuhkan konsistensi data yang kuat dan real-time.</strong></p>
+          <p style="margin-top: 8px;"><strong>Alasannya:</strong></p>
+          <ol style="margin-left: 20px; margin-top: 6px;">
+            <li>Seluruh pengguna harus melihat harga saham dan order book yang konsisten.</li>
+            <li>Setiap transaksi harus mengikuti urutan waktu nyata.</li>
+            <li>Mencegah transaksi menggunakan informasi harga yang sudah tidak berlaku.</li>
+            <li>Setiap operasi seolah-olah terjadi secara atomic pada satu titik waktu.</li>
+          </ol>
+          <p style="margin-top: 10px;">Dengan demikian, Linearizability membantu menjaga konsistensi harga dan transaksi meskipun terdapat banyak pengguna yang mengakses sistem secara bersamaan.</p>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p><strong>CloudStudy</strong>: Media Belajar Interaktif Sistem Terdistribusi & Cloud Computing</p>
+      <p>Rangkuman jawaban resmi soal UTS tahun lalu (Soal 1 s.d. 7) sesuai kunci singkat, padat, dan jelas.</p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

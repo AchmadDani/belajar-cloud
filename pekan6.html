@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pekan 6: Naming in Distributed Systems | CloudStudy</title>
+  
+  <!-- Typography: Modern Ultra-Legible Sans-Serif (Plus Jakarta Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Styling -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Site Navigation Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="CloudStudy Beranda">
+        <div class="brand-badge" aria-hidden="true">C</div>
+        <div>
+          <span class="brand-text">CloudStudy</span>
+          <span class="brand-sub">UTS Hub</span>
+        </div>
+      </a>
+
+      <nav aria-label="Navigasi Utama">
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">&larr; Beranda</a></li>
+          <li><a href="kisi_kisi.html" class="nav-link">Kisi-Kisi</a></li>
+          <li><a href="soal_tahun_lalu.html" class="nav-link" style="color: var(--accent-coral-text); font-weight: 700;">Soal Tahun Lalu</a></li>
+          <li><a href="#kuis" class="nav-cta">Latihan Kuis</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Module Header -->
+  <div class="container">
+    <div class="module-header">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="index.html">Beranda</a>
+        <span aria-hidden="true">&rsaquo;</span>
+        <a href="index.html#kurikulum">Materi UTS</a>
+        <span aria-hidden="true">&rsaquo;</span>
+        <span style="color: var(--text-main); font-weight: 600;">Pekan 6</span>
+      </nav>
+
+      <h1 class="module-title">Pekan 6: Naming</h1>
+      
+      <div class="module-meta">
+        <span class="meta-pill">
+          <strong>Topik:</strong> Names, Identifiers, Flat Naming, Structured Naming (DNS), Attribute-Based Naming (LDAP)
+        </span>
+        <span class="meta-pill">
+          <strong>Format:</strong> Rangkuman Teori + Flashcard + 5 Soal Kuis
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Layout (Sticky Nav + Content) -->
+  <div class="container module-layout">
+    
+    <!-- Sticky Table of Contents -->
+    <aside class="sticky-nav" aria-label="Daftar Isi Modul">
+      <p class="nav-title">Daftar Isi Materi</p>
+      <ul class="toc-list">
+        <li><a href="#dasar-naming" class="toc-link">1. Konsep Dasar Naming</a></li>
+        <li><a href="#flat-naming" class="toc-link">2. Flat Naming</a></li>
+        <li><a href="#structured-naming" class="toc-link">3. Structured Naming & DNS</a></li>
+        <li><a href="#attribute-naming" class="toc-link">4. Attribute-Based Naming (LDAP)</a></li>
+        <li><a href="#cheat-sheet" class="toc-link">5. Tabel Komparasi Ujian</a></li>
+        <li><a href="#flashcards" class="toc-link">6. Flashcard Uji Ingatan</a></li>
+        <li><a href="#kuis" class="toc-link">7. Kuis Pemahaman Mandiri</a></li>
+      </ul>
+    </aside>
+
+    <!-- Content Sections -->
+    <main class="content-area">
+      
+      <!-- Section 1: Konsep Dasar Naming -->
+      <section id="dasar-naming" class="content-section" aria-labelledby="heading-dasar">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-blue-bg); color: var(--accent-blue-text);">Bagian 1</span>
+          <h2 id="heading-dasar" class="section-title">Konsep Dasar Naming</h2>
+          <p class="section-desc">Pembeda fundamental antara Name, Identifier, dan Address serta independensi lokasi.</p>
+        </div>
+
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-tag">Tipe 1</div>
+            <h4 class="concept-name">Name</h4>
+            <p class="concept-body">
+              Label berupa string simbolik yang digunakan oleh manusia atau aplikasi untuk merujuk pada suatu entitas (contoh: <code>www.informatika.ac.id</code>).
+            </p>
+          </div>
+
+          <div class="concept-card highlight">
+            <div class="concept-tag">Tipe 2</div>
+            <h4 class="concept-name">Identifier</h4>
+            <p class="concept-body">
+              Nama unik yang memenuhi 3 sifat wajib: (1) Merujuk paling banyak 1 entitas, (2) Setiap entitas memiliki paling banyak 1 identifier, (3) Identifier tidak pernah didaur ulang/digunakan kembali untuk entitas lain.
+            </p>
+          </div>
+
+          <div class="concept-card">
+            <div class="concept-tag">Tipe 3</div>
+            <h4 class="concept-name">Address</h4>
+            <p class="concept-body">
+              Nama dari <strong>Access Point</strong> suatu entitas yang mendefinisikan lokasi jaringan tempat entitas tersebut dapat diakses (contoh: alamat IP dan nomor Port).
+            </p>
+          </div>
+        </div>
+
+        <div class="callout callout-blue">
+          <div class="callout-title">Location Independence & Pure Names</div>
+          <p class="callout-text">
+            <strong>Location Independence:</strong> Nama entitas tidak bergantung pada lokasi fisiknya, sehingga entitas bebas berpindah mesin tanpa harus mengganti namanya.<br>
+            <strong>Pure Name:</strong> Nama acak murni yang sama sekali tidak mengandung informasi mengenai lokasi atau karakteristik entitas, melainkan murni referensi acak (seperti UUID 128-bit).
+          </p>
+        </div>
+      </section>
+
+      <!-- Section 2: Flat Naming -->
+      <section id="flat-naming" class="content-section" aria-labelledby="heading-flat">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-green-bg); color: var(--accent-green-text);">Bagian 2</span>
+          <h2 id="heading-flat" class="section-title">Flat Naming (Nama Tanpa Struktur)</h2>
+          <p class="section-desc">Mencari lokasi entitas berdasarkan identifier yang tidak memiliki hierarki.</p>
+        </div>
+
+        <div class="table-responsive">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th scope="col">Pendekatan Flat Naming</th>
+                <th scope="col">Mekanisme Kerja</th>
+                <th scope="col">Kelebihan & Kekurangan</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>1. Broadcasting</strong></td>
+                <td>Mengirim pesan pencarian ke seluruh node di jaringan lokal (contoh: ARP untuk mencari MAC Address dari IP Address).</td>
+                <td>Sederhana, tidak butuh server pusat. Namun boros bandwidth dan tidak bisa diskalakan di jaringan WAN.</td>
+              </tr>
+              <tr>
+                <td><strong>2. Forwarding Pointers</strong></td>
+                <td>Ketika entitas berpindah dari node A ke B, node A meninggalkan pointer referensi menuju B. Jika pindah ke C, B menunjuk ke C.</td>
+                <td>Mendukung mobilitas cepat. Namun rantai pointer dapat menjadi sangat panjang, lambat ditelusuri, dan putus jika satu node mati.</td>
+              </tr>
+              <tr>
+                <td><strong>3. Home-Based Approach</strong></td>
+                <td>Entitas memiliki lokasi 'rumah' tetap (Home Location). Setiap kali berpindah, entitas mendaftarkan <em>Care-of Address</em> ke Home (contoh: Mobile IP).</td>
+                <td>Tidak butuh rantai panjang. Namun timbul masalah rute segitiga (*triangle routing*) yang menambah latensi.</td>
+              </tr>
+              <tr>
+                <td><strong>4. Distributed Hash Tables (DHT)</strong></td>
+                <td>Memetakan identifier dan node ke dalam ruang kunci numerik terstruktur seperti Chord Ring.</td>
+                <td>Sangat terdesentralisasi, tidak ada single failure, lookup efisien logaritmik O(log N).</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section 3: Structured Naming & DNS -->
+      <section id="structured-naming" class="content-section" aria-labelledby="heading-dns">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-amber-bg); color: var(--accent-amber-text);">Bagian 3</span>
+          <h2 id="heading-dns" class="section-title">Structured Naming & Domain Name System (DNS)</h2>
+          <p class="section-desc">Pohon ruang nama (Name Space Graph), resolusi nama iteratif vs rekursif, dan arsitektur DNS.</p>
+        </div>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin-bottom: 12px;">Name Space Graph & Closure Mechanism</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+          Ruang nama terstruktur dimodelkan sebagai graf berarah dengan <strong>Root Node</strong>, <strong>Directory Nodes</strong> (memiliki tabel tepi menuju node lain), dan <strong>Leaf Nodes</strong> (entitas akhir).<br>
+          <strong>Closure Mechanism:</strong> Menentukan konteks awal di mana proses resolusi nama harus dimulai (misal: bagaimana sistem tahu bahwa <code>/</code> adalah root filesystem atau <code>.</code> adalah root DNS).
+        </p>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin: 28px 0 12px 0;">Resolusi Nama: Iterative vs Recursive</h3>
+        <div class="concept-grid">
+          <div class="concept-card highlight">
+            <div class="concept-tag">Resolusi 1</div>
+            <h4 class="concept-name">Iterative Name Resolution</h4>
+            <p class="concept-body">
+              Klien mengontak server DNS tingkat atas, server mengembalikan alamat server DNS tingkat berikutnya, lalu <strong>klien sendiri</strong> yang menghubungi server berikutnya secara berulang sampai selesai. Beban kerja berada di sisi klien resolver.
+            </p>
+          </div>
+
+          <div class="concept-card">
+            <div class="concept-tag">Resolusi 2</div>
+            <h4 class="concept-name">Recursive Name Resolution</h4>
+            <p class="concept-body">
+              Klien bertanya ke server DNS pertama, lalu <strong>server tersebut yang mengontak server lain secara berantai atas nama klien</strong> dan meneruskan hasil akhir kembali ke klien. Memudahkan caching di server, tetapi membebani server DNS tingkat atas.
+            </p>
+          </div>
+        </div>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin: 32px 0 12px 0;">3 Lapisan Hirarki DNS & Resource Records</h3>
+        <div class="table-responsive">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th scope="col">Lapisan DNS</th>
+                <th scope="col">Karakteristik & Contoh</th>
+                <th scope="col">Tingkat Stabilitas Data</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Global Layer</strong></td>
+                <td>Root server dan server Top-Level Domain (TLD seperti .com, .id, .org).</td>
+                <td>Sangat stabil, dikelola oleh registrar resmi, jarang sekali berubah.</td>
+              </tr>
+              <tr>
+                <td><strong>Administrational Layer</strong></td>
+                <td>Server nama organisasi atau institusi (contoh: <code>ugm.ac.id</code>, <code>google.com</code>).</td>
+                <td>Cukup stabil, dikelola oleh administrator jaringan organisasi.</td>
+              </tr>
+              <tr>
+                <td><strong>Managerial Layer</strong></td>
+                <td>Server lokal departemen yang memetakan host individual (contoh: workstation lab).</td>
+                <td>Sering berubah seiring penambahan atau perpindahan perangkat klien.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-blue">
+          <div class="callout-title">Tipe DNS Resource Records (RR) Populer</div>
+          <p class="callout-text">
+            <strong>A:</strong> Memetakan nama host ke alamat IPv4 (32-bit).<br>
+            <strong>AAAA:</strong> Memetakan nama host ke alamat IPv6 (128-bit).<br>
+            <strong>NS:</strong> Menyimpan nama otoritatif Name Server untuk zona tersebut.<br>
+            <strong>CNAME:</strong> Menyimpan nama alias kanonikal dari suatu host.<br>
+            <strong>MX:</strong> Mengarahkan pengiriman email ke Mail Exchange server.
+          </p>
+        </div>
+      </section>
+
+      <!-- Section 4: Attribute-Based Naming -->
+      <section id="attribute-naming" class="content-section" aria-labelledby="heading-attr">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-coral-bg); color: var(--accent-coral-text);">Bagian 4</span>
+          <h2 id="heading-attr" class="section-title">Attribute-Based Naming (Direktori & LDAP)</h2>
+          <p class="section-desc">Pencarian entitas berdasarkan karakteristik atau atribut, bukan sekadar nama tetap.</p>
+        </div>
+
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">
+          Terkadang pengguna tidak mengetahui nama persis suatu printer atau server, melainkan hanya atributnya (contoh: "cari printer warna duplex di lantai 2"). Inilah fungsi <strong>Directory Services</strong>.
+        </p>
+
+        <div class="callout callout-green">
+          <div class="callout-title">Lightweight Directory Access Protocol (LDAP)</div>
+          <p class="callout-text">
+            Data disusun dalam hierarki <strong>Directory Information Tree (DIT)</strong>:<br>
+            - <strong>Relative Distinguished Name (RDN):</strong> Nama unik lokal pada level hierarki saat ini (contoh: <code>cn=Ahmad Fauzi</code>).<br>
+            - <strong>Distinguished Name (DN):</strong> Jalur lengkap dari akar pohon hingga entitas (contoh: <code>cn=Ahmad Fauzi, ou=Informatika, o=Universitas, c=ID</code>).
+          </p>
+        </div>
+      </section>
+
+      <!-- Section 5: Cheat Sheet Ujian Pekan 6 -->
+      <section id="cheat-sheet" class="content-section" aria-labelledby="heading-cheat">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-purple-bg); color: var(--accent-purple-text);">Bagian 5</span>
+          <h2 id="heading-cheat" class="section-title">Lembar Rangkuman Cepat (Exam Cheat Sheet)</h2>
+          <p class="section-desc">Pembeda utama konsep penamaan sistem terdistribusi untuk persiapan ujian UTS.</p>
+        </div>
+
+        <div class="table-responsive">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th scope="col">Pasangan Konsep</th>
+                <th scope="col">Pembeda Utama untuk Ujian</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Name vs Identifier vs Address</strong></td>
+                <td>Nama simbolik acuan manusia vs ID unik 1-ke-1 tanpa daur ulang vs Lokasi access point jaringan entitas.</td>
+              </tr>
+              <tr>
+                <td><strong>Location Independence</strong></td>
+                <td>Kemampuan entitas berpindah lokasi fisik tanpa harus mengganti nama resminya.</td>
+              </tr>
+              <tr>
+                <td><strong>Iterative vs Recursive DNS Resolution</strong></td>
+                <td>Klien resolver aktif menghubungi server tiap tingkatan sendiri vs Server DNS yang meneruskan pertanyaan berantai atas nama klien.</td>
+              </tr>
+              <tr>
+                <td><strong>Global vs Managerial DNS Layer</strong></td>
+                <td>Lapisan Root & TLD yang sangat jarang berubah vs Lapisan host lokal departemen yang dinamis dan sering berubah.</td>
+              </tr>
+              <tr>
+                <td><strong>DNS Record: A vs CNAME vs MX</strong></td>
+                <td>Pemetaan IP address vs Nama alias kanonikal vs Mail server email.</td>
+              </tr>
+              <tr>
+                <td><strong>RDN vs DN pada LDAP</strong></td>
+                <td>Atribut unik di satu level hierarki lokal vs Rantai hierarki lengkap dari root DIT.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section 6: Flashcards -->
+      <section id="flashcards" class="content-section" aria-labelledby="heading-flashcards">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-blue-bg); color: var(--accent-blue-text);">Bagian 6</span>
+          <h2 id="heading-flashcards" class="section-title">Flashcard Uji Ingatan Mandiri</h2>
+          <p class="section-desc">Klik kartu untuk menguji ingatan Anda mengenai konsep penamaan terdistribusi.</p>
+        </div>
+
+        <div class="flashcard-deck">
+          
+          <div class="flashcard" role="button" tabindex="0" aria-label="Flashcard 1">
+            <p class="flashcard-tip">Klik untuk melihat jawaban & kata kunci</p>
+            <h3 class="flashcard-prompt">3 Syarat Utama Identifier</h3>
+            <div class="flashcard-answer">
+              1. Merujuk paling banyak satu entitas.<br>
+              2. Setiap entitas memiliki paling banyak satu identifier.<br>
+              3. Identifier tidak pernah digunakan kembali untuk entitas lain.
+            </div>
+          </div>
+
+          <div class="flashcard" role="button" tabindex="0" aria-label="Flashcard 2">
+            <p class="flashcard-tip">Klik untuk melihat jawaban & kata kunci</p>
+            <h3 class="flashcard-prompt">Apa itu Closure Mechanism?</h3>
+            <div class="flashcard-answer">
+              Mekanisme yang menentukan konteks awal di mana proses resolusi nama harus dimulai (misal bagaimana proses mengetahui alamat IP server DNS root awal).
+            </div>
+          </div>
+
+          <div class="flashcard" role="button" tabindex="0" aria-label="Flashcard 3">
+            <p class="flashcard-tip">Klik untuk melihat jawaban & kata kunci</p>
+            <h3 class="flashcard-prompt">Kelemahan Rantai Forwarding Pointers</h3>
+            <div class="flashcard-answer">
+              Rantai penunjuk dapat bertambah panjang seiring seringnya entitas berpindah lokasi, memperlambat proses pencarian dan rentan putus total jika satu node di tengah rantai mengalami crash.
+            </div>
+          </div>
+
+          <div class="flashcard" role="button" tabindex="0" aria-label="Flashcard 4">
+            <p class="flashcard-tip">Klik untuk melihat jawaban & kata kunci</p>
+            <h3 class="flashcard-prompt">Perbedaan Iterative vs Recursive DNS Resolution</h3>
+            <div class="flashcard-answer">
+              <strong>Iterative</strong>: Klien yang secara aktif menghubungi setiap DNS server langkah demi langkah.<br>
+              <strong>Recursive</strong>: Server DNS pertama yang menjadi perantara menghubungi server-server lain secara estafet.
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Section 7: Kuis Interaktif Pekan 6 -->
+      <section id="kuis" class="content-section" aria-labelledby="heading-kuis">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-green-bg); color: var(--accent-green-text);">Bagian 7</span>
+          <h2 id="heading-kuis" class="section-title">Kuis Pemahaman Mandiri Pekan 6</h2>
+          <p class="section-desc">Uji pemahaman penamaan terdistribusi dan DNS dengan 5 soal berbasis skenario ujian UTS.</p>
+        </div>
+
+        <!-- Quiz Container (Driven by js/app.js) -->
+        <div id="pekan6-quiz" class="quiz-box"></div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p><strong>CloudStudy</strong>: Media Belajar Interaktif Sistem Terdistribusi & Cloud Computing</p>
+      <p>Pekan 6 telah siap dipelajari. Lanjutkan ke Pekan 7 (materi terakhir sebelum ujian)!</p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
+

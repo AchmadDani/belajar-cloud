@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pekan 3: Processes in Distributed Systems | CloudStudy</title>
+  
+  <!-- Typography: Modern Ultra-Legible Sans-Serif (Plus Jakarta Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Styling -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Site Navigation Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="CloudStudy Beranda">
+        <div class="brand-badge" aria-hidden="true">C</div>
+        <div>
+          <span class="brand-text">CloudStudy</span>
+          <span class="brand-sub">UTS Hub</span>
+        </div>
+      </a>
+
+      <nav aria-label="Navigasi Utama">
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">&larr; Beranda</a></li>
+          <li><a href="kisi_kisi.html" class="nav-link">Kisi-Kisi</a></li>
+          <li><a href="soal_tahun_lalu.html" class="nav-link" style="color: var(--accent-coral-text); font-weight: 700;">Soal Tahun Lalu</a></li>
+          <li><a href="#kuis" class="nav-cta">Latihan Kuis</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Module Header -->
+  <div class="container">
+    <div class="module-header">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="index.html">Beranda</a>
+        <span aria-hidden="true">&rsaquo;</span>
+        <a href="index.html#kurikulum">Materi UTS</a>
+        <span aria-hidden="true">&rsaquo;</span>
+        <span style="color: var(--text-main); font-weight: 600;">Pekan 3</span>
+      </nav>
+
+      <h1 class="module-title">Pekan 3: Processes in Distributed Systems</h1>
+      
+      <div class="module-meta">
+        <span class="meta-pill">
+          <strong>Topik:</strong> Thread vs Process, Virtualisasi & Kontainer, Server Architecture, TCP Handoff & Migrasi Kode
+        </span>
+        <span class="meta-pill">
+          <strong>Format:</strong> Rangkuman Teori + Flashcard + 5 Soal Kuis
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Layout (Sticky Nav + Content) -->
+  <div class="container module-layout">
+    
+    <!-- Sticky Table of Contents -->
+    <aside class="sticky-nav" aria-label="Daftar Isi Modul">
+      <p class="nav-title">Daftar Isi Materi</p>
+      <ul class="toc-list">
+        <li><a href="#proses-thread" class="toc-link">1. Thread, Proses & Context</a></li>
+        <li><a href="#thread-os" class="toc-link">2. User vs Kernel Threads</a></li>
+        <li><a href="#thread-ds" class="toc-link">3. Threads dalam Sistem Terdistribusi</a></li>
+        <li><a href="#virtualisasi" class="toc-link">4. Virtualisasi & Kontainer</a></li>
+        <li><a href="#client-server" class="toc-link">5. Arsitektur Server & Cluster</a></li>
+        <li><a href="#migrasi-kode" class="toc-link">6. Migrasi Kode (Mobility)</a></li>
+        <li><a href="#cheat-sheet" class="toc-link">7. Tabel Komparasi Ujian</a></li>
+        <li><a href="#flashcards" class="toc-link">8. Flashcard Uji Ingatan</a></li>
+        <li><a href="#kuis" class="toc-link">9. Kuis Pemahaman Mandiri</a></li>
+      </ul>
+    </aside>
+
+    <!-- Content Sections -->
+    <main class="content-area">
+      
+      <!-- Section 1: Konsep Dasar Thread & Proses -->
+      <section id="proses-thread" class="content-section" aria-labelledby="heading-proses-thread">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-blue-bg); color: var(--accent-blue-text);">Bagian 1</span>
+          <h2 id="heading-proses-thread" class="section-title">Processor, Thread, Process & Context Switching</h2>
+          <p class="section-desc">Membangun virtual processor di atas prosesor fisik serta biaya pergantian konteks.</p>
+        </div>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin-bottom: 12px;">Hierarki Konseptual</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">
+          Sistem komputasi modern dibangun berdasarkan tiga tingkatan entitas prosesor:
+        </p>
+
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-tag">Tingkat 1</div>
+            <h4 class="concept-name">Processor (Physical)</h4>
+            <p class="concept-body">
+              Perangkat keras fisik yang menyediakan sekumpulan instruksi dan mampu mengeksekusi instruksi tersebut secara otomatis.
+            </p>
+          </div>
+
+          <div class="concept-card">
+            <div class="concept-tag">Tingkat 2</div>
+            <h4 class="concept-name">Thread (Minimal Software)</h4>
+            <p class="concept-body">
+              Minimal software processor yang menjadi konteks eksekusi serangkaian instruksi. Memiliki execution context untuk menyimpan status jeda.
+            </p>
+          </div>
+
+          <div class="concept-card highlight">
+            <div class="concept-tag">Tingkat 3</div>
+            <h4 class="concept-name">Process (Software Processor)</h4>
+            <p class="concept-body">
+              Software processor lengkap yang menjadi wadah tempat satu atau lebih thread dijalankan secara bersamaan dalam satu address space.
+            </p>
+          </div>
+        </div>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin: 32px 0 12px 0;">Tiga Jenis Context Switching</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+          Context switching adalah proses menghentikan sementara eksekusi, menyimpan informasi statusnya, dan melanjutkan eksekusi entitas lain:
+        </p>
+
+        <div class="table-responsive">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th scope="col">Jenis Context</th>
+                <th scope="col">Informasi yang Disimpan</th>
+                <th scope="col">Tingkat Bobot Komputasi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Processor Context</strong></td>
+                <td>Nilai minimal register prosesor (Program Counter, Stack Pointer, Addressing Registers).</td>
+                <td>Sangat ringan.</td>
+              </tr>
+              <tr>
+                <td><strong>Thread Context</strong></td>
+                <td>Processor context ditambah status (state) internal dari thread tersebut.</td>
+                <td>Ringan (berbagi address space yang sama).</td>
+              </tr>
+              <tr>
+                <td><strong>Process Context</strong></td>
+                <td>Thread context ditambah nilai register MMU (Memory Management Unit) dan tabel address space.</td>
+                <td>Berat (memerlukan instruksi trap ke OS kernel dan pergantian ruang memori).</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-coral">
+          <div class="callout-title">Biaya Context Switch: Direct vs Indirect Costs</div>
+          <p class="callout-text">
+            <strong>Direct Costs:</strong> Biaya langsung eksekusi kode pergantian register dan instruksi interrupt handler.<br>
+            <strong>Indirect Costs:</strong> Dampak terganggunya <strong>cache prosesor</strong>. Ketika proses berganti, isi cache memory terbuang (*cache thrashing*), sehingga proses yang baru mengalami *cache miss* beruntun dan performa melambat drastis.
+          </p>
+        </div>
+      </section>
+
+      <!-- Section 2: User vs Kernel Threads -->
+      <section id="thread-os" class="content-section" aria-labelledby="heading-thread-os">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-green-bg); color: var(--accent-green-text);">Bagian 2</span>
+          <h2 id="heading-thread-os" class="section-title">Implementasi Thread: User-Space vs Kernel-Space</h2>
+          <p class="section-desc">Perdebatan mendasar: apakah thread dikelola package aplikasi atau langsung oleh kernel OS.</p>
+        </div>
+
+        <div class="table-responsive">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th scope="col">Aspek Analisis</th>
+                <th scope="col">User-Space Threads</th>
+                <th scope="col">Kernel-Space Threads</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Pihak Pengelola</strong></td>
+                <td>Package library aplikasi di user space (tanpa campur tangan OS).</td>
+                <td>Operating System Kernel langsung.</td>
+              </tr>
+              <tr>
+                <td><strong>Kecepatan Switching</strong></td>
+                <td>Sangat cepat (dapat dilakukan murni di user space tanpa system call).</td>
+                <td>Lebih lambat karena memerlukan *trap to kernel* (overhead system call).</td>
+              </tr>
+              <tr>
+                <td><strong>Perilaku Saat Blocking</strong></td>
+                <td><strong>Kelemahan Besar:</strong> Jika satu thread melakukan operasi I/O yang memblokir, seluruh proses ikut terhenti.</td>
+                <td><strong>Keunggulan:</strong> Ketika satu thread terblokir, kernel dapat langsung menjadwalkan thread lain dalam proses yang sama.</td>
+              </tr>
+              <tr>
+                <td><strong>Penanganan Event Eksternal</strong></td>
+                <td>Kernel sulit membedakan dan mengarahkan sinyal ke thread tertentu.</td>
+                <td>Kernel dapat dengan mudah menangkap sinyal dan meneruskannya ke thread spesifik.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-green">
+          <div class="callout-title">Pendekatan Kombinasi (Two-Level Threading)</div>
+          <p class="callout-text">
+            Menggabungkan keunggulan keduanya: sekelompok *user-level threads* dieksekusi di atas sejumlah *kernel threads*. Jika user thread melakukan blocking system call, kernel thread tersebut terblokir, tetapi kernel tetap dapat menjadwalkan kernel thread lain yang membawa user thread lain yang masih siap jalan (*runnable*).
+          </p>
+        </div>
+      </section>
+
+      <!-- Section 3: Threads dalam Sistem Terdistribusi -->
+      <section id="thread-ds" class="content-section" aria-labelledby="heading-thread-ds">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-amber-bg); color: var(--accent-amber-text);">Bagian 3</span>
+          <h2 id="heading-thread-ds" class="section-title">Threads dalam Sistem Terdistribusi</h2>
+          <p class="section-desc">Penerapan thread pada klien untuk menyembunyikan latensi dan pada server untuk struktur yang bersih.</p>
+        </div>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin-bottom: 12px;">1. Client-Side: Multithreaded Web Client</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+          Browser web memanfaatkan multithreading untuk mengambil aset (gambar, CSS, script) dari beberapa server secara bersamaan. Saat satu koneksi menunggu latensi jaringan, koneksi lain tetap mengunduh, sehingga browser dapat merender halaman secara bertahap tanpa macet.
+        </p>
+
+        <div class="callout callout-blue">
+          <div class="callout-title">Rumus Thread-Level Parallelism (TLP)</div>
+          <p class="callout-text">
+            Mengukur rata-rata jumlah thread yang dieksekusi bersamaan ketika sistem aktif:<br>
+            <strong>TLP = (&Sigma; i &times; c<sub>i</sub>) / (1 - c<sub>0</sub>)</strong><br>
+            <em>Catatan Ujian:</em> Nilai TLP browser umumnya hanya berkisar antara <strong>1.5 hingga 2.5</strong>. Artinya, thread pada browser lebih banyak berfungsi untuk mengorganisasikan aktivitas secara logis agar tidak blocking, bukan murni mengejar throughput paralel raksasa.
+          </p>
+        </div>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin: 32px 0 12px 0;">2. Server-Side: Dispatcher/Worker Model</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+          Pola arsitektur standar server konkuren untuk menangani banyak request secara paralel:
+        </p>
+
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-tag">Komponen 1</div>
+            <h4 class="concept-name">Dispatcher Thread</h4>
+            <p class="concept-body">Bertugas terus menerus mendengarkan jaringan (*listen*), menerima request yang masuk dari klien, lalu membagikannya ke worker yang luang.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-tag">Komponen 2</div>
+            <h4 class="concept-name">Worker Threads</h4>
+            <p class="concept-body">Sekumpulan thread pekerja independen yang menerima request dari dispatcher dan mengeksekusi logika pemrosesan secara paralel.</p>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th scope="col">Model Organisasi Server</th>
+                <th scope="col">Tingkat Paralelisme</th>
+                <th scope="col">Gaya System Call</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Multithreading</strong></td>
+                <td>Tinggi (Paralel nyata di multicore).</td>
+                <td>Blocking system calls yang mudah dipahami.</td>
+              </tr>
+              <tr>
+                <td><strong>Single-Threaded Process</strong></td>
+                <td>Tidak ada paralelisme.</td>
+                <td>Blocking system calls (rentan bottleneck).</td>
+              </tr>
+              <tr>
+                <td><strong>Finite-State Machine (FSM)</strong></td>
+                <td>Paralelisme event-driven.</td>
+                <td>Nonblocking system calls (sangat efisien namun rumit).</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section 4: Virtualisasi & Kontainer -->
+      <section id="virtualisasi" class="content-section" aria-labelledby="heading-virtualisasi">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-coral-bg); color: var(--accent-coral-text);">Bagian 4</span>
+          <h2 id="heading-virtualisasi" class="section-title">Prinsip Virtualisasi & Kontainer</h2>
+          <p class="section-desc">Mekanisme meniru antarmuka (mimicking interfaces), syarat Popek-Goldberg, dan isolasi Linux Container.</p>
+        </div>
+
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">
+          Virtualisasi lahir karena perangkat keras berubah lebih cepat daripada perangkat lunak, serta kebutuhan akan portabilitas dan isolasi keamanan yang ketat.
+        </p>
+
+        <div class="table-responsive">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th scope="col">Tipe Virtualisasi</th>
+                <th scope="col">Level Antarmuka</th>
+                <th scope="col">Karakteristik & Contoh</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Process Virtual Machine</strong></td>
+                <td>Instruction set tersendiri di atas OS.</td>
+                <td>Menggunakan interpreter/emulator (contoh: Java Virtual Machine / JVM).</td>
+              </tr>
+              <tr>
+                <td><strong>Native VMM (Type 1 Hypervisor)</strong></td>
+                <td>Low-level instructions langsung di atas hardware.</td>
+                <td>Berjalan langsung di atas bare-metal dengan minimal OS (contoh: VMware ESXi, KVM).</td>
+              </tr>
+              <tr>
+                <td><strong>Hosted VMM (Type 2 Hypervisor)</strong></td>
+                <td>Low-level instructions di atas Host OS.</td>
+                <td>Mendelegasikan sebagian besar tugas I/O ke full-fledged Host OS (contoh: VirtualBox, VMware Workstation).</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-coral">
+          <div class="callout-title">Syarat Formal Popek-Goldberg untuk Virtualisasi</div>
+          <p class="callout-text">
+            Sebuah VMM dapat dibangun secara efisien jika seluruh <strong>Sensitive Instructions</strong> (instruksi yang mengubah konfigurasi atau perilaku mesin) merupakan himpunan bagian dari <strong>Privileged Instructions</strong> (instruksi yang menyebabkan trap ke kernel jika dipanggil di user mode):<br>
+            <strong>Sensitive Instructions &sube; Privileged Instructions</strong><br>
+            Jika syarat ini dilanggar (seperti pada arsitektur x86 lama), solusinya adalah emulasi penuh, pembungkusan instruksi sensitif, atau <strong>Paravirtualization</strong> (memodifikasi kode kernel guest OS agar tidak memanggil instruksi sensitif terlarang).
+          </p>
+        </div>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin: 32px 0 12px 0;">Arsitektur Kontainer: Tiga Pilar Linux</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+          Kontainer memberikan isolasi proses tanpa overhead menjalankan OS guest lengkap. Tiga mekanisme pondasinya:
+        </p>
+
+        <ul style="margin-left: 20px; line-height: 1.7; color: var(--text-muted); font-size: 0.94rem; margin-bottom: 24px;">
+          <li><strong>Namespaces:</strong> Mengisolasi pandangan identifier sistem (Process ID, Network interface, Mount points, User IDs) sehingga proses di dalam kontainer merasa memiliki sistem sendiri.</li>
+          <li><strong>Union File System (UnionFS):</strong> Menggabungkan beberapa lapisan image file system di mana hanya layer teratas yang dapat ditulisi (*read-write layer*).</li>
+          <li><strong>Control Groups (cgroups):</strong> Membatasi dan mengukur alokasi sumber daya fisik (kuota persentase CPU, batas memori RAM, dan I/O bandwidth).</li>
+        </ul>
+      </section>
+
+      <!-- Section 5: Arsitektur Server & Cluster -->
+      <section id="client-server" class="content-section" aria-labelledby="heading-client-server">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-purple-bg); color: var(--accent-purple-text);">Bagian 5</span>
+          <h2 id="heading-client-server" class="section-title">Arsitektur Klien, Server & Server Clusters</h2>
+          <p class="section-desc">Stateless vs Stateful, TCP Handoff pada cluster 3-tier, dan CDN request routing.</p>
+        </div>
+
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-tag">Karakteristik 1</div>
+            <h4 class="concept-name">Stateless Server</h4>
+            <p class="concept-body">
+              Tidak menyimpan informasi status klien setelah request selesai. Klien dan server independen. Jika server crash, pemulihan sangat mudah tanpa state yang rusak (contoh: HTTP murni).
+            </p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-tag">Karakteristik 2</div>
+            <h4 class="concept-name">Stateful Server</h4>
+            <p class="concept-body">
+              Menyimpan status sesi klien (file yang sedang dibuka, cache klien). Memberikan performa sangat tinggi lewat *prefetching*, namun pemulihan saat crash menjadi jauh lebih rumit.
+            </p>
+          </div>
+        </div>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin: 32px 0 12px 0;">Server Cluster 3-Tier & TCP Handoff</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+          Cluster server modern dibagi menjadi: First Tier (Logical Switch / Load Balancer), Second Tier (Application Compute Servers), dan Third Tier (Distributed Database).
+        </p>
+
+        <div class="callout callout-amber">
+          <div class="callout-title">Mekanisme TCP Handoff (Mencegah Bottleneck)</div>
+          <p class="callout-text">
+            Jika seluruh lalu lintas bolak-balik harus melewati switch tier-1, switch tersebut akan segera kewalahan (*bottleneck*). Pada <strong>TCP Handoff</strong>: klien membuka koneksi dengan switch, switch menentukan server tier-2 terbaik, lalu koneksi TCP dialihkan (*handoff*) ke server tersebut. Selanjutnya, server tier-2 mengirimkan respons langsung ke klien tanpa membebani switch lagi!
+          </p>
+        </div>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin: 32px 0 12px 0;">Akamai CDN: Dynamic DNS Routing</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+          Ketika klien meminta konten web, DNS khusus CDN mengembalikan alamat IP <strong>Edge Server terdekat</strong>. Jika konten ada di cache edge, konten langsung disajikan. Menariknya, CDN modern tidak hanya meng-cache file statis, tetapi juga dapat mengeksekusi sebagian kode aplikasi (*serverless/edge functions*) di edge server.
+        </p>
+      </section>
+
+      <!-- Section 6: Migrasi Kode -->
+      <section id="migrasi-kode" class="content-section" aria-labelledby="heading-migrasi">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-blue-bg); color: var(--accent-blue-text);">Bagian 6</span>
+          <h2 id="heading-migrasi" class="section-title">Migrasi Kode (Code Mobility)</h2>
+          <p class="section-desc">Memindahkan komputasi mendekati lokasi data untuk memangkas latensi dan menjaga privasi.</p>
+        </div>
+
+        <div class="callout callout-blue">
+          <div class="callout-title">4 Alasan Utama Migrasi Kode</div>
+          <p class="callout-text">
+            1. <strong>Load Distribution:</strong> Menyeimbangkan beban kerja di data center.<br>
+            2. <strong>Minimizing Communication:</strong> Memindahkan kode kecil menuju server basis data raksasa, bukan menarik data bergiga-gita ke klien.<br>
+            3. <strong>Flexibility:</strong> Mengunduh kode dinamis saat dibutuhkan tanpa instalasi manual.<br>
+            4. <strong>Privacy and Security:</strong> Contoh nyata pada <em>Federated Machine Learning</em>: data medis pasien tidak boleh keluar dari rumah sakit, sehingga model/kode AI yang dikirim ke rumah sakit untuk dilatih secara lokal.
+          </p>
+        </div>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin: 32px 0 12px 0;">Weak Mobility vs Strong Mobility</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+          Sebuah objek program terdiri dari: <strong>Code Segment</strong> (kode program), <strong>Data Segment</strong> (variabel/state data), dan <strong>Execution State</strong> (program counter, stack frame thread).
+        </p>
+
+        <div class="table-responsive">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th scope="col">Aspek Pembeda</th>
+                <th scope="col">Weak Mobility</th>
+                <th scope="col">Strong Mobility</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Segmen yang Dipindahkan</strong></td>
+                <td>Hanya Code Segment dan Data Segment.</td>
+                <td>Code Segment, Data Segment, dan <strong>Execution State</strong> lengkap.</td>
+              </tr>
+              <tr>
+                <td><strong>Kelanjutan Eksekusi</strong></td>
+                <td>Eksekusi <strong>dimulai dari awal</strong> (*reboot execution*).</td>
+                <td>Eksekusi <strong>dilanjutkan tepat di titik saat jeda</strong>.</td>
+              </tr>
+              <tr>
+                <td><strong>Mekanisme / Contoh</strong></td>
+                <td><em>Code Shipping</em> (push ke tujuan) atau <em>Code Fetching</em> (pull unduh ke klien, seperti JavaScript di web).</td>
+                <td><em>Process Migration</em> (pindah utuh) atau <em>Cloning</em> (kloning proses identik).</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin: 32px 0 12px 0;">3 Metode Migrasi Virtual Machine</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
+          <div style="background: var(--bg-primary); padding: 18px; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+            <h4 style="font-family: var(--font-serif); font-size: 1.15rem; margin-bottom: 8px;">Pushing Memory Pages</h4>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">
+              VM tetap berjalan di mesin asal sementara halaman memori dikirim secara bertahap. Halaman yang berubah (*dirty pages*) dikirim ulang secara iteratif.
+            </p>
+          </div>
+          <div style="background: var(--bg-primary); padding: 18px; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+            <h4 style="font-family: var(--font-serif); font-size: 1.15rem; margin-bottom: 8px;">Stop and Copy</h4>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">
+              VM dihentikan total, seluruh isi memori disalin ke mesin tujuan, lalu VM dinyalakan kembali. Menimbulkan *downtime* yang nyata.
+            </p>
+          </div>
+          <div style="background: var(--bg-primary); padding: 18px; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+            <h4 style="font-family: var(--font-serif); font-size: 1.15rem; margin-bottom: 8px;">Pulling Memory Pages</h4>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">
+              VM langsung dinyalakan di mesin tujuan, lalu mengambil halaman memori yang belum ada dari mesin asal secara *on-demand* saat dibutuhkan.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 7: Cheat Sheet Ujian Pekan 3 -->
+      <section id="cheat-sheet" class="content-section" aria-labelledby="heading-cheat">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-purple-bg); color: var(--accent-purple-text);">Bagian 7</span>
+          <h2 id="heading-cheat" class="section-title">Lembar Rangkuman Cepat (Exam Cheat Sheet)</h2>
+          <p class="section-desc">Pembeda utama konsep proses, thread, virtualisasi, dan migrasi untuk soal ujian UTS.</p>
+        </div>
+
+        <div class="table-responsive">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th scope="col">Pasangan Konsep</th>
+                <th scope="col">Pembeda Utama untuk Ujian</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Process vs Thread Context</strong></td>
+                <td>Thread Context menyimpan register & state thread (berbagi memori) vs Process Context menyimpan register MMU & tabel memori terpisah.</td>
+              </tr>
+              <tr>
+                <td><strong>Direct vs Indirect Switch Cost</strong></td>
+                <td>Biaya instruksi CPU & OS trap langsung vs Kerugian performa akibat hilangnya data cache prosesor (*cache miss*).</td>
+              </tr>
+              <tr>
+                <td><strong>User-Space vs Kernel-Space Threads</strong></td>
+                <td>Switching cepat tanpa trap kernel tetapi rentan blocking proses total vs Switching dengan overhead trap tetapi satu blocking tidak mematikan thread lain.</td>
+              </tr>
+              <tr>
+                <td><strong>Dispatcher vs Worker</strong></td>
+                <td>Menerima request jaringan & membagikan tugas vs Memproses logika komputasi tugas secara paralel.</td>
+              </tr>
+              <tr>
+                <td><strong>Popek-Goldberg Condition</strong></td>
+                <td>Virtualisasi efisien terjamin jika <em>Sensitive Instructions &sube; Privileged Instructions</em>.</td>
+              </tr>
+              <tr>
+                <td><strong>Container: Namespaces vs cgroups</strong></td>
+                <td>Namespaces mengisolasi <em>pandangan sistem (identifier)</em> vs cgroups membatasi <em>kuota kuantitatif sumber daya fisik (CPU/RAM)</em>.</td>
+              </tr>
+              <tr>
+                <td><strong>Iterative vs Concurrent Server</strong></td>
+                <td>Menangani satu request sampai tuntas sebelum menerima request baru vs Menangani banyak request serentak melalui dispatcher-worker.</td>
+              </tr>
+              <tr>
+                <td><strong>Stateless vs Stateful Server</strong></td>
+                <td>Bebas info klien, pemulihan crash mudah vs Menyimpan sesi klien, mendukung prefetching dan cache lokal berkinerja tinggi.</td>
+              </tr>
+              <tr>
+                <td><strong>TCP Handoff</strong></td>
+                <td>Mengalihkan koneksi TCP langsung ke server pemroses agar switch tier-1 tidak menjadi bottleneck.</td>
+              </tr>
+              <tr>
+                <td><strong>Weak vs Strong Mobility</strong></td>
+                <td>Pindah Code + Data (eksekusi reboot dari nol) vs Pindah Code + Data + Execution State (eksekusi lanjut mulus).</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section 8: Flashcard Uji Ingatan Mandiri -->
+      <section id="flashcards" class="content-section" aria-labelledby="heading-flashcards">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-blue-bg); color: var(--accent-blue-text);">Bagian 8</span>
+          <h2 id="heading-flashcards" class="section-title">Flashcard Uji Ingatan Mandiri</h2>
+          <p class="section-desc">Klik kartu untuk menguji pemahaman Anda sebelum melihat jawaban resminya.</p>
+        </div>
+
+        <div class="flashcard-deck">
+          
+          <div class="flashcard" role="button" tabindex="0" aria-label="Flashcard 1">
+            <p class="flashcard-tip">Klik untuk melihat jawaban & kata kunci</p>
+            <h3 class="flashcard-prompt">Kelemahan Terbesar User-Space Threads</h3>
+            <div class="flashcard-answer">
+              <strong>The Blocking Problem</strong>: Karena kernel hanya mengenali proses secara utuh, jika salah satu user thread melakukan blocking I/O system call, kernel akan menidurkan seluruh proses, melumpuhkan thread lain di dalamnya.
+            </div>
+          </div>
+
+          <div class="flashcard" role="button" tabindex="0" aria-label="Flashcard 2">
+            <p class="flashcard-tip">Klik untuk melihat jawaban & kata kunci</p>
+            <h3 class="flashcard-prompt">Tujuan Utama TCP Handoff pada Server Cluster</h3>
+            <div class="flashcard-answer">
+              Mencegah <em>first tier</em> (load balancer / switch) menjadi titik kemacetan (bottleneck) komunikasi, dengan mengalihkan jalur transmisi respons server langsung ke klien.
+            </div>
+          </div>
+
+          <div class="flashcard" role="button" tabindex="0" aria-label="Flashcard 3">
+            <p class="flashcard-tip">Klik untuk melihat jawaban & kata kunci</p>
+            <h3 class="flashcard-prompt">Beda Paravirtualization vs Emulasi Penuh</h3>
+            <div class="flashcard-answer">
+              Emulasi penuh meniru instruksi via software tanpa mengubah OS guest (lambat). Paravirtualization memodifikasi kernel OS guest agar secara sukarela bekerja sama dengan VMM (jauh lebih cepat).
+            </div>
+          </div>
+
+          <div class="flashcard" role="button" tabindex="0" aria-label="Flashcard 4">
+            <p class="flashcard-tip">Klik untuk melihat jawaban & kata kunci</p>
+            <h3 class="flashcard-prompt">Alasan Migrasi Kode pada Federated Learning</h3>
+            <div class="flashcard-answer">
+              <strong>Privacy and Security</strong>: Data sensitif (misal rekam medis) tidak boleh dipindahkan keluar karena regulasi hukum, sehingga algoritma/kode pelatih yang dikirimkan ke lokasi data.
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Section 9: Kuis Interaktif Pekan 3 -->
+      <section id="kuis" class="content-section" aria-labelledby="heading-kuis">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-green-bg); color: var(--accent-green-text);">Bagian 9</span>
+          <h2 id="heading-kuis" class="section-title">Kuis Pemahaman Mandiri Pekan 3</h2>
+          <p class="section-desc">Uji pemahaman proses dan virtualisasi dengan 5 soal berbasis skenario ujian UTS.</p>
+        </div>
+
+        <!-- Quiz Container (Driven by js/app.js) -->
+        <div id="pekan3-quiz" class="quiz-box"></div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p><strong>CloudStudy</strong>: Media Belajar Interaktif Sistem Terdistribusi & Cloud Computing</p>
+      <p>Pekan 3 telah siap dipelajari. Lanjutkan ke Pekan 4 saat Anda siap!</p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
+

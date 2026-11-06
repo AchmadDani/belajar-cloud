@@ -1,0 +1,11 @@
+# Ignore semua file markdown
+*.md
+
+# Ignore direktori agen
+.agents/
+
+# File sistem & cache
+.DS_Store
+Thumbs.db
+node_modules/
+

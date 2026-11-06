@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pekan 5: Coordination in Distributed Systems | CloudStudy</title>
+  
+  <!-- Typography: Modern Ultra-Legible Sans-Serif (Plus Jakarta Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Styling -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Site Navigation Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="CloudStudy Beranda">
+        <div class="brand-badge" aria-hidden="true">C</div>
+        <div>
+          <span class="brand-text">CloudStudy</span>
+          <span class="brand-sub">UTS Hub</span>
+        </div>
+      </a>
+
+      <nav aria-label="Navigasi Utama">
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">&larr; Beranda</a></li>
+          <li><a href="kisi_kisi.html" class="nav-link">Kisi-Kisi</a></li>
+          <li><a href="soal_tahun_lalu.html" class="nav-link" style="color: var(--accent-coral-text); font-weight: 700;">Soal Tahun Lalu</a></li>
+          <li><a href="#kuis" class="nav-cta">Latihan Kuis</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Module Header -->
+  <div class="container">
+    <div class="module-header">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="index.html">Beranda</a>
+        <span aria-hidden="true">&rsaquo;</span>
+        <a href="index.html#kurikulum">Materi UTS</a>
+        <span aria-hidden="true">&rsaquo;</span>
+        <span style="color: var(--text-main); font-weight: 600;">Pekan 5</span>
+      </nav>
+
+      <h1 class="module-title">Pekan 5: Coordination</h1>
+      
+      <div class="module-meta">
+        <span class="meta-pill">
+          <strong>Topik:</strong> Physical Clock Sync (NTP), Lamport & Vector Clocks, Mutual Exclusion, Election Algorithms
+        </span>
+        <span class="meta-pill">
+          <strong>Format:</strong> Rangkuman Teori + Flashcard + 5 Soal Kuis
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Layout (Sticky Nav + Content) -->
+  <div class="container module-layout">
+    
+    <!-- Sticky Table of Contents -->
+    <aside class="sticky-nav" aria-label="Daftar Isi Modul">
+      <p class="nav-title">Daftar Isi Materi</p>
+      <ul class="toc-list">
+        <li><a href="#clock-sync" class="toc-link">1. Sinkronisasi Jam Fisik</a></li>
+        <li><a href="#logical-clocks" class="toc-link">2. Jam Logis (Lamport & Vector)</a></li>
+        <li><a href="#mutual-exclusion" class="toc-link">3. Mutual Exclusion</a></li>
+        <li><a href="#election" class="toc-link">4. Algoritma Pemilihan (Bully/Ring)</a></li>
+        <li><a href="#gossip-coord" class="toc-link">5. Gossip Coordination</a></li>
+        <li><a href="#cheat-sheet" class="toc-link">6. Tabel Komparasi Ujian</a></li>
+        <li><a href="#flashcards" class="toc-link">7. Flashcard Uji Ingatan</a></li>
+        <li><a href="#kuis" class="toc-link">8. Kuis Pemahaman Mandiri</a></li>
+      </ul>
+    </aside>
+
+    <!-- Content Sections -->
+    <main class="content-area">
+      
+      <!-- Section 1: Sinkronisasi Jam Fisik -->
+      <section id="clock-sync" class="content-section" aria-labelledby="heading-clock-sync">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-blue-bg); color: var(--accent-blue-text);">Bagian 1</span>
+          <h2 id="heading-clock-sync" class="section-title">Sinkronisasi Jam Fisik (Physical Clocks)</h2>
+          <p class="section-desc">Penyimpangan osilator kristal kuarsa, Universal Coordinated Time (UTC), dan protokol NTP.</p>
+        </div>
+
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">
+          Karena osilator perangkat keras pada setiap komputer mengalami fenomena <strong>Clock Drift</strong> (berjalan sedikit lebih cepat atau lebih lambat dari waktu ideal dengan batas laju drift &rho;), jam komputer akan perlahan saling menjauh.
+        </p>
+
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-tag">Konsep 1</div>
+            <h4 class="concept-name">Precision (Internal Sync)</h4>
+            <p class="concept-body">
+              Mengukur seberapa dekat waktu antarmesin yang berbeda dalam sistem: <code>|C<sub>p</sub>(t) - C<sub>q</sub>(t)| &le; &pi;</code>. Tujuannya menjaga keselarasan antarnode tanpa perlu peduli waktu matahari dunia nyata.
+            </p>
+          </div>
+
+          <div class="concept-card">
+            <div class="concept-tag">Konsep 2</div>
+            <h4 class="concept-name">Accuracy (External Sync)</h4>
+            <p class="concept-body">
+              Mengukur seberapa dekat jam komputer dengan waktu standar internasional atomik sebenarnya (UTC): <code>|C<sub>p</sub>(t) - t| &le; &alpha;</code>.
+            </p>
+          </div>
+        </div>
+
+        <div class="callout callout-blue">
+          <div class="callout-title">Network Time Protocol (NTP): 4 Timestamp Estimasi</div>
+          <p class="callout-text">
+            NTP mengukur pertukaran pesan antara klien dan server dengan 4 penanda waktu:<br>
+            T<sub>1</sub> (klien kirim request) &rarr; T<sub>2</sub> (server terima) &rarr; T<sub>3</sub> (server kirim response) &rarr; T<sub>4</sub> (klien terima response).<br>
+            <strong>Relative Offset (&theta;):</strong> [ (T<sub>2</sub> - T<sub>1</sub>) + (T<sub>3</sub> - T<sub>4</sub>) ] / 2<br>
+            <strong>Round-Trip Delay (&delta;):</strong> [ (T<sub>4</sub> - T<sub>1</sub>) - (T<sub>3</sub> - T<sub>2</sub>) ] / 2<br>
+            NTP memilih pasangan nilai offset (&theta;) yang memiliki delay (&delta;) paling minimum untuk meminimalkan ketidakpastian jitter jaringan.
+          </p>
+        </div>
+      </section>
+
+      <!-- Section 2: Jam Logis -->
+      <section id="logical-clocks" class="content-section" aria-labelledby="heading-logical">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-green-bg); color: var(--accent-green-text);">Bagian 2</span>
+          <h2 id="heading-logical" class="section-title">Jam Logis: Lamport & Vector Clocks</h2>
+          <p class="section-desc">Menentukan kausalitas dan urutan parsial kejadian tanpa memerlukan jam fisik global.</p>
+        </div>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin-bottom: 12px;">Relasi Happened-Before (a &rarr; b)</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+          Diusulkan oleh Leslie Lamport, relasi kausal <code>a &rarr; b</code> menyatakan bahwa kejadian <code>a</code> terjadi sebelum dan berpotensi memengaruhi kejadian <code>b</code>:
+        </p>
+
+        <ul style="margin-left: 20px; line-height: 1.7; color: var(--text-muted); font-size: 0.94rem; margin-bottom: 24px;">
+          <li>Jika <code>a</code> dan <code>b</code> terjadi di proses yang sama dan <code>a</code> mendahului <code>b</code>, maka <code>a &rarr; b</code>.</li>
+          <li>Jika <code>a</code> adalah pengiriman pesan dan <code>b</code> adalah penerimaan pesan tersebut, maka <code>a &rarr; b</code>.</li>
+          <li><strong>Transitivitas:</strong> Jika <code>a &rarr; b</code> dan <code>b &rarr; c</code>, maka <code>a &rarr; c</code>.</li>
+          <li>Jika tidak ada relasi kausal antardua kejadian, maka kejadian tersebut bersifat <strong>Konkuren (a || b)</strong>.</li>
+        </ul>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin: 32px 0 12px 0;">Aturan Pembaruan Lamport Logical Clock</h3>
+        <div style="background: var(--bg-primary); padding: 18px; border-radius: var(--radius-md); border-left: 4px solid var(--accent-green-text); margin-bottom: 24px;">
+          <ol style="margin-left: 20px; line-height: 1.8; color: var(--text-main); font-size: 0.92rem;">
+            <li>Sebelum proses P<sub>i</sub> mengeksekusi suatu kejadian internal, jam lokal dinaikkan: <code>C<sub>i</sub> = C<sub>i</sub> + 1</code>.</li>
+            <li>Saat mengirim pesan <code>m</code>, proses menyertakan nilai jamnya: <code>ts(m) = C<sub>i</sub></code>.</li>
+            <li>Saat proses P<sub>j</sub> menerima pesan <code>m</code>, ia memperbarui jam lokalnya dengan nilai terbesar: <code>C<sub>j</sub> = max(C<sub>j</sub>, ts(m)) + 1</code>.</li>
+          </ol>
+        </div>
+
+        <div class="callout callout-coral">
+          <div class="callout-title">Kelemahan Lamport Clocks & Solusi Vector Clocks</div>
+          <p class="callout-text">
+            Pada Lamport Clock, jika <code>a &rarr; b</code> maka dijamin <code>C(a) &lt; C(b)</code>. Namun <strong>kebalikannya tidak berlaku</strong>! Jika <code>C(a) &lt; C(b)</code>, kita tidak dapat memastikan apakah <code>a &rarr; b</code> atau keduanya konkuren.<br>
+            <strong>Vector Clocks</strong> memecahkan kelemahan ini. Setiap proses memegang array vektor jam <code>V<sub>i</sub>[1..n]</code>. Pada Vector Clocks berlaku relasi dua arah: <strong>a &rarr; b jika dan hanya jika V(a) &lt; V(b)</strong>, sehingga kausalitas sejati dapat dideteksi secara sempurna!
+          </p>
+        </div>
+      </section>
+
+      <!-- Section 3: Mutual Exclusion -->
+      <section id="mutual-exclusion" class="content-section" aria-labelledby="heading-mutex">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-amber-bg); color: var(--accent-amber-text);">Bagian 3</span>
+          <h2 id="heading-mutex" class="section-title">Mutual Exclusion dalam Sistem Terdistribusi</h2>
+          <p class="section-desc">Mencegah benturan akses bersamaan ke Critical Section (CS) tanpa memori fisik bersama.</p>
+        </div>
+
+        <div class="table-responsive">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th scope="col">Algoritma</th>
+                <th scope="col">Mekanisme Kerja</th>
+                <th scope="col">Jumlah Pesan Masuk CS</th>
+                <th scope="col">Kelemahan Utama</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Centralized Algorithm</strong></td>
+                <td>Satu koordinator tunggal mengelola izin. Proses mengirim REQUEST, koordinator menjawab GRANT, proses keluar mengirim RELEASE.</td>
+                <td><strong>3 pesan</strong> (Request, Grant, Release).</td>
+                <td>Single Point of Failure (koordinator mati = macet total) dan bottleneck beban.</td>
+              </tr>
+              <tr>
+                <td><strong>Distributed (Ricart & Agrawala)</strong></td>
+                <td>Memanfaatkan Lamport timestamp. Proses mengirim request ke SEMUA node lain. Node lain membalas OK jika tidak berniat masuk atau timestamp-nya lebih besar. Masuk CS setelah menerima OK dari semua node.</td>
+                <td><strong>2 &times; (N - 1) pesan</strong>.</td>
+                <td>Jika salah satu node mengalami crash, seluruh sistem akan terblokir menunggu jawaban dari node yang mati tersebut (N point of failure!).</td>
+              </tr>
+              <tr>
+                <td><strong>Token Ring Algorithm</strong></td>
+                <td>Node diatur dalam cincin logis. Token beredar melintasi ring. Hanya pemegang token yang berhak masuk ke CS.</td>
+                <td><strong>1 hingga (N - 1) pesan</strong> (atau 0 jika sudah pegang).</td>
+                <td>Jika token hilang (loss), dibutuhkan algoritma rumit untuk mendeteksi hilangnya token dan membuat token baru; jika ring putus perlu rekonstruksi.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section 4: Algoritma Pemilihan -->
+      <section id="election" class="content-section" aria-labelledby="heading-election">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-coral-bg); color: var(--accent-coral-text);">Bagian 4</span>
+          <h2 id="heading-election" class="section-title">Algoritma Pemilihan (Election Algorithms)</h2>
+          <p class="section-desc">Bagaimana node-node memilih koordinator baru ketika koordinator lama mengalami kegagalan.</p>
+        </div>
+
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">
+          Setiap proses diasumsikan memiliki <strong>Identifier unik</strong>. Prinsip dasarnya adalah memilih proses aktif yang memiliki identifier paling tinggi sebagai koordinator baru.
+        </p>
+
+        <div class="concept-grid">
+          <div class="concept-card highlight">
+            <div class="concept-tag">Algoritma 1</div>
+            <h4 class="concept-name">The Bully Algorithm</h4>
+            <p class="concept-body">
+              Ketika proses P mendeteksi koordinator mati, P mengirim pesan <code>ELECTION</code> ke semua proses ber-ID lebih tinggi.<br>
+              - Jika ada node ber-ID lebih tinggi yang menjawab <code>OK</code>, node tersebut mengambil alih pemilihan dan P mundur.<br>
+              - Jika tidak ada balasan dalam batas timeout, proses P menang dan memproklamirkan dirinya sebagai koordinator dengan menyiarkan pesan <code>COORDINATOR</code> ke semua node.
+            </p>
+          </div>
+
+          <div class="concept-card">
+            <div class="concept-tag">Algoritma 2</div>
+            <h4 class="concept-name">The Ring Algorithm</h4>
+            <p class="concept-body">
+              Node disusun dalam cincin logis searah jarum jam.<br>
+              - Proses inisiator mengirim pesan <code>ELECTION</code> ke tetangga berikutnya yang memuat ID dirinya.<br>
+              - Setiap node penerima menyisipkan ID-nya ke daftar pesan lalu meneruskannya.<br>
+              - Begitu pesan kembali ke inisiator, node dengan ID tertinggi di daftar resmi menjadi koordinator baru, lalu pesan <code>COORDINATOR</code> diedarkan melintasi ring.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 5: Gossip Coordination -->
+      <section id="gossip-coord" class="content-section" aria-labelledby="heading-gossip">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-purple-bg); color: var(--accent-purple-text);">Bagian 5</span>
+          <h2 id="heading-gossip" class="section-title">Gossip Coordination & Sistem Lokasi</h2>
+          <p class="section-desc">Agregasi terdesentralisasi, gossip peer-sampling, dan estimasi posisi node.</p>
+        </div>
+
+        <div class="callout callout-blue">
+          <div class="callout-title">Gossip-Based Information Aggregation</div>
+          <p class="callout-text">
+            Protokol gossip dapat digunakan untuk menghitung nilai agregat global (seperti rata-rata nilai sensor atau estimasi total jumlah node dalam jaringan) secara terdesentralisasi murni. Setiap putaran, sepasang node acak saling bertukar nilai dan memperbarui nilai masing-masing dengan rata-ratanya: <code>(v<sub>p</sub> + v<sub>q</sub>) / 2</code>. Dalam beberapa putaran pertukaran, seluruh node di jaringan akan secara eksponensial konvergen ke nilai rata-rata global yang sebenarnya!
+          </p>
+        </div>
+      </section>
+
+      <!-- Section 6: Cheat Sheet Ujian Pekan 5 -->
+      <section id="cheat-sheet" class="content-section" aria-labelledby="heading-cheat">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-blue-bg); color: var(--accent-blue-text);">Bagian 6</span>
+          <h2 id="heading-cheat" class="section-title">Lembar Rangkuman Cepat (Exam Cheat Sheet)</h2>
+          <p class="section-desc">Pembeda utama konsep koordinasi untuk persiapan ujian UTS.</p>
+        </div>
+
+        <div class="table-responsive">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th scope="col">Pasangan Konsep</th>
+                <th scope="col">Pembeda Utama untuk Ujian</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Precision vs Accuracy</strong></td>
+                <td>Deviasi waktu antarmesin dalam sistem (&le; &pi;) vs Deviasi waktu terhadap jam atomik UTC sebenarnya (&le; &alpha;).</td>
+              </tr>
+              <tr>
+                <td><strong>Internal vs External Sync</strong></td>
+                <td>Sinkronisasi untuk menjaga presisi antarnode vs Sinkronisasi dengan sumber waktu UTC luar.</td>
+              </tr>
+              <tr>
+                <td><strong>Lamport Clocks vs Vector Clocks</strong></td>
+                <td>a &rarr; b menjamin C(a) &lt; C(b) (satu arah) vs a &rarr; b &hArr; V(a) &lt; V(b) (dua arah mendeteksi kausalitas pasti).</td>
+              </tr>
+              <tr>
+                <td><strong>Centralized vs Distributed Mutual Exclusion</strong></td>
+                <td>3 pesan per masuk CS, single failure vs 2*(N-1) pesan per masuk CS, 1 node mati melumpuhkan semua.</td>
+              </tr>
+              <tr>
+                <td><strong>Bully Algorithm vs Ring Algorithm</strong></td>
+                <td>Node ber-ID tinggi 'mengintimidasi' node lebih rendah vs Pesan pemilihan diedarkan melintasi cincin menyusun daftar node aktif.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section 7: Flashcard Uji Ingatan Mandiri -->
+      <section id="flashcards" class="content-section" aria-labelledby="heading-flashcards">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-green-bg); color: var(--accent-green-text);">Bagian 7</span>
+          <h2 id="heading-flashcards" class="section-title">Flashcard Uji Ingatan Mandiri</h2>
+          <p class="section-desc">Klik kartu untuk menguji ingatan Anda mengenai konsep koordinasi terdistribusi.</p>
+        </div>
+
+        <div class="flashcard-deck">
+          
+          <div class="flashcard" role="button" tabindex="0" aria-label="Flashcard 1">
+            <p class="flashcard-tip">Klik untuk melihat jawaban & kata kunci</p>
+            <h3 class="flashcard-prompt">Kelemahan Terbesar Algoritma Ricart-Agrawala</h3>
+            <div class="flashcard-answer">
+              <strong>N-points of failure</strong>: Node hanya boleh masuk Critical Section jika menerima persetujuan (OK) dari SELURUH node lain. Jika salah satu node mati, node yang ingin masuk akan menunggu selamanya tanpa kepastian.
+            </div>
+          </div>
+
+          <div class="flashcard" role="button" tabindex="0" aria-label="Flashcard 2">
+            <p class="flashcard-tip">Klik untuk melihat jawaban & kata kunci</p>
+            <h3 class="flashcard-prompt">Aturan Penerimaan Pesan pada Lamport Clock</h3>
+            <div class="flashcard-answer">
+              Saat proses menerima pesan dengan timestamp <code>ts(m)</code>, proses memperbarui jam lokalnya dengan: <code>C = max(C_lokal, ts(m)) + 1</code>.
+            </div>
+          </div>
+
+          <div class="flashcard" role="button" tabindex="0" aria-label="Flashcard 3">
+            <p class="flashcard-tip">Klik untuk melihat jawaban & kata kunci</p>
+            <h3 class="flashcard-prompt">Prinsip Pemenang pada Bully Algorithm</h3>
+            <div class="flashcard-answer">
+              Proses aktif yang memiliki <strong>Identifier terbesar</strong> yang menang dan memproklamirkan diri menjadi koordinator baru dengan mengirimkan pesan COORDINATOR ke semua proses lain.
+            </div>
+          </div>
+
+          <div class="flashcard" role="button" tabindex="0" aria-label="Flashcard 4">
+            <p class="flashcard-tip">Klik untuk melihat jawaban & kata kunci</p>
+            <h3 class="flashcard-prompt">Perbedaan Utama Precision dan Accuracy</h3>
+            <div class="flashcard-answer">
+              <strong>Precision</strong>: Mengukur selisih waktu antarmesin di sistem lokal.<br>
+              <strong>Accuracy</strong>: Mengukur selisih waktu sebuah mesin terhadap standar waktu absolut UTC.
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Section 8: Kuis Interaktif Pekan 5 -->
+      <section id="kuis" class="content-section" aria-labelledby="heading-kuis">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-coral-bg); color: var(--accent-coral-text);">Bagian 8</span>
+          <h2 id="heading-kuis" class="section-title">Kuis Pemahaman Mandiri Pekan 5</h2>
+          <p class="section-desc">Uji pemahaman koordinasi, logical clocks, dan pemilihan pemimpin dengan 5 soal berbasis skenario ujian UTS.</p>
+        </div>
+
+        <!-- Quiz Container (Driven by js/app.js) -->
+        <div id="pekan5-quiz" class="quiz-box"></div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p><strong>CloudStudy</strong>: Media Belajar Interaktif Sistem Terdistribusi & Cloud Computing</p>
+      <p>Pekan 5 telah siap dipelajari. Lanjutkan ke Pekan 6 saat Anda siap!</p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CloudStudy: Persiapan UTS Sistem Terdistribusi & Cloud Computing</title>
+  
+  <!-- Typography: Modern Ultra-Legible Sans-Serif (Plus Jakarta Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Core Design System -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Site Navigation Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="CloudStudy Beranda">
+        <div class="brand-badge" aria-hidden="true">C</div>
+        <div>
+          <span class="brand-text">CloudStudy</span>
+          <span class="brand-sub">UTS Hub</span>
+        </div>
+      </a>
+
+      <nav aria-label="Navigasi Utama">
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link active">Beranda</a></li>
+          <li><a href="kisi_kisi.html" class="nav-link" style="color: var(--accent-green-text); font-weight: 700;">Kisi-Kisi UTS</a></li>
+          <li><a href="#kurikulum" class="nav-link">Materi (Pekan 1-7)</a></li>
+          <li><a href="soal_tahun_lalu.html" class="nav-link" style="color: var(--accent-coral-text); font-weight: 700;">Soal Tahun Lalu</a></li>
+          <li><a href="kisi_kisi.html" class="nav-cta" style="background-color: var(--accent-green-text);">Mulai Kisi-Kisi</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container">
+    
+    <!-- Hero Section -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-tag">
+        <span>Persiapan Ujian Tengah Semester</span>
+        <span aria-hidden="true">&bull;</span>
+        <span>Semester 3 Informatika</span>
+      </div>
+      <h1 id="hero-title" class="hero-title">
+        Pelajari Sistem Terdistribusi Sesuai Kisi-Kisi Ujian
+      </h1>
+      <p class="hero-desc">
+        Platform belajar interaktif terstruktur. Tersedia rangkuman fokus kisi-kisi resmi dosen, modul lengkap Pekan 1 hingga Pekan 7, dan simulasi bank soal ujian.
+      </p>
+    </section>
+
+    <!-- Three Primary Choices (Kisi-Kisi, Materi Lengkap, Bank Soal) -->
+    <section class="choice-grid" aria-label="Pilihan Metode Belajar">
+      
+      <!-- Option 1: FOKUS KISI-KISI DOSEN (Featured / Highlight) -->
+      <article class="choice-card highlight-kisi">
+        <div>
+          <div class="choice-header">
+            <span class="choice-pill" style="background: var(--accent-green-bg); color: var(--accent-green-text); border: 1px solid var(--accent-green-border);">Rekomendasi Utama</span>
+            <h2 class="choice-title">Fokus Kisi-Kisi Dosen (Pekan 1 - 7)</h2>
+            <p class="choice-desc">
+              Dirancang khusus mengikuti 7 poin kisi-kisi resmi dosen. Padat, tajam, dan langsung ke kata kunci penilaian ujian agar belajar lebih efisien.
+            </p>
+          </div>
+
+          <ul class="choice-features">
+            <li class="choice-feature-item">
+              <span class="check-bullet" aria-hidden="true">&check;</span>
+              <span>7 topik kisi-kisi (REST, Container, RPC, Vector Clock, Chord, Sequential/Causal)</span>
+            </li>
+            <li class="choice-feature-item">
+              <span class="check-bullet" aria-hidden="true">&check;</span>
+              <span>Interactive Checklist kesiapan sebelum masuk ruang ujian</span>
+            </li>
+            <li class="choice-feature-item">
+              <span class="check-bullet" aria-hidden="true">&check;</span>
+              <span>Kuis kilat 7 soal representatif kisi-kisi dosen</span>
+            </li>
+          </ul>
+        </div>
+
+        <div style="margin-top: 24px;">
+          <a href="kisi_kisi.html" class="btn-primary" style="width: 100%; background: var(--accent-green-text);">
+            Buka Ringkasan Kisi-Kisi Sekarang
+          </a>
+        </div>
+      </article>
+
+      <!-- Option 2: Belajar Materi Lengkap Pekan 1 - 7 -->
+      <article class="choice-card primary-choice">
+        <div>
+          <div class="choice-header">
+            <span class="choice-pill pill-blue">Modul Komprehensif</span>
+            <h2 class="choice-title">Materi Lengkap (Pekan 1 - 7)</h2>
+            <p class="choice-desc">
+              Pelajari materi perkuliahan secara berurutan dan mendalam. Dilengkapi kartu konsep, tabel komparasi, dan kuis latihan per pekan.
+            </p>
+          </div>
+
+          <ul class="choice-features">
+            <li class="choice-feature-item">
+              <span class="check-bullet" aria-hidden="true">&check;</span>
+              <span>Seluruh bab kuliah lengkap dari Pekan 1 hingga 7</span>
+            </li>
+            <li class="choice-feature-item">
+              <span class="check-bullet" aria-hidden="true">&check;</span>
+              <span>Flashcard interaktif uji ingatan istilah penting</span>
+            </li>
+            <li class="choice-feature-item">
+              <span class="check-bullet" aria-hidden="true">&check;</span>
+              <span>Kuis evaluasi mandiri 5 soal di setiap pekan</span>
+            </li>
+          </ul>
+        </div>
+
+        <div style="margin-top: 24px;">
+          <a href="#kurikulum" class="btn-primary" style="width: 100%;">
+            Pilih Pekan Materi di Bawah
+          </a>
+        </div>
+      </article>
+
+      <!-- Option 3: Belajar Soal Tahun Lalu (Asli) -->
+      <article class="choice-card secondary-choice" id="soal-tahun-lalu">
+        <div>
+          <div class="choice-header">
+            <span class="choice-pill pill-coral">Arsip Resmi Ujian</span>
+            <h2 class="choice-title">Soal UTS Tahun Lalu</h2>
+            <p class="choice-desc">
+              Pembahasan lengkap 7 soal resmi UTS tahun lalu (15 poin per soal) dengan kunci jawaban singkat, padat, jelas dan diagram visual interaktif (Vector Clock, Arsitektur 3-Tier, dan Konsistensi).
+            </p>
+          </div>
+
+          <ul class="choice-features">
+            <li class="choice-feature-item">
+              <span class="check-bullet" aria-hidden="true" style="background-color: var(--accent-coral-bg); color: var(--accent-coral-text);">&check;</span>
+              <span>7 Soal Lengkap: Transparency, 3-Tier, Thread, Transport, Vector Clock, DNS, Konsistensi</span>
+            </li>
+            <li class="choice-feature-item">
+              <span class="check-bullet" aria-hidden="true" style="background-color: var(--accent-coral-bg); color: var(--accent-coral-text);">&check;</span>
+              <span>Visualisasi SVG Timeline Vector Clock dan Analisis Kausalitas m2 & m4</span>
+            </li>
+            <li class="choice-feature-item">
+              <span class="check-bullet" aria-hidden="true" style="background-color: var(--accent-coral-bg); color: var(--accent-coral-text);">&check;</span>
+              <span>Visualisasi Arsitektur 3-Tier, Simulator Thread Lingkaran, & Timeline Konsistensi</span>
+            </li>
+          </ul>
+        </div>
+
+        <div style="margin-top: 24px;">
+          <a href="soal_tahun_lalu.html" class="btn-primary" style="width: 100%; background: var(--accent-coral-text);">
+            Buka Pembahasan Soal Tahun Lalu
+          </a>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- Week Curriculum Overview -->
+    <section id="kurikulum" aria-labelledby="kurikulum-heading">
+      <div class="section-title-wrap">
+        <p class="section-label">Rencana Perkuliahan UTS</p>
+        <h2 id="kurikulum-heading" class="section-heading">Daftar Modul Materi (Pekan 1 - 7)</h2>
+      </div>
+
+      <div class="weeks-grid">
+        
+        <!-- Week 1: Active -->
+        <a href="pekan1.html" class="week-card ready" aria-label="Buka Modul Pekan 1">
+          <div>
+            <div class="week-top">
+              <span class="week-num">PEKAN 01</span>
+              <span class="week-badge badge-ready">Siap Dipelajari</span>
+            </div>
+            <h3 class="week-title">Introduction to Distributed Systems</h3>
+            <p class="week-summary">
+              Definisi model terpusat vs terdistribusi, 6 tujuan desain (transparansi, dependability, skalabilitas), klasifikasi sistem (Cluster vs Grid), dan 8 asumsi keliru jaringan.
+            </p>
+          </div>
+          <div class="week-action-text">
+            <span>Buka Modul Pekan 1 &rarr;</span>
+          </div>
+        </a>
+
+        <!-- Week 2: Active -->
+        <a href="pekan2.html" class="week-card ready" aria-label="Buka Modul Pekan 2">
+          <div>
+            <div class="week-top">
+              <span class="week-num">PEKAN 02</span>
+              <span class="week-badge badge-ready">Siap Dipelajari</span>
+            </div>
+            <h3 class="week-title">Architectures in Distributed Systems</h3>
+            <p class="week-summary">
+              Gaya arsitektur berlapis, RESTful vs SOAP, Temporal & Referential coupling, Linda tuple space, Chord Ring, Flooding vs Random Walk, dan konsensus Blockchain.
+            </p>
+          </div>
+          <div class="week-action-text">
+            <span>Buka Modul Pekan 2 &rarr;</span>
+          </div>
+        </a>
+
+        <!-- Week 3: Active -->
+        <a href="pekan3.html" class="week-card ready" aria-label="Buka Modul Pekan 3">
+          <div>
+            <div class="week-top">
+              <span class="week-num">PEKAN 03</span>
+              <span class="week-badge badge-ready">Siap Dipelajari</span>
+            </div>
+            <h3 class="week-title">Processes in Distributed Systems</h3>
+            <p class="week-summary">
+              Thread vs proses, context switching costs, user-level vs kernel-level threads, arsitektur dispatcher/worker, virtualisasi (VMM) & kontainer, serta migrasi kode.
+            </p>
+          </div>
+          <div class="week-action-text">
+            <span>Buka Modul Pekan 3 &rarr;</span>
+          </div>
+        </a>
+
+        <!-- Week 4: Active -->
+        <a href="pekan4.html" class="week-card ready" aria-label="Buka Modul Pekan 4">
+          <div>
+            <div class="week-top">
+              <span class="week-num">PEKAN 04</span>
+              <span class="week-badge badge-ready">Siap Dipelajari</span>
+            </div>
+            <h3 class="week-title">Communication</h3>
+            <p class="week-summary">
+              Protokol berlapis & middleware, transient vs persistent, synchronous vs asynchronous, RPC & stubs, message queues (MOM/ZeroMQ/AMQP), serta protokol gossip (anti-entropy).
+            </p>
+          </div>
+          <div class="week-action-text">
+            <span>Buka Modul Pekan 4 &rarr;</span>
+          </div>
+        </a>
+
+        <!-- Week 5 -->
+        <a href="pekan5.html" class="week-card ready" aria-label="Buka Modul Pekan 5">
+          <div>
+            <div class="week-top">
+              <span class="week-num">PEKAN 05</span>
+              <span class="week-badge badge-ready">Siap Dipelajari</span>
+            </div>
+            <h3 class="week-title">Coordination</h3>
+            <p class="week-summary">
+              Sinkronisasi jam fisik (NTP), Lamport Logical Clocks & Vector Clocks, algoritma Mutual Exclusion (Centralized, Ricart-Agrawala, Token Ring), serta algoritma pemilihan koordinator (Bully & Ring).
+            </p>
+          </div>
+          <div class="week-action-text">
+            <span>Buka Modul Pekan 5 &rarr;</span>
+          </div>
+        </a>
+
+        <!-- Week 6 -->
+        <a href="pekan6.html" class="week-card ready" aria-label="Buka Modul Pekan 6">
+          <div>
+            <div class="week-top">
+              <span class="week-num">PEKAN 06</span>
+              <span class="week-badge badge-ready">Siap Dipelajari</span>
+            </div>
+            <h3 class="week-title">Naming</h3>
+            <p class="week-summary">
+              Names, Identifiers, dan Addresses. Flat Naming (DHT Chord & forwarding pointers), Structured Naming (Domain Name System / DNS hierarki & iterasi), serta Attribute-Based Naming (Direktori LDAP).
+            </p>
+          </div>
+          <div class="week-action-text">
+            <span>Buka Modul Pekan 6 &rarr;</span>
+          </div>
+        </a>
+
+        <!-- Week 7 -->
+        <a href="pekan7.html" class="week-card ready" aria-label="Buka Modul Pekan 7">
+          <div>
+            <div class="week-top">
+              <span class="week-num">PEKAN 07</span>
+              <span class="week-badge badge-ready">Siap Dipelajari</span>
+            </div>
+            <h3 class="week-title">Consistency and Replication</h3>
+            <p class="week-summary">
+              Alasan replikasi & trade-off, Data-Centric consistency (Sequential, Causal, Eventual), Client-Centric consistency (Monotonic Reads/Writes, Read-Your-Writes), serta protokol Quorum-based.
+            </p>
+          </div>
+          <div class="week-action-text">
+            <span>Buka Modul Pekan 7 &rarr;</span>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p><strong>CloudStudy</strong>: Media Belajar Interaktif Sistem Terdistribusi & Cloud Computing</p>
+      <p>Dipersiapkan untuk Ujian Tengah Semester (UTS) Program Studi Informatika</p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pekan 2: Architectures in Distributed Systems | CloudStudy</title>
+  
+  <!-- Typography: Modern Ultra-Legible Sans-Serif (Plus Jakarta Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Styling -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Site Navigation Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="CloudStudy Beranda">
+        <div class="brand-badge" aria-hidden="true">C</div>
+        <div>
+          <span class="brand-text">CloudStudy</span>
+          <span class="brand-sub">UTS Hub</span>
+        </div>
+      </a>
+
+      <nav aria-label="Navigasi Utama">
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">&larr; Beranda</a></li>
+          <li><a href="kisi_kisi.html" class="nav-link">Kisi-Kisi</a></li>
+          <li><a href="soal_tahun_lalu.html" class="nav-link" style="color: var(--accent-coral-text); font-weight: 700;">Soal Tahun Lalu</a></li>
+          <li><a href="#kuis" class="nav-cta">Latihan Kuis</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Module Header -->
+  <div class="container">
+    <div class="module-header">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="index.html">Beranda</a>
+        <span aria-hidden="true">&rsaquo;</span>
+        <a href="index.html#kurikulum">Materi UTS</a>
+        <span aria-hidden="true">&rsaquo;</span>
+        <span style="color: var(--text-main); font-weight: 600;">Pekan 2</span>
+      </nav>
+
+      <h1 class="module-title">Pekan 2: Architectures in Distributed Systems</h1>
+      
+      <div class="module-meta">
+        <span class="meta-pill">
+          <strong>Topik:</strong> Architectural Styles, SOA & REST, Coupling & Pub-Sub, P2P, Cloud-Edge & Blockchain
+        </span>
+        <span class="meta-pill">
+          <strong>Format:</strong> Rangkuman Teori + Flashcard + 5 Soal Kuis
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Layout (Sticky Nav + Content) -->
+  <div class="container module-layout">
+    
+    <!-- Sticky Table of Contents -->
+    <aside class="sticky-nav" aria-label="Daftar Isi Modul">
+      <p class="nav-title">Daftar Isi Materi</p>
+      <ul class="toc-list">
+        <li><a href="#arsitektur" class="toc-link">1. Gaya Arsitektur & Layer</a></li>
+        <li><a href="#soa" class="toc-link">2. SOA & RESTful Style</a></li>
+        <li><a href="#koordinasi" class="toc-link">3. Koordinasi & Pub-Sub</a></li>
+        <li><a href="#middleware" class="toc-link">4. Middleware & Broker</a></li>
+        <li><a href="#p2p" class="toc-link">5. Peer-to-Peer (Chord & Flooding)</a></li>
+        <li><a href="#hybrid" class="toc-link">6. Hybrid: Cloud, Edge & Blockchain</a></li>
+        <li><a href="#cheat-sheet" class="toc-link">7. Tabel Komparasi Ujian</a></li>
+        <li><a href="#flashcards" class="toc-link">8. Flashcard Uji Ingatan</a></li>
+        <li><a href="#kuis" class="toc-link">9. Kuis Pemahaman Mandiri</a></li>
+      </ul>
+    </aside>
+
+    <!-- Content Sections -->
+    <main class="content-area">
+      
+      <!-- Section 1: Gaya Arsitektur & Layering -->
+      <section id="arsitektur" class="content-section" aria-labelledby="heading-arsitektur">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-blue-bg); color: var(--accent-blue-text);">Bagian 1</span>
+          <h2 id="heading-arsitektur" class="section-title">Gaya Arsitektur & Layering Sistem</h2>
+          <p class="section-desc">Pondasi penyusunan sistem berdasarkan komponen, koneksi, pertukaran data, dan susunan konfigurasi.</p>
+        </div>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin-bottom: 12px;">Empat Aspek Architectural Styles</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">
+          Architectural Style menggambarkan bagaimana sistem terdistribusi disusun berdasarkan empat aspek:
+        </p>
+
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-tag">Aspek 1 & 2</div>
+            <h4 class="concept-name">Components & Connections</h4>
+            <p class="concept-body">
+              <strong>Components:</strong> Bagian penyusun sistem yang dapat diganti (replaceable) dengan interface jelas.<br>
+              <strong>Connections:</strong> Cara komponen saling terhubung dan berkomunikasi.
+            </p>
+          </div>
+
+          <div class="concept-card">
+            <div class="concept-tag">Aspek 3 & 4</div>
+            <h4 class="concept-name">Data Exchange & Config</h4>
+            <p class="concept-body">
+              <strong>Data Exchange:</strong> Informasi atau pesan yang dipertukarkan antarkomponen.<br>
+              <strong>Configuration:</strong> Cara komponen dan penghubungnya disusun bersama membentuk satu kesatuan sistem.
+            </p>
+          </div>
+        </div>
+
+        <div class="callout callout-blue">
+          <div class="callout-title">Apa itu Connector?</div>
+          <p class="callout-text">
+            Mekanisme yang menjadi perantara komunikasi, koordinasi, atau kerja sama antarkomponen. Contoh konektor nyata dalam sistem terdistribusi meliputi: <strong>Remote Procedure Call (RPC)</strong>, <strong>Messaging</strong>, dan <strong>Streaming</strong> data.
+          </p>
+        </div>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin: 32px 0 12px 0;">Layered Architecture: Organisasi Pemanggilan</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+          Sistem dibagi menjadi beberapa lapisan hierarkis. Komunikasi antarlapisan dapat berbentuk:
+        </p>
+
+        <ul style="margin-left: 20px; line-height: 1.7; color: var(--text-muted); font-size: 0.94rem; margin-bottom: 24px;">
+          <li><strong>Request/Response Downcall:</strong> Permintaan diteruskan dari layer yang lebih tinggi ke layer di bawahnya, dan balasan dikembalikan melalui jalur sebaliknya.</li>
+          <li><strong>One-way Call:</strong> Pemanggilan dilakukan ke layer berikutnya tanpa harus menunggu respons langsung.</li>
+          <li><strong>Upcall:</strong> Layer yang lebih rendah memanggil kembali fungsi pada layer yang lebih tinggi (mirip callback handler).</li>
+        </ul>
+
+        <div class="callout callout-amber">
+          <div class="callout-title">Trisula Konsep: Protocol vs Service vs Interface</div>
+          <p class="callout-text">
+            <strong>1. Protocol:</strong> Kumpulan aturan yang mengatur bagaimana dua entitas pada <em>layer yang sama (setara)</em> saling bertukar pesan.<br>
+            <strong>2. Service:</strong> Layanan operasional yang disediakan oleh suatu layer untuk digunakan oleh layer di atasnya.<br>
+            <strong>3. Interface:</strong> Batas atau fasilitas teknis resmi untuk mengakses layanan dari layer di bawahnya.
+          </p>
+        </div>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin: 32px 0 12px 0;">Traditional Three-Layered View (Application Layering)</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+          Standar de-facto pemisahan fungsional sistem informasi terdistribusi:
+        </p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
+          <div style="background: var(--bg-primary); padding: 18px; border-radius: var(--radius-md); border-top: 4px solid var(--accent-blue-text);">
+            <h4 style="font-family: var(--font-serif); font-size: 1.15rem; margin-bottom: 6px;">1. Application-Interface</h4>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">
+              Berinteraksi langsung dengan pengguna atau sistem eksternal (User Interface, Form input, Presentasi data).
+            </p>
+          </div>
+          <div style="background: var(--bg-primary); padding: 18px; border-radius: var(--radius-md); border-top: 4px solid var(--accent-green-text);">
+            <h4 style="font-family: var(--font-serif); font-size: 1.15rem; margin-bottom: 6px;">2. Processing Layer</h4>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">
+              Memuat logika bisnis utama, algoritma perankingan, dan pembuatan kueri pemrosesan tanpa menyimpan data spesifik.
+            </p>
+          </div>
+          <div style="background: var(--bg-primary); padding: 18px; border-radius: var(--radius-md); border-top: 4px solid var(--accent-coral-text);">
+            <h4 style="font-family: var(--font-serif); font-size: 1.15rem; margin-bottom: 6px;">3. Data Layer</h4>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">
+              Menyimpan data persisten yang dimanipulasi aplikasi (DBMS relasional, NoSQL, atau File Storage).
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: SOA & RESTful -->
+      <section id="soa" class="content-section" aria-labelledby="heading-soa">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-green-bg); color: var(--accent-green-text);">Bagian 2</span>
+          <h2 id="heading-soa" class="section-title">Service-Oriented & RESTful Architectures</h2>
+          <p class="section-desc">Evolusi dari pendekatan berbasis objek menuju arsitektur berorientasi resource (REST).</p>
+        </div>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin-bottom: 12px;">Object-Based Style vs RESTful Architectures</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">
+          <strong>Object-Based Style</strong> memandang sistem sebagai kumpulan objek yang saling memanggil prosedur/method lintas jaringan melalui enkapsulasi. Sebaliknya, <strong>RESTful Architectures</strong> memandang sistem sebagai kumpulan resource yang dimanipulasi melalui antarmuka HTTP standar.
+        </p>
+
+        <h4 style="font-size: 1.05rem; margin-bottom: 12px; font-weight: 700;">4 Karakteristik Inti RESTful:</h4>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-bottom: 24px;">
+          <div style="background: var(--bg-primary); padding: 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
+            <strong>1. Single Naming Scheme:</strong> Seluruh resource diidentifikasi secara unik menggunakan URI seragam.
+          </div>
+          <div style="background: var(--bg-primary); padding: 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
+            <strong>2. Uniform Interface:</strong> Seluruh service menggunakan operasi HTTP standar yang sama (PUT, GET, POST, DELETE).
+          </div>
+          <div style="background: var(--bg-primary); padding: 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
+            <strong>3. Self-Descriptive Messages:</strong> Setiap pesan memiliki metadata dan konteks lengkap untuk diproses tanpa kebergantungan luar.
+          </div>
+          <div style="background: var(--bg-primary); padding: 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
+            <strong>4. Stateless Interaction:</strong> Server tidak menyimpan status riwayat sesi klien untuk kebutuhan interaksi berikutnya.
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th scope="col">HTTP Verb</th>
+                <th scope="col">Fungsi Utama REST</th>
+                <th scope="col">Contoh pada Amazon S3</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>PUT</strong></td>
+                <td>Membuat resource baru atau menimpa resource yang ada secara idempoten.</td>
+                <td>Membuat Bucket baru atau mengunggah Object file ke URI bucket.</td>
+              </tr>
+              <tr>
+                <td><strong>GET</strong></td>
+                <td>Mengambil kondisi representasi resource saat ini.</td>
+                <td>Membaca isi file Object atau mendaftar daftar file di dalam Bucket.</td>
+              </tr>
+              <tr>
+                <td><strong>POST</strong></td>
+                <td>Memodifikasi resource dengan mengirimkan data baru.</td>
+                <td>Menambahkan entri metadata atau memproses unggahan dinamis.</td>
+              </tr>
+              <tr>
+                <td><strong>DELETE</strong></td>
+                <td>Menghapus resource dari penyimpanan.</td>
+                <td>Menghapus Object atau menghapus Bucket kosong.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-coral">
+          <div class="callout-title">Perbedaan Kunci: SOAP vs RESTful</div>
+          <p class="callout-text">
+            <strong>SOAP (Simple Object Access Protocol):</strong> Berfokus pada <em>pemanggilan operasi/method</em> (contoh: <code>bucket.create("mybucket")</code>). Antarmuka tergantung fungsi yang didefinisikan service.<br>
+            <strong>RESTful:</strong> Berfokus pada <em>manipulasi resource</em> melalui kata kerja HTTP standar terhadap URI (contoh: <code>PUT https://mybucket.s3.amazonaws.com/</code>). Lebih ringan dan sederhana, namun kompleksitas berpindah ke pengelolaan parameter request.
+          </p>
+        </div>
+      </section>
+
+      <!-- Section 3: Koordinasi & Pub-Sub -->
+      <section id="koordinasi" class="content-section" aria-labelledby="heading-koordinasi">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-coral-bg); color: var(--accent-coral-text);">Bagian 3</span>
+          <h2 id="heading-koordinasi" class="section-title">Koordinasi, Coupling & Publish-Subscribe</h2>
+          <p class="section-desc">Tingkat kebergantungan waktu dan referensi antarkomponen serta model Shared Data Space.</p>
+        </div>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin-bottom: 12px;">Temporal vs Referential Coupling</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">
+          Coupling menggambarkan keterikatan komunikasi antarkomponen:
+        </p>
+
+        <ul style="margin-left: 20px; line-height: 1.7; color: var(--text-muted); font-size: 0.94rem; margin-bottom: 20px;">
+          <li><strong>Temporal Coupling:</strong> Ketergantungan terhadap <em>waktu</em> atau ketersediaan aktif komponen lain saat komunikasi berlangsung.</li>
+          <li><strong>Referential Coupling:</strong> Ketergantungan terhadap <em>identitas atau alamat</em> komponen tujuan komunikasi.</li>
+        </ul>
+
+        <div class="table-responsive">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th scope="col">Temporal Coupling</th>
+                <th scope="col">Referential Coupling</th>
+                <th scope="col">Model Komunikasi</th>
+                <th scope="col">Karakteristik & Penjelasan</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Coupled (Terikat Waktu)</td>
+                <td>Coupled (Terikat Alamat)</td>
+                <td><strong>Direct</strong></td>
+                <td>Kedua pihak harus aktif bersamaan dan saling mengetahui alamat tujuan langsung (contoh: RPC, Socket TCP).</td>
+              </tr>
+              <tr>
+                <td>Coupled (Terikat Waktu)</td>
+                <td>Decoupled (Bebas Alamat)</td>
+                <td><strong>Mailbox</strong></td>
+                <td>Klien mengirim ke mailbox tanpa tahu siapa penerima pastinya, tetapi proses pengambilan tetap terikat waktu.</td>
+              </tr>
+              <tr>
+                <td>Decoupled (Bebas Waktu)</td>
+                <td>Coupled (Terikat Alamat)</td>
+                <td><strong>Event-based</strong></td>
+                <td>Komunikasi melalui event ke tujuan spesifik. Komponen pengirim dan penerima tidak harus aktif bersamaan.</td>
+              </tr>
+              <tr>
+                <td>Decoupled (Bebas Waktu)</td>
+                <td>Decoupled (Bebas Alamat)</td>
+                <td><strong>Shared Data Space</strong></td>
+                <td>Komponen berkomunikasi melalui ruang data bersama tanpa tahu alamat satu sama lain dan tanpa harus aktif bersamaan.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin: 32px 0 12px 0;">Linda Tuple Space: Operasi & Karakteristik</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+          Linda adalah implementasi klasik Shared Data Space yang menyimpan data dalam bentuk <em>tuple</em> (sekumpulan nilai terstruktur).
+        </p>
+
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-tag">Operasi 1</div>
+            <h4 class="concept-name">out(t)</h4>
+            <p class="concept-body">Menambahkan tuple <code>t</code> ke dalam tuple space. Bersifat <strong>multiset</strong> (jika dipanggil dua kali, dua salinan tuple akan tersimpan).</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-tag">Operasi 2</div>
+            <h4 class="concept-name">rd(t)</h4>
+            <p class="concept-body">Membaca dan mengambil <strong>salinan</strong> tuple yang cocok dengan pola template <code>t</code> tanpa menghapusnya dari space. Bersifat <strong>blocking</strong> jika data belum ada.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-tag">Operasi 3</div>
+            <h4 class="concept-name">in(t)</h4>
+            <p class="concept-body">Membaca sekaligus <strong>menghapus</strong> tuple yang cocok dari tuple space. Juga bersifat <strong>blocking</strong> jika tuple belum tersedia.</p>
+          </div>
+        </div>
+
+        <div class="callout callout-blue">
+          <div class="callout-title">Pub-Sub: Topic-Based vs Content-Based Subscription</div>
+          <p class="callout-text">
+            <strong>Topic-Based:</strong> Berlangganan berdasarkan kata kunci atau topik tertentu (pencocokan sederhana: <code>attribute = value</code>). Cepat dan efisien diskalakan.<br>
+            <strong>Content-Based:</strong> Berlangganan berdasarkan kriteria rentang isi data (pencocokan kompleks: <code>attribute &isin; range</code>). Sangat fleksibel bagi subscriber, namun menimbulkan beban pencocokan tinggi yang berisiko terhadap skalabilitas sistem.
+          </p>
+        </div>
+      </section>
+
+      <!-- Section 4: Middleware & Adapter Patterns -->
+      <section id="middleware" class="content-section" aria-labelledby="heading-middleware">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-amber-bg); color: var(--accent-amber-text);">Bagian 4</span>
+          <h2 id="heading-middleware" class="section-title">Middleware, Wrapper & Broker</h2>
+          <p class="section-desc">Mekanisme integrasi komponen legacy dan penyederhanaan kompleksitas koneksi antaraplikasi.</p>
+        </div>
+
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">
+          Middleware sering dijuluki sebagai <strong>OS of Distributed Systems</strong> karena menyediakan komponen, antarmuka seragam, dan fungsi komunikasi umum sehingga aplikasi tidak perlu mengimplementasikan ulang fungsi dasar tersebut.
+        </p>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin-bottom: 12px;">Integrasi Komponen Legacy: Wrapper / Adapter</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+          Ketika aplikasi baru perlu menggunakan sistem lama (legacy) yang antarmukanya tidak cocok, digunakan <strong>Wrapper / Adapter</strong> yang menerjemahkan panggilan aplikasi baru menjadi instruksi yang dipahami komponen legacy.
+        </p>
+
+        <div class="table-responsive">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th scope="col">Aspek Analisis</th>
+                <th scope="col">Pendekatan 1-on-1 (Point-to-Point)</th>
+                <th scope="col">Pendekatan Broker (Terpusat)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Pola Komunikasi</strong></td>
+                <td>Langsung antaraplikasi. Setiap aplikasi membuat wrapper ke aplikasi mitra.</td>
+                <td>Seluruh aplikasi berkomunikasi melalui entitas Broker tunggal.</td>
+              </tr>
+              <tr>
+                <td><strong>Jumlah Wrapper (N aplikasi)</strong></td>
+                <td><strong>N &times; (N - 1)</strong></td>
+                <td><strong>2N</strong></td>
+              </tr>
+              <tr>
+                <td><strong>Kompleksitas Komputasi</strong></td>
+                <td><strong>O(N&sup2;)</strong> (Kuadratik, meledak saat aplikasi bertambah).</td>
+                <td><strong>O(N)</strong> (Linear, sangat efisien dan mudah dikelola).</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-green">
+          <div class="callout-title">Adaptable Middleware: Intercepting the Usual Flow of Control</div>
+          <p class="callout-text">
+            Middleware menyediakan alur kendali standar. Untuk mendukung kebutuhan aplikasi khusus, arsitektur modern menggunakan mekanisme <strong>Interception</strong>: menyela alur eksekusi pesan standar untuk menyisipkan otorisasi khusus, logging, atau enkripsi sebelum pesan diteruskan ke komponen tujuan.
+          </p>
+        </div>
+      </section>
+
+      <!-- Section 5: P2P & Chord -->
+      <section id="p2p" class="content-section" aria-labelledby="heading-p2p">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-purple-bg); color: var(--accent-purple-text);">Bagian 5</span>
+          <h2 id="heading-p2p" class="section-title">Peer-to-Peer & Distribusi Simetris</h2>
+          <p class="section-desc">Distribusi beban vertikal vs horizontal, serta arsitektur P2P terstruktur (Chord Ring) dan tidak terstruktur.</p>
+        </div>
+
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-tag">Tipe Distribusi 1</div>
+            <h4 class="concept-name">Vertical Distribution</h4>
+            <p class="concept-body">
+              Membagi sistem ke dalam <strong>logical layers yang berbeda fungsinya</strong> (Interface, Processing, Data), lalu menjalankan tiap layer pada server terpisah (contoh: Multi-Tier Client-Server).
+            </p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-tag">Tipe Distribusi 2</div>
+            <h4 class="concept-name">Horizontal Distribution</h4>
+            <p class="concept-body">
+              Membagi sistem ke beberapa komponen yang memiliki <strong>fungsi setara secara logis</strong>, tetapi masing-masing komponen menangani pecahan data yang berbeda (contoh: Peer-to-Peer dan Sharding).
+            </p>
+          </div>
+        </div>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin: 28px 0 12px 0;">Structured P2P: Distributed Hash Table & Chord</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+          Structured P2P menggunakan skema penempatan data berbasis kunci deterministik dengan fungsi hash: <code>key = hash(value)</code>.
+        </p>
+
+        <div class="callout callout-blue">
+          <div class="callout-title">Prinsip Kerja Chord Ring</div>
+          <p class="callout-text">
+            1. Node dan key data dipetakan ke dalam lingkaran logis berukuran 2<sup>m</sup>.<br>
+            2. <strong>Aturan Penyimpanan:</strong> Data dengan key <code>k</code> disimpan pada node dengan identifier terkecil yang lebih besar atau sama dengan <code>k</code> (<code>id &ge; k</code>). Node ini disebut <strong>Successor dari key k</strong>.<br>
+            3. <strong>Shortcut Links (Finger Table):</strong> Ring dilengkapi pintasan antar-node agar proses pencarian (lookup) berlangsung cepat secara logaritmik O(log N).
+          </p>
+        </div>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin: 28px 0 12px 0;">Unstructured P2P: Flooding vs Random Walk</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+          Pada P2P tidak terstruktur, node membentuk graf acak (*overlay network*) tanpa aturan penempatan data yang kaku. Dua metode pencariannya adalah:
+        </p>
+
+        <div class="table-responsive">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th scope="col">Metode</th>
+                <th scope="col">Cara Kerja</th>
+                <th scope="col">Kelebihan</th>
+                <th scope="col">Kelemahan & Solusi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Flooding</strong></td>
+                <td>Node pengirim meneruskan request pencarian ke <em>seluruh tetangganya</em> secara serentak.</td>
+                <td>Dapat menjangkau ribuan node dan menemukan data dengan sangat cepat.</td>
+                <td>Boros bandwidth dan membebani jaringan. Wajib dibatasi dengan <strong>TTL (Time-To-Live)</strong> agar tidak berputar tanpa henti.</td>
+              </tr>
+              <tr>
+                <td><strong>Random Walk</strong></td>
+                <td>Node pengirim hanya memilih <em>satu tetangga acak</em> untuk meneruskan request.</td>
+                <td>Sangat hemat beban pesan komunikasi jaringan.</td>
+                <td>Membutuhkan waktu lebih lama untuk menemukan data. Ekspektasi langkah pencarian: S &asymp; N / r (berbanding terbalik dengan replika).</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-amber">
+          <div class="callout-title">Super-Peer Networks & BitTorrent</div>
+          <p class="callout-text">
+            <strong>Super-Peer:</strong> Node yang memiliki performa dan bandwidth lebih tinggi ditunjuk sebagai super-peer untuk mengelola indeks pencarian node biasa.<br>
+            <strong>BitTorrent:</strong> Menggunakan <em>Torrent File</em> (metrik file), <em>Tracker</em> (pencatat peer aktif), <em>Swarm</em> (kelompok peer yang berbagi file), dan memecah file menjadi <em>Chunks</em> sehingga peer dapat saling barter potongan data secara terdistribusi.
+          </p>
+        </div>
+      </section>
+
+      <!-- Section 6: Hybrid Arsitektur -->
+      <section id="hybrid" class="content-section" aria-labelledby="heading-hybrid">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-coral-bg); color: var(--accent-coral-text);">Bagian 6</span>
+          <h2 id="heading-hybrid" class="section-title">Hybrid: Cloud, Edge & Blockchain</h2>
+          <p class="section-desc">Kombinasi model arsitektur modern dalam komputasi awan, tepi jaringan, dan buku besar terdistribusi.</p>
+        </div>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin-bottom: 12px;">4 Lapisan Cloud Computing</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+          Cloud computing membagi abstraksi infrastrukturnya menjadi empat lapisan dari bawah ke atas:
+        </p>
+
+        <ol style="margin-left: 20px; line-height: 1.8; color: var(--text-muted); font-size: 0.94rem; margin-bottom: 24px;">
+          <li><strong>Hardware Layer:</strong> Perangkat fisik CPU, memori, switch jaringan, catu daya, dan pendingin data center.</li>
+          <li><strong>Infrastructure Layer:</strong> Virtualisasi server dan media penyimpanan virtual (IaaS).</li>
+          <li><strong>Platform Layer:</strong> Abstraksi tingkat tinggi untuk pengembangan dan penyimpanan data (PaaS, contoh: Amazon S3 Bucket API).</li>
+          <li><strong>Application Layer:</strong> Perangkat lunak akhir yang digunakan langsung oleh konsumen (SaaS, contoh: Office suites, Google Docs).</li>
+        </ol>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin: 28px 0 12px 0;">Edge Infrastructure & Orkestrasi</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+          Edge server ditempatkan di perbatasan antara jaringan lokal organisasi dan Internet. Tiga aspek penting dalam <strong>Edge Orchestration</strong>:
+        </p>
+
+        <ul style="margin-left: 20px; line-height: 1.7; color: var(--text-muted); font-size: 0.94rem; margin-bottom: 24px;">
+          <li><strong>Resource Allocation:</strong> Memastikan ketersediaan kapasitas komputasi di edge node.</li>
+          <li><strong>Service Placement:</strong> Menentukan kapan dan di mana suatu layanan harus dijalankan mendekati pengguna mobile.</li>
+          <li><strong>Edge Selection:</strong> Memilih node edge terbaik (catatan penting: node yang secara fisik paling dekat belum tentu memberikan konektivitas terbaik).</li>
+        </ul>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin: 28px 0 12px 0;">Blockchain: Mekanisme Konsensus Terdistribusi</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+          Blockchain adalah struktur penyimpanan rantai blok <em>append-only</em> yang bersifat <em>immutable</em> (tidak dapat diubah) dan direplikasi masif.
+        </p>
+
+        <div class="table-responsive">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th scope="col">Pendekatan Konsensus</th>
+                <th scope="col">Otoritas Pengambil Keputusan</th>
+                <th scope="col">Tingkat Partisipasi & Karakteristik</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Centralized</strong></td>
+                <td>Satu entitas pusat tunggal menentukan validator.</td>
+                <td>Kurang sesuai dengan filosofi desentralisasi blockchain.</td>
+              </tr>
+              <tr>
+                <td><strong>Distributed (Permissioned)</strong></td>
+                <td>Kelompok server terpilih dalam jumlah terbatas.</td>
+                <td>Konsensus tercapai selama minimal sekitar 2/3 server berperilaku jujur sesuai spesifikasi (menampung puluhan server).</td>
+              </tr>
+              <tr>
+                <td><strong>Decentralized (Permissionless)</strong></td>
+                <td>Peserta jaringan secara kolektif memilih leader.</td>
+                <td>Partisipasi terbuka untuk umum melalui pemilihan leader terdesentralisasi (Proof of Work / Proof of Stake).</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section 7: Cheat Sheet Ujian Pekan 2 -->
+      <section id="cheat-sheet" class="content-section" aria-labelledby="heading-cheat">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-purple-bg); color: var(--accent-purple-text);">Bagian 7</span>
+          <h2 id="heading-cheat" class="section-title">Lembar Rangkuman Cepat (Exam Cheat Sheet)</h2>
+          <p class="section-desc">Pembeda utama konsep arsitektur Pekan 2 yang sering keluar di soal esai dan analisis.</p>
+        </div>
+
+        <div class="table-responsive">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th scope="col">Pasangan Konsep</th>
+                <th scope="col">Pembeda Utama untuk Ujian</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Protocol vs Service vs Interface</strong></td>
+                <td>Aturan komunikasi layer setara vs Layanan yang disediakan layer vs Mekanisme resmi mengakses layanan tersebut.</td>
+              </tr>
+              <tr>
+                <td><strong>SOAP vs RESTful</strong></td>
+                <td>Fokus pada pemanggilan operasi/method spesifik vs Fokus pada manipulasi resource menggunakan verb HTTP standar pada URI.</td>
+              </tr>
+              <tr>
+                <td><strong>Temporal vs Referential Coupling</strong></td>
+                <td>Ketergantungan terhadap ketersediaan waktu aktif vs Ketergantungan terhadap alamat/identitas tujuan.</td>
+              </tr>
+              <tr>
+                <td><strong>Linda Tuple Space: in(t) vs rd(t)</strong></td>
+                <td>in(t) membaca dan MENGHAPUS tuple vs rd(t) hanya membaca SALINAN tuple tanpa menghapusnya.</td>
+              </tr>
+              <tr>
+                <td><strong>Topic-Based vs Content-Based Pub-Sub</strong></td>
+                <td>Pencocokan kata kunci/atribut pasti (attribute = value) vs Pencocokan kriteria rentang isi (attribute &isin; range).</td>
+              </tr>
+              <tr>
+                <td><strong>1-on-1 vs Broker Wrapper</strong></td>
+                <td>Kompleksitas O(N&sup2;) dengan N*(N-1) wrapper vs Kompleksitas O(N) linear dengan 2N wrapper.</td>
+              </tr>
+              <tr>
+                <td><strong>Vertical vs Horizontal Distribution</strong></td>
+                <td>Pemisahan berdasarkan layer fungsi logis berbeda vs Pemisahan komponen dengan fungsi setara untuk membagi porsi data.</td>
+              </tr>
+              <tr>
+                <td><strong>Flooding vs Random Walk</strong></td>
+                <td>Meneruskan request ke semua tetangga (cepat, boros pesan) vs Meneruskan ke 1 tetangga acak (lambat, hemat pesan).</td>
+              </tr>
+              <tr>
+                <td><strong>Chord Ring: Successor Rule</strong></td>
+                <td>Data key k disimpan pada node terkecil yang memenuhi identifier &ge; k.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section 8: Flashcard Uji Ingatan Mandiri -->
+      <section id="flashcards" class="content-section" aria-labelledby="heading-flashcards">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-blue-bg); color: var(--accent-blue-text);">Bagian 8</span>
+          <h2 id="heading-flashcards" class="section-title">Flashcard Uji Ingatan Mandiri</h2>
+          <p class="section-desc">Klik kartu untuk menguji pemahaman Anda sebelum melihat definisi resminya.</p>
+        </div>
+
+        <div class="flashcard-deck">
+          
+          <div class="flashcard" role="button" tabindex="0" aria-label="Flashcard 1">
+            <p class="flashcard-tip">Klik untuk melihat jawaban & kata kunci</p>
+            <h3 class="flashcard-prompt">Model Komunikasi pada Linda Tuple Space</h3>
+            <div class="flashcard-answer">
+              <strong>Shared Data Space</strong>: Bersifat <em>Decoupled in Time</em> (pengirim dan pembaca tidak perlu aktif bersamaan) dan <em>Decoupled in Space/Referential</em> (kedua pihak tidak perlu saling tahu identitas/alamat).
+            </div>
+          </div>
+
+          <div class="flashcard" role="button" tabindex="0" aria-label="Flashcard 2">
+            <p class="flashcard-tip">Klik untuk melihat jawaban & kata kunci</p>
+            <h3 class="flashcard-prompt">Rumus Jumlah Wrapper Broker vs 1-on-1</h3>
+            <div class="flashcard-answer">
+              Pendekatan 1-on-1: <strong>N &times; (N - 1) = O(N&sup2;)</strong><br>
+              Pendekatan Broker: <strong>2N = O(N)</strong> (jauh lebih mudah diskalakan saat aplikasi bertambah).
+            </div>
+          </div>
+
+          <div class="flashcard" role="button" tabindex="0" aria-label="Flashcard 3">
+            <p class="flashcard-tip">Klik untuk melihat jawaban & kata kunci</p>
+            <h3 class="flashcard-prompt">Aturan Successor pada Chord Ring</h3>
+            <div class="flashcard-answer">
+              Data dengan key <code>k</code> akan disimpan pada node yang memiliki identifier terkecil yang lebih besar atau sama dengan k: <code>id &ge; k</code>.
+            </div>
+          </div>
+
+          <div class="flashcard" role="button" tabindex="0" aria-label="Flashcard 4">
+            <p class="flashcard-tip">Klik untuk melihat jawaban & kata kunci</p>
+            <h3 class="flashcard-prompt">4 Lapisan Cloud Computing dari Bawah ke Atas</h3>
+            <div class="flashcard-answer">
+              1. <strong>Hardware Layer</strong> (CPU, router, cooling)<br>
+              2. <strong>Infrastructure Layer</strong> (Virtualisasi IaaS)<br>
+              3. <strong>Platform Layer</strong> (Abstraksi API PaaS)<br>
+              4. <strong>Application Layer</strong> (Aplikasi akhir SaaS).
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Section 9: Kuis Interaktif Pekan 2 -->
+      <section id="kuis" class="content-section" aria-labelledby="heading-kuis">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-green-bg); color: var(--accent-green-text);">Bagian 9</span>
+          <h2 id="heading-kuis" class="section-title">Kuis Pemahaman Mandiri Pekan 2</h2>
+          <p class="section-desc">Uji pemahaman arsitektur sistem terdistribusi dengan 5 soal berbasis skenario ujian UTS.</p>
+        </div>
+
+        <!-- Quiz Container (Driven by js/app.js) -->
+        <div id="pekan2-quiz" class="quiz-box"></div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p><strong>CloudStudy</strong>: Media Belajar Interaktif Sistem Terdistribusi & Cloud Computing</p>
+      <p>Pekan 2 telah siap dipelajari. Lanjutkan ke Pekan 3 saat Anda siap!</p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
+

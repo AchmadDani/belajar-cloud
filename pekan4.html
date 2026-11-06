@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pekan 4: Communication in Distributed Systems | CloudStudy</title>
+  
+  <!-- Typography: Modern Ultra-Legible Sans-Serif (Plus Jakarta Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Styling -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Site Navigation Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="CloudStudy Beranda">
+        <div class="brand-badge" aria-hidden="true">C</div>
+        <div>
+          <span class="brand-text">CloudStudy</span>
+          <span class="brand-sub">UTS Hub</span>
+        </div>
+      </a>
+
+      <nav aria-label="Navigasi Utama">
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">&larr; Beranda</a></li>
+          <li><a href="kisi_kisi.html" class="nav-link">Kisi-Kisi</a></li>
+          <li><a href="soal_tahun_lalu.html" class="nav-link" style="color: var(--accent-coral-text); font-weight: 700;">Soal Tahun Lalu</a></li>
+          <li><a href="#kuis" class="nav-cta">Latihan Kuis</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Module Header -->
+  <div class="container">
+    <div class="module-header">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="index.html">Beranda</a>
+        <span aria-hidden="true">&rsaquo;</span>
+        <a href="index.html#kurikulum">Materi UTS</a>
+        <span aria-hidden="true">&rsaquo;</span>
+        <span style="color: var(--text-main); font-weight: 600;">Pekan 4</span>
+      </nav>
+
+      <h1 class="module-title">Pekan 4: Communication</h1>
+      
+      <div class="module-meta">
+        <span class="meta-pill">
+          <strong>Topik:</strong> Layered Protocols, RPC & Stubs, Message Queues (MOM), Sockets/ZeroMQ, Multicasting & Gossip
+        </span>
+        <span class="meta-pill">
+          <strong>Format:</strong> Rangkuman Teori + Flashcard + 5 Soal Kuis
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Layout (Sticky Nav + Content) -->
+  <div class="container module-layout">
+    
+    <!-- Sticky Table of Contents -->
+    <aside class="sticky-nav" aria-label="Daftar Isi Modul">
+      <p class="nav-title">Daftar Isi Materi</p>
+      <ul class="toc-list">
+        <li><a href="#dasar-komunikasi" class="toc-link">1. Fondasi Protokol & Middleware</a></li>
+        <li><a href="#tipe-komunikasi" class="toc-link">2. Tipe Komunikasi (Sync vs Async)</a></li>
+        <li><a href="#rpc" class="toc-link">3. Remote Procedure Call (RPC)</a></li>
+        <li><a href="#messaging" class="toc-link">4. Message-Oriented (MOM & Sockets)</a></li>
+        <li><a href="#multicast" class="toc-link">5. Multicast & Gossip Dissemination</a></li>
+        <li><a href="#cheat-sheet" class="toc-link">6. Tabel Komparasi Ujian</a></li>
+        <li><a href="#flashcards" class="toc-link">7. Flashcard Uji Ingatan</a></li>
+        <li><a href="#kuis" class="toc-link">8. Kuis Pemahaman Mandiri</a></li>
+      </ul>
+    </aside>
+
+    <!-- Content Sections -->
+    <main class="content-area">
+      
+      <!-- Section 1: Fondasi Protokol & Middleware -->
+      <section id="dasar-komunikasi" class="content-section" aria-labelledby="heading-dasar">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-blue-bg); color: var(--accent-blue-text);">Bagian 1</span>
+          <h2 id="heading-dasar" class="section-title">Fondasi Komunikasi & Lapisan Middleware</h2>
+          <p class="section-desc">Penyederhanaan model jaringan berlapis menuju arsitektur berorientasi middleware.</p>
+        </div>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin-bottom: 12px;">Transport Layer: TCP vs UDP dalam Sistem Terdistribusi</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">
+          Untuk sebagian besar sistem terdistribusi, interface tingkat terendah yang berinteraksi langsung adalah <strong>Transport Layer</strong>:
+        </p>
+
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-tag">Protokol 1</div>
+            <h4 class="concept-name">TCP (Transmission Control Protocol)</h4>
+            <p class="concept-body">
+              Bersifat <strong>connection-oriented</strong>, <strong>reliable</strong> (menjamin urutan dan keutuhan paket dengan mekanisme acknowledgment/retransmission), dan berbasis stream byte berkelanjutan.
+            </p>
+          </div>
+
+          <div class="concept-card">
+            <div class="concept-tag">Protokol 2</div>
+            <h4 class="concept-name">UDP (User Datagram Protocol)</h4>
+            <p class="concept-body">
+              Bersifat <strong>connectionless</strong> dan <strong>unreliable (best-effort)</strong>. Tidak menjamin urutan kedatangan paket, namun memiliki overhead minimal dan latensi sangat rendah.
+            </p>
+          </div>
+        </div>
+
+        <div class="callout callout-blue">
+          <div class="callout-title">Peran Krusial Middleware Layer</div>
+          <p class="callout-text">
+            Middleware bertindak sebagai lapisan perekat umum (*common protocols and services*) yang menyediakan:<br>
+            1. <strong>Communication Protocols:</strong> Menyediakan abstraksi RPC, MOM, dan streaming.<br>
+            2. <strong>(Un)marshaling Data:</strong> Mengubah struktur data memori lokal menjadi format biner jaringan (*marshaling*) dan merekonstruksinya di penerima (*unmarshaling*).<br>
+            3. <strong>Naming & Security Protocols:</strong> Menemukan alamat resource dan mengenkripsi kanal.<br>
+            4. <strong>Scaling Mechanisms:</strong> Mengelola replikasi data dan caching secara transparan.
+          </p>
+        </div>
+      </section>
+
+      <!-- Section 2: Tipe Komunikasi -->
+      <section id="tipe-komunikasi" class="content-section" aria-labelledby="heading-tipe">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-green-bg); color: var(--accent-green-text);">Bagian 2</span>
+          <h2 id="heading-tipe" class="section-title">Tipe Komunikasi: Persistensi & Sinkronisasi</h2>
+          <p class="section-desc">Dimensi persistensi penyimpanan pesan dan titik sinkronisasi pengirim.</p>
+        </div>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin-bottom: 12px;">Dimensi 1: Persistent vs Transient Communication</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+          <strong>Persistent Communication:</strong> Pesan yang dikirim akan disimpan oleh sistem perantara (message queue) selama yang dibutuhkan sampai penerima siap mengambilnya. Pengirim dan penerima tidak perlu aktif bersamaan (contoh: Email, Antrean Pesan).<br>
+          <strong>Transient Communication:</strong> Pesan hanya disimpan selama aplikasi pengirim dan penerima sedang aktif berjalan. Jika transmisi gagal atau penerima sedang mati, pesan akan langsung dibuang (contoh: Socket TCP, UDP).
+        </p>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin: 28px 0 12px 0;">Dimensi 2: Synchronous vs Asynchronous Communication</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+          <strong>Asynchronous Communication:</strong> Pengirim langsung melanjutkan eksekusinya segera setelah menyerahkan pesan ke buffer komunikasi lokal.<br>
+          <strong>Synchronous Communication:</strong> Pengirim terblokir (*blocked*) dan harus menunggu pada titik sinkronisasi:
+        </p>
+
+        <ul style="margin-left: 20px; line-height: 1.7; color: var(--text-muted); font-size: 0.94rem; margin-bottom: 24px;">
+          <li><em>Sync at request submission:</em> Pengirim menunggu sampai pesan berhasil masuk ke middleware lokal.</li>
+          <li><em>Sync at request delivery:</em> Pengirim menunggu sampai pesan tiba di mesin penerima.</li>
+          <li><em>Sync at response (RPC):</em> Pengirim menunggu sampai server selesai memproses dan mengembalikan hasil jawaban.</li>
+        </ul>
+
+        <div class="table-responsive">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th scope="col">Kombinasi Komunikasi</th>
+                <th scope="col">Karakteristik & Mekanisme</th>
+                <th scope="col">Contoh Nyata</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Persistent Asynchronous</strong></td>
+                <td>Pesan disimpan di antrean, pengirim langsung melanjutkan pekerjaan tanpa menunggu.</td>
+                <td>Message Queuing Systems (RabbitMQ, Apache Kafka, AMQP).</td>
+              </tr>
+              <tr>
+                <td><strong>Persistent Synchronous</strong></td>
+                <td>Pesan disimpan di antrean, namun pengirim menunggu konfirmasi bahwa pesan telah tersimpan di buffer server.</td>
+                <td>Sistem pertukaran dokumen resmi finansial dengan ACK tanda terima.</td>
+              </tr>
+              <tr>
+                <td><strong>Transient Asynchronous</strong></td>
+                <td>Pesan dibuang jika gagal sampai, pengirim tidak menunggu (kirim dan lupakan / fire-and-forget).</td>
+                <td>Pengiriman datagram UDP, streaming sensor suhu kontinu.</td>
+              </tr>
+              <tr>
+                <td><strong>Transient Synchronous</strong></td>
+                <td>Pesan dibuang jika jaringan putus, pengirim terblokir menunggu jawaban dari server.</td>
+                <td>Traditional Client-Server RPC dan HTTP Request-Response.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section 3: RPC -->
+      <section id="rpc" class="content-section" aria-labelledby="heading-rpc">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-amber-bg); color: var(--accent-amber-text);">Bagian 3</span>
+          <h2 id="heading-rpc" class="section-title">Remote Procedure Call (RPC)</h2>
+          <p class="section-desc">Mekanisme pemanggilan fungsi pada mesin jarak jauh seolah-olah fungsi lokal.</p>
+        </div>
+
+        <div class="callout callout-blue">
+          <div class="callout-title">Duo Komponen: Client Stub & Server Stub (Skeleton)</div>
+          <p class="callout-text">
+            <strong>Client Stub:</strong> Berada di mesin klien. Menyamar sebagai fungsi asli yang dipanggil program klien. Tugasnya mengemas nama prosedur dan parameter menjadi paket pesan jaringan melalui <strong>Marshaling</strong>, lalu mengirimkannya ke server.<br>
+            <strong>Server Stub (Skeleton):</strong> Berada di mesin server. Menerima paket pesan, melakukan <strong>Unmarshaling</strong> untuk merekonstruksi parameter asli, memanggil fungsi sesungguhnya di server, lalu mengemas nilai balikan (*return value*) untuk dikirim kembali ke klien.
+          </p>
+        </div>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin: 28px 0 12px 0;">Alur 10 Langkah Kerja RPC Klasik</h3>
+        <ol style="margin-left: 20px; line-height: 1.8; color: var(--text-muted); font-size: 0.94rem; margin-bottom: 24px;">
+          <li>Klien memanggil fungsi pada Client Stub lokal seperti panggilan fungsi biasa.</li>
+          <li>Client Stub menyusun pesan jaringan berisi nama prosedur dan argumen (Marshaling).</li>
+          <li>Client Stub menyerahkan pesan ke Operating System lokal klien.</li>
+          <li>OS lokal mengirimkan pesan melintasi jaringan ke server jarak jauh.</li>
+          <li>OS server menerima pesan dan meneruskannya ke Server Stub.</li>
+          <li>Server Stub membongkar parameter dari pesan jaringan (Unmarshaling).</li>
+          <li>Server Stub memanggil fungsi prosedur yang sebenarnya di server.</li>
+          <li>Fungsi server menyelesaikan tugas dan mengembalikan hasil ke Server Stub.</li>
+          <li>Server Stub mengemas hasil balikan ke dalam pesan dan mengirimkannya kembali via OS.</li>
+          <li>Client Stub menerima pesan balasan, membongkarnya, dan mengembalikan hasil ke program klien.</li>
+        </ol>
+
+        <div class="callout callout-coral">
+          <div class="callout-title">Tantangan Parameter Passing: Pointers & Remote References</div>
+          <p class="callout-text">
+            <em>Pass by value</em> sangat mudah dilakukan karena nilai disalin ke pesan. Namun <strong>Pass by reference (Pointer)</strong> sangat sulit karena pointer merujuk ke alamat memori fisik lokal mesin klien yang tidak ada artinya di mesin server. Solusinya: menyalin seluruh blok data yang ditunjuk pointer (*deep copy*), atau membuat <strong>Remote Object Reference</strong> khusus yang didukung middleware.
+          </p>
+        </div>
+
+        <div class="callout callout-green">
+          <div class="callout-title">Asynchronous RPC: Memangkas Waktu Tunggu Klien</div>
+          <p class="callout-text">
+            Pada RPC konvensional, klien terhenti menunggu server menyelesaikan seluruh tugasnya. Pada <strong>Asynchronous RPC</strong>, klien hanya menunggu sampai server mengirim sinyal bahwa request telah berhasil diterima (*Acknowledgment / ACK*). Begitu ACK diterima, klien langsung melanjutkan proses lokalnya tanpa menunggu hasil komputasi selesai!
+          </p>
+        </div>
+      </section>
+
+      <!-- Section 4: Message-Oriented Communication -->
+      <section id="messaging" class="content-section" aria-labelledby="heading-messaging">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-coral-bg); color: var(--accent-coral-text);">Bagian 4</span>
+          <h2 id="heading-messaging" class="section-title">Message-Oriented: MOM, Sockets & ZeroMQ</h2>
+          <p class="section-desc">Komunikasi berbasis antrean pesan persisten dan soket pesan tingkat tinggi.</p>
+        </div>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin-bottom: 12px;">1. Transient Messaging: Berkeley Sockets & ZeroMQ</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+          Soket adalah abstraksi endpoint komunikasi. Urutan primitif socket TCP standar: <code>socket()</code> &rarr; <code>bind()</code> &rarr; <code>listen()</code> &rarr; <code>accept()</code> pada server, dan <code>connect()</code> pada klien.
+        </p>
+
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">
+          <strong>ZeroMQ</strong> menyediakan soket cerdas tingkat tinggi yang menyembunyikan detail koneksi TCP dan mendukung pola arsitektur:
+        </p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-bottom: 24px;">
+          <div style="background: var(--bg-primary); padding: 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
+            <strong>Request-Reply Pattern:</strong> Pasangan soket REQ dan REP untuk komunikasi dua arah sinkron mirip RPC.
+          </div>
+          <div style="background: var(--bg-primary); padding: 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
+            <strong>Publish-Subscribe:</strong> Soket PUB memancarkan pesan ke banyak soket SUB berdasarkan kecocokan filter prefix.
+          </div>
+          <div style="background: var(--bg-primary); padding: 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
+            <strong>Pipeline (Push-Pull):</strong> Soket PUSH mendistribusikan beban kerja secara seimbang ke beberapa pekerja soket PULL.
+          </div>
+        </div>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin: 32px 0 12px 0;">2. Persistent Messaging: Message-Oriented Middleware (MOM)</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+          MOM menjamin pesan tidak hilang meskipun aplikasi penerima sedang mati atau jaringan sedang terputus:
+        </p>
+
+        <ul style="margin-left: 20px; line-height: 1.7; color: var(--text-muted); font-size: 0.94rem; margin-bottom: 24px;">
+          <li><strong>Message Queue:</strong> Buffer penyimpanan pesan persisten dengan urutan tertentu.</li>
+          <li><strong>Queue Manager:</strong> Komponen perangkat lunak yang mengelola antrean dan merutekan pesan antar-antrean.</li>
+          <li><strong>Message Broker:</strong> Komponen penengah yang mengatasi perbedaan format data heterogen antaraplikasi dengan menerjemahkan skema pesan (menggunakan aturan transformasi) sehingga aplikasi yang sama sekali berbeda teknologi tetap dapat bertukar data.</li>
+          <li><strong>AMQP (Advanced Message Queuing Protocol):</strong> Standar protokol terbuka industri untuk antrean pesan enterprise.</li>
+        </ul>
+      </section>
+
+      <!-- Section 5: Multicasting & Gossip -->
+      <section id="multicast" class="content-section" aria-labelledby="heading-multicast">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-purple-bg); color: var(--accent-purple-text);">Bagian 5</span>
+          <h2 id="heading-multicast" class="section-title">Multicast & Gossip-Based Dissemination</h2>
+          <p class="section-desc">Penyebaran data satu-ke-banyak di tingkat aplikasi dan protokol epidemiologi.</p>
+        </div>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin-bottom: 12px;">Application-Level Multicasting (ALM)</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+          Karena router IP publik jarang mengaktifkan multicast level jaringan, penyebaran data dilakukan pada <em>overlay network</em> tingkat aplikasi.
+        </p>
+
+        <div class="callout callout-amber">
+          <div class="callout-title">Dua Metrik Evaluasi Kualitas ALM</div>
+          <p class="callout-text">
+            <strong>1. Link Stress:</strong> Mengukur berapa kali salinan paket pesan yang identik melintasi link fisik jaringan yang sama. Nilai link stress ideal adalah 1.<br>
+            <strong>2. Stretch (Relative Delay Penalty / RDP):</strong> Rasio antara waktu latensi delay transmisi melalui jalur ALM di overlay dibandingkan dengan delay jalur langsung di level jaringan IP fisik (Stretch = Delay<sub>ALM</sub> / Delay<sub>IP</sub>).
+          </p>
+        </div>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin: 32px 0 12px 0;">Gossip-Based (Epidemic) Protocols</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+          Meniru penyebaran virus atau rumor di masyarakat untuk menyinkronkan data antar-replika server:
+        </p>
+
+        <div class="table-responsive">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th scope="col">Mekanisme</th>
+                <th scope="col">Cara Operasi</th>
+                <th scope="col">Efektivitas Penyebaran</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Push Approach</strong></td>
+                <td>Node yang memiliki pembaruan mengirimkannya ke node acak lain.</td>
+                <td>Sangat cepat ketika jumlah node terinfeksi masih sedikit, namun lambat saat sebagian besar node sudah terupdate.</td>
+              </tr>
+              <tr>
+                <td><strong>Pull Approach</strong></td>
+                <td>Node secara berkala meminta update terbaru dari node acak lain.</td>
+                <td>Sangat efektif dan cepat ketika sebagian besar node jaringan sudah memiliki update.</td>
+              </tr>
+              <tr>
+                <td><strong>Push-Pull Approach</strong></td>
+                <td>Node saling bertukar update secara timbal balik dalam satu siklus kontak.</td>
+                <td>Paling optimal dan paling cepat mencapai konsistensi konvergen global.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-coral">
+          <div class="callout-title">Death Certificate: Menghapus Data pada Protokol Gossip</div>
+          <p class="callout-text">
+            Pada sistem epidemi, jika sebuah data langsung dihapus dari memori server A, server B yang masih memiliki data lama akan menganggap server A belum menerima data tersebut dan "menularkan" kembali data tersebut ke server A! Solusinya adalah menerbitkan <strong>Death Certificate (Tombstone)</strong>: penanda khusus bertanggal yang mencatat bahwa data telah dihapus, sehingga penghapusan tersebut dapat disebarkan secara teratur ke seluruh node sebelum sertifikatnya kedaluwarsa.
+          </p>
+        </div>
+      </section>
+
+      <!-- Section 6: Cheat Sheet Ujian Pekan 4 -->
+      <section id="cheat-sheet" class="content-section" aria-labelledby="heading-cheat">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-blue-bg); color: var(--accent-blue-text);">Bagian 6</span>
+          <h2 id="heading-cheat" class="section-title">Lembar Rangkuman Cepat (Exam Cheat Sheet)</h2>
+          <p class="section-desc">Pembeda utama konsep komunikasi sistem terdistribusi untuk persiapan ujian UTS.</p>
+        </div>
+
+        <div class="table-responsive">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th scope="col">Pasangan Konsep</th>
+                <th scope="col">Pembeda Utama untuk Ujian</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Transient vs Persistent Communication</strong></td>
+                <td>Pesan dibuang jika penerima tidak aktif vs Pesan disimpan di antrean perantara sampai berhasil diterima.</td>
+              </tr>
+              <tr>
+                <td><strong>Synchronous vs Asynchronous Communication</strong></td>
+                <td>Pengirim terblokir menunggu titik sinkronisasi respon vs Pengirim langsung lanjut bekerja setelah pesan diserahkan ke buffer.</td>
+              </tr>
+              <tr>
+                <td><strong>Marshaling vs Unmarshaling</strong></td>
+                <td>Mengubah struktur data memori lokal menjadi paket biner jaringan vs Mengembalikan paket biner ke struktur data memori penerima.</td>
+              </tr>
+              <tr>
+                <td><strong>Client Stub vs Server Stub</strong></td>
+                <td>Menyamar sebagai fungsi lokal di sisi klien & lakukan marshaling vs Menerima pesan di server, unmarshaling, & memanggil fungsi asli.</td>
+              </tr>
+              <tr>
+                <td><strong>Asynchronous RPC</strong></td>
+                <td>Klien hanya menunggu sinyal penerimaan pesan (ACK) dari server, bukan menunggu hasil perhitungan tuntas.</td>
+              </tr>
+              <tr>
+                <td><strong>Message Broker vs Queue Manager</strong></td>
+                <td>Mengatasi heterogenitas data dengan mentransformasi format isi pesan vs Mengatur antrean buffer dan routing rute pesan.</td>
+              </tr>
+              <tr>
+                <td><strong>Link Stress vs Stretch (RDP)</strong></td>
+                <td>Berapa kali paket identik melewati link fisik yang sama vs Rasio waktu delay jalur ALM terhadap jalur jaringan fisik IP.</td>
+              </tr>
+              <tr>
+                <td><strong>Push vs Pull Gossip</strong></td>
+                <td>Pengirim aktif menawarkan data vs Penerima aktif meminta data (Pull lebih cepat di akhir epidemi).</td>
+              </tr>
+              <tr>
+                <td><strong>Death Certificate</strong></td>
+                <td>Penanda penghapusan (tombstone) agar data yang telah dihapus tidak dibangkitkan kembali oleh node tetangga.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section 7: Flashcard Uji Ingatan Mandiri -->
+      <section id="flashcards" class="content-section" aria-labelledby="heading-flashcards">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-green-bg); color: var(--accent-green-text);">Bagian 7</span>
+          <h2 id="heading-flashcards" class="section-title">Flashcard Uji Ingatan Mandiri</h2>
+          <p class="section-desc">Klik kartu untuk menguji ingatan Anda mengenai konsep komunikasi terdistribusi.</p>
+        </div>
+
+        <div class="flashcard-deck">
+          
+          <div class="flashcard" role="button" tabindex="0" aria-label="Flashcard 1">
+            <p class="flashcard-tip">Klik untuk melihat jawaban & kata kunci</p>
+            <h3 class="flashcard-prompt">Apa itu Marshaling pada RPC?</h3>
+            <div class="flashcard-answer">
+              Proses mengubah parameter dan argumen pemanggilan fungsi dari representasi memori lokal komputer menjadi format biner terstandarisasi yang siap ditransmisikan melintasi jaringan.
+            </div>
+          </div>
+
+          <div class="flashcard" role="button" tabindex="0" aria-label="Flashcard 2">
+            <p class="flashcard-tip">Klik untuk melihat jawaban & kata kunci</p>
+            <h3 class="flashcard-prompt">Fungsi Message Broker pada MOM</h3>
+            <div class="flashcard-answer">
+              Menangani perbedaan format dan heterogenitas aplikasi bisnis dengan cara mentransformasi dan menerjemahkan skema format pesan antaraplikasi yang berbeda teknologi.
+            </div>
+          </div>
+
+          <div class="flashcard" role="button" tabindex="0" aria-label="Flashcard 3">
+            <p class="flashcard-tip">Klik untuk melihat jawaban & kata kunci</p>
+            <h3 class="flashcard-prompt">Perbedaan Link Stress dan Stretch</h3>
+            <div class="flashcard-answer">
+              <strong>Link Stress</strong>: Jumlah replika paket yang melewati link fisik yang sama.<br>
+              <strong>Stretch</strong>: Rasio penalti keterlambatan waktu tempuh (Delay ALM / Delay IP Fisik).
+            </div>
+          </div>
+
+          <div class="flashcard" role="button" tabindex="0" aria-label="Flashcard 4">
+            <p class="flashcard-tip">Klik untuk melihat jawaban & kata kunci</p>
+            <h3 class="flashcard-prompt">Mengapa Butuh Death Certificate pada Gossip?</h3>
+            <div class="flashcard-answer">
+              Untuk mencatat penghapusan data secara resmi. Tanpa sertifikat ini, node tetangga yang masih memegang data lama akan mengira node kita ketinggalan update dan mengirimkan kembali data yang sudah dihapus.
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Section 8: Kuis Interaktif Pekan 4 -->
+      <section id="kuis" class="content-section" aria-labelledby="heading-kuis">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-coral-bg); color: var(--accent-coral-text);">Bagian 8</span>
+          <h2 id="heading-kuis" class="section-title">Kuis Pemahaman Mandiri Pekan 4</h2>
+          <p class="section-desc">Uji pemahaman komunikasi sistem terdistribusi dengan 5 soal berbasis skenario ujian UTS.</p>
+        </div>
+
+        <!-- Quiz Container (Driven by js/app.js) -->
+        <div id="pekan4-quiz" class="quiz-box"></div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p><strong>CloudStudy</strong>: Media Belajar Interaktif Sistem Terdistribusi & Cloud Computing</p>
+      <p>Pekan 4 telah siap dipelajari. Lanjutkan ke Pekan 5 saat Anda siap!</p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
+

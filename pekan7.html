@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pekan 7: Consistency and Replication | CloudStudy</title>
+  
+  <!-- Typography: Modern Ultra-Legible Sans-Serif (Plus Jakarta Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Styling -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Site Navigation Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="CloudStudy Beranda">
+        <div class="brand-badge" aria-hidden="true">C</div>
+        <div>
+          <span class="brand-text">CloudStudy</span>
+          <span class="brand-sub">UTS Hub</span>
+        </div>
+      </a>
+
+      <nav aria-label="Navigasi Utama">
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">&larr; Beranda</a></li>
+          <li><a href="kisi_kisi.html" class="nav-link">Kisi-Kisi</a></li>
+          <li><a href="soal_tahun_lalu.html" class="nav-link" style="color: var(--accent-coral-text); font-weight: 700;">Soal Tahun Lalu</a></li>
+          <li><a href="#kuis" class="nav-cta">Latihan Kuis</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Module Header -->
+  <div class="container">
+    <div class="module-header">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="index.html">Beranda</a>
+        <span aria-hidden="true">&rsaquo;</span>
+        <a href="index.html#kurikulum">Materi UTS</a>
+        <span aria-hidden="true">&rsaquo;</span>
+        <span style="color: var(--text-main); font-weight: 600;">Pekan 7</span>
+      </nav>
+
+      <h1 class="module-title">Pekan 7: Consistency and Replication</h1>
+      
+      <div class="module-meta">
+        <span class="meta-pill">
+          <strong>Topik:</strong> Data-Centric & Client-Centric Consistency, Quorum-Based Protocols, Replica Management
+        </span>
+        <span class="meta-pill">
+          <strong>Format:</strong> Rangkuman Teori + Flashcard + 5 Soal Kuis
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Layout (Sticky Nav + Content) -->
+  <div class="container module-layout">
+    
+    <!-- Sticky Table of Contents -->
+    <aside class="sticky-nav" aria-label="Daftar Isi Modul">
+      <p class="nav-title">Daftar Isi Materi</p>
+      <ul class="toc-list">
+        <li><a href="#tujuan-replikasi" class="toc-link">1. Tujuan Replikasi & Konflik</a></li>
+        <li><a href="#data-centric" class="toc-link">2. Data-Centric Consistency</a></li>
+        <li><a href="#client-centric" class="toc-link">3. Client-Centric Consistency</a></li>
+        <li><a href="#manajemen-replika" class="toc-link">4. Manajemen & Distribusi Replika</a></li>
+        <li><a href="#protokol-konsistensi" class="toc-link">5. Quorum-Based Protocols</a></li>
+        <li><a href="#cheat-sheet" class="toc-link">6. Tabel Komparasi Ujian</a></li>
+        <li><a href="#flashcards" class="toc-link">7. Flashcard Uji Ingatan</a></li>
+        <li><a href="#kuis" class="toc-link">8. Kuis Pemahaman Mandiri</a></li>
+      </ul>
+    </aside>
+
+    <!-- Content Sections -->
+    <main class="content-area">
+      
+      <!-- Section 1: Tujuan Replikasi & Konflik -->
+      <section id="tujuan-replikasi" class="content-section" aria-labelledby="heading-tujuan-rep">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-blue-bg); color: var(--accent-blue-text);">Bagian 1</span>
+          <h2 id="heading-tujuan-rep" class="section-title">Tujuan Replikasi & Konflik Konsistensi</h2>
+          <p class="section-desc">Pendorong utama penggandaan data dan harga mahal sinkronisasi global.</p>
+        </div>
+
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-tag">Tujuan 1</div>
+            <h4 class="concept-name">Reliability (Keandalan)</h4>
+            <p class="concept-body">
+              Meningkatkan ketahanan sistem terhadap kegagalan. Jika satu replika crash atau rusak, sistem dapat segera dialihkan ke replika lain tanpa penghentian layanan secara total.
+            </p>
+          </div>
+
+          <div class="concept-card">
+            <div class="concept-tag">Tujuan 2</div>
+            <h4 class="concept-name">Performance (Performa)</h4>
+            <p class="concept-body">
+              Membagi beban kueri pembacaan data ke beberapa server terpisah dan menempatkan data secara geografis lebih dekat dengan klien untuk menekan latensi.
+            </p>
+          </div>
+        </div>
+
+        <div class="callout callout-coral">
+          <div class="callout-title">Dilema Konsistensi: Trade-off Replikasi</div>
+          <p class="callout-text">
+            Ketika data diperbanyak, setiap operasi tulis (update) harus disebarkan ke seluruh salinan. Dua jenis konflik utama:<br>
+            - <strong>Read-Write Conflict:</strong> Operasi baca dan tulis terjadi bersamaan pada replika yang berbeda.<br>
+            - <strong>Write-Write Conflict:</strong> Dua proses berbeda menulis nilai baru pada waktu bersamaan.<br>
+            Memastikan semua replika selalu persis sama setiap mikrodetik (*Strict Consistency*) membutuhkan sinkronisasi global yang melumpuhkan skalabilitas. Karena itu, sistem terdistribusi memodifikasi model konsistensinya.
+          </p>
+        </div>
+      </section>
+
+      <!-- Section 2: Data-Centric Consistency Models -->
+      <section id="data-centric" class="content-section" aria-labelledby="heading-data-centric">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-green-bg); color: var(--accent-green-text);">Bagian 2</span>
+          <h2 id="heading-data-centric" class="section-title">Data-Centric Consistency Models</h2>
+          <p class="section-desc">Jaminan urutan operasi baca dan tulis dari sudut pandang penyimpanan data bersama.</p>
+        </div>
+
+        <div class="table-responsive">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th scope="col">Model Konsistensi</th>
+                <th scope="col">Aturan & Jaminan Utama</th>
+                <th scope="col">Tingkat Kekuatan</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Linearizability</strong></td>
+                <td>Operasi harus terlihat terjadi secara instan (*instantaneous*) pada rentang waktu fisik sebenarnya di antara start dan end time. Sangat menghormati jam dinding nyata.</td>
+                <td>Sangat Kuat (Paling mahal dan sulit diskalakan).</td>
+              </tr>
+              <tr>
+                <td><strong>Sequential Consistency</strong></td>
+                <td>Hasil eksekusi sama seperti jika seluruh operasi semua proses dijalankan dalam satu urutan sekuensial global, dan urutan operasi internal program setiap proses tidak berubah. Tidak peduli waktu fisik mutlak.</td>
+                <td>Kuat.</td>
+              </tr>
+              <tr>
+                <td><strong>Causal Consistency</strong></td>
+                <td>Operasi tulis yang memiliki hubungan kausalitas (*happened-before*) harus dilihat dalam urutan yang sama oleh semua proses. Operasi tulis yang konkuren boleh dilihat dalam urutan berbeda oleh replika yang berbeda.</td>
+                <td>Menengah.</td>
+              </tr>
+              <tr>
+                <td><strong>Eventual Consistency</strong></td>
+                <td>Jika tidak ada operasi update baru yang masuk ke sistem dalam periode waktu tertentu, pada akhirnya (*eventually*) seluruh replika dijamin akan konvergen menjadi identik. Sangat populer untuk DNS dan cache web.</td>
+                <td>Lemah namun sangat skalabel (*Highly Scalable*).</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section 3: Client-Centric Consistency Models -->
+      <section id="client-centric" class="content-section" aria-labelledby="heading-client-centric">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-amber-bg); color: var(--accent-amber-text);">Bagian 3</span>
+          <h2 id="heading-client-centric" class="section-title">Client-Centric Consistency Models</h2>
+          <p class="section-desc">Jaminan konsistensi bagi satu klien mobile yang berpindah-pindah mengakses replika yang berbeda.</p>
+        </div>
+
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-tag">Model 1</div>
+            <h4 class="concept-name">Monotonic Reads</h4>
+            <p class="concept-body">
+              Jika suatu proses telah membaca nilai data <code>x</code> pada suatu waktu, setiap operasi baca berikutnya terhadap <code>x</code> oleh proses tersebut <strong>tidak akan pernah mengembalikan nilai versi yang lebih lama</strong>.
+            </p>
+          </div>
+
+          <div class="concept-card">
+            <div class="concept-tag">Model 2</div>
+            <h4 class="concept-name">Monotonic Writes</h4>
+            <p class="concept-body">
+              Operasi tulis terhadap <code>x</code> oleh suatu proses dijamin akan diselesaikan secara berurutan sebelum operasi tulis berikutnya terhadap <code>x</code> oleh proses yang sama dieksekusi di replika manapun.
+            </p>
+          </div>
+
+          <div class="concept-card highlight">
+            <div class="concept-tag">Model 3 (Paling Populer)</div>
+            <h4 class="concept-name">Read Your Writes</h4>
+            <p class="concept-body">
+              Hasil dari operasi tulis terhadap <code>x</code> oleh suatu proses dijamin akan <strong>selalu terlihat oleh operasi baca berikutnya</strong> terhadap <code>x</code> yang dilakukan oleh proses yang sama (klien tidak melihat perubahan dirinya sendiri hilang).
+            </p>
+          </div>
+
+          <div class="concept-card">
+            <div class="concept-tag">Model 4</div>
+            <h4 class="concept-name">Writes Follow Reads</h4>
+            <p class="concept-body">
+              Operasi tulis terhadap <code>x</code> oleh suatu proses yang mengikuti operasi baca sebelumnya terhadap <code>x</code> dijamin terjadi pada nilai <code>x</code> yang sama atau versi yang lebih baru daripada nilai yang telah dibaca.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: Manajemen Replika -->
+      <section id="manajemen-replika" class="content-section" aria-labelledby="heading-replika-mgmt">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-coral-bg); color: var(--accent-coral-text);">Bagian 4</span>
+          <h2 id="heading-replika-mgmt" class="section-title">Manajemen & Distribusi Replika</h2>
+          <p class="section-desc">Penempatan replika permanen, server-initiated, dan protokol distribusi konten.</p>
+        </div>
+
+        <div class="table-responsive">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th scope="col">Tipe Replika</th>
+                <th scope="col">Inisiator</th>
+                <th scope="col">Karakteristik & Contoh Penggunaan</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Permanent Replicas</strong></td>
+                <td>Administrator Sistem</td>
+                <td>Dikonfigurasi secara manual dan statis di awal (misal server basis data cluster master-slave).</td>
+              </tr>
+              <tr>
+                <td><strong>Server-Initiated Replicas</strong></td>
+                <td>Server / Hosting Provider</td>
+                <td>Dibuat secara dinamis oleh server ketika lonjakan lalu lintas terdeteksi untuk mencegah overload (contoh: CDN dynamic caching).</td>
+              </tr>
+              <tr>
+                <td><strong>Client-Initiated Replicas</strong></td>
+                <td>Klien</td>
+                <td>Salinan lokal yang disimpan di perangkat klien (contoh: browser cache, proxy lokal kantor).</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-blue">
+          <div class="callout-title">Protokol Pembaruan: Push vs Pull vs Lease</div>
+          <p class="callout-text">
+            <strong>Push-Based (Server-based):</strong> Server langsung mendorong update ke replika begitu terjadi perubahan. Cocok jika rasio *Read-to-Write* tinggi.<br>
+            <strong>Pull-Based (Client-based):</strong> Replika klien meminta update ke server saat data akan dibaca. Cocok jika data jarang dibaca.<br>
+            <strong>Lease-Based:</strong> Server memberi hak sewa (*lease*) waktu tertentu ke replika; selama masa sewa masih berlaku, server berjanji akan mengabari setiap perubahan.
+          </p>
+        </div>
+      </section>
+
+      <!-- Section 5: Quorum-Based Protocols -->
+      <section id="protokol-konsistensi" class="content-section" aria-labelledby="heading-quorum">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-purple-bg); color: var(--accent-purple-text);">Bagian 5</span>
+          <h2 id="heading-quorum" class="section-title">Quorum-Based Protocols (Gifford's Quorum)</h2>
+          <p class="section-desc">Aturan voting mayoritas matematis untuk menjamin konsistensi tanpa koordinator tunggal.</p>
+        </div>
+
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">
+          Dalam sistem dengan total <code>N</code> replika, klien memerlukan izin voting dari sekumpulan replika untuk membaca (Read Quorum <code>N<sub>R</sub></code>) dan menulis (Write Quorum <code>N<sub>W</sub></code>).
+        </p>
+
+        <div class="callout callout-coral">
+          <div class="callout-title">Dua Aturan Mutlak Gifford's Quorum</div>
+          <p class="callout-text" style="font-size: 1.05rem;">
+            <strong>1. N<sub>R</sub> + N<sub>W</sub> &gt; N</strong> (Mencegah Read-Write Conflict)<br>
+            <em>Penjelasan:</em> Menjamin bahwa dalam kelompok replika yang dibaca (N<sub>R</sub>), selalu ada minimal <strong>satu replika</strong> yang masuk dalam kelompok yang baru saja ditulis (N<sub>W</sub>), sehingga data terbaru pasti terbaca lewat versi timestamp tertinggi.<br><br>
+            <strong>2. N<sub>W</sub> &gt; N / 2</strong> (Mencegah Write-Write Conflict)<br>
+            <em>Penjelasan:</em> Menjamin bahwa hanya ada maksimal <strong>satu kelompok mayoritas</strong> yang dapat melakukan operasi tulis pada waktu yang sama, mencegah *split-brain*.
+          </p>
+        </div>
+      </section>
+
+      <!-- Section 6: Cheat Sheet Ujian Pekan 7 -->
+      <section id="cheat-sheet" class="content-section" aria-labelledby="heading-cheat">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-blue-bg); color: var(--accent-blue-text);">Bagian 6</span>
+          <h2 id="heading-cheat" class="section-title">Lembar Rangkuman Cepat (Exam Cheat Sheet)</h2>
+          <p class="section-desc">Pembeda utama konsep konsistensi dan replikasi untuk persiapan ujian UTS.</p>
+        </div>
+
+        <div class="table-responsive">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th scope="col">Pasangan Konsep</th>
+                <th scope="col">Pembeda Utama untuk Ujian</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Sequential Consistency vs Linearizability</strong></td>
+                <td>Urutan global logis sekuensial bebas waktu fisik vs Eksekusi instan terikat waktu fisik nyata.</td>
+              </tr>
+              <tr>
+                <td><strong>Causal vs Eventual Consistency</strong></td>
+                <td>Menghormati urutan sebab-akibat (kausalitas) vs Jaminan konvergen identik jika tidak ada pembaruan baru.</td>
+              </tr>
+              <tr>
+                <td><strong>Monotonic Reads vs Read Your Writes</strong></td>
+                <td>Tidak pernah membaca nilai yang lebih tua dari yang sudah dibaca vs Klien selalu dapat membaca apa yang baru saja ia tulis sendiri.</td>
+              </tr>
+              <tr>
+                <td><strong>Push vs Pull Distribution</strong></td>
+                <td>Server proaktif kirim update (cocok read tinggi) vs Klien meminta data saat butuh (cocok write tinggi, read rendah).</td>
+              </tr>
+              <tr>
+                <td><strong>Gifford Quorum Condition 1</strong></td>
+                <td>N<sub>R</sub> + N<sub>W</sub> &gt; N (mencegah benturan read-write).</td>
+              </tr>
+              <tr>
+                <td><strong>Gifford Quorum Condition 2</strong></td>
+                <td>N<sub>W</sub> &gt; N / 2 (mencegah benturan write-write ganda).</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section 7: Flashcards -->
+      <section id="flashcards" class="content-section" aria-labelledby="heading-flashcards">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-green-bg); color: var(--accent-green-text);">Bagian 7</span>
+          <h2 id="heading-flashcards" class="section-title">Flashcard Uji Ingatan Mandiri</h2>
+          <p class="section-desc">Klik kartu untuk menguji ingatan Anda mengenai konsep konsistensi dan replikasi.</p>
+        </div>
+
+        <div class="flashcard-deck">
+          
+          <div class="flashcard" role="button" tabindex="0" aria-label="Flashcard 1">
+            <p class="flashcard-tip">Klik untuk melihat jawaban & kata kunci</p>
+            <h3 class="flashcard-prompt">Rumus Gifford's Quorum untuk Mencegah Read-Write Conflict</h3>
+            <div class="flashcard-answer">
+              <strong>N<sub>R</sub> + N<sub>W</sub> &gt; N</strong><br>
+              Menjamin selalu terjadi tumpang tindih (overlap) minimal 1 replika yang memegang versi data paling baru di antara kuorum baca dan tulis.
+            </div>
+          </div>
+
+          <div class="flashcard" role="button" tabindex="0" aria-label="Flashcard 2">
+            <p class="flashcard-tip">Klik untuk melihat jawaban & kata kunci</p>
+            <h3 class="flashcard-prompt">Apa itu Read Your Writes Consistency?</h3>
+            <div class="flashcard-answer">
+              Model konsistensi klien yang menjamin bahwa setelah suatu proses melakukan operasi tulis pada data <code>x</code>, operasi baca berikutnya terhadap <code>x</code> oleh proses tersebut akan selalu melihat hasil tulisannya sendiri.
+            </div>
+          </div>
+
+          <div class="flashcard" role="button" tabindex="0" aria-label="Flashcard 3">
+            <p class="flashcard-tip">Klik untuk melihat jawaban & kata kunci</p>
+            <h3 class="flashcard-prompt">Kapan Push Protocol Lebih Baik dari Pull Protocol?</h3>
+            <div class="flashcard-answer">
+              Ketika <strong>Read-to-Write ratio tinggi</strong> (data sangat sering dibaca oleh banyak klien tetapi relatif jarang diperbarui), sehingga efisien bagi server untuk mendorong update sekali ke semua replika.
+            </div>
+          </div>
+
+          <div class="flashcard" role="button" tabindex="0" aria-label="Flashcard 4">
+            <p class="flashcard-tip">Klik untuk melihat jawaban & kata kunci</p>
+            <h3 class="flashcard-prompt">Definisi Eventual Consistency</h3>
+            <div class="flashcard-answer">
+              Bentuk konsistensi lemah di mana jika tidak ada operasi update baru yang dilakukan dalam waktu tertentu, pada akhirnya (*eventually*) seluruh replika akan konvergen dan memiliki nilai yang persis sama.
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Section 8: Kuis Interaktif Pekan 7 -->
+      <section id="kuis" class="content-section" aria-labelledby="heading-kuis">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-coral-bg); color: var(--accent-coral-text);">Bagian 8</span>
+          <h2 id="heading-kuis" class="section-title">Kuis Pemahaman Mandiri Pekan 7</h2>
+          <p class="section-desc">Uji pemahaman konsistensi dan protokol kuorum dengan 5 soal berbasis skenario ujian UTS.</p>
+        </div>
+
+        <!-- Quiz Container (Driven by js/app.js) -->
+        <div id="pekan7-quiz" class="quiz-box"></div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p><strong>CloudStudy</strong>: Media Belajar Interaktif Sistem Terdistribusi & Cloud Computing</p>
+      <p>Selamat! Seluruh materi Pekan 1 hingga Pekan 7 telah tuntas dipelajari.</p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
+

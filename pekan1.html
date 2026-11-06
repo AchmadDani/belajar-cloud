@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pekan 1: Introduction to Distributed Systems | CloudStudy</title>
+  
+  <!-- Typography: Modern Ultra-Legible Sans-Serif (Plus Jakarta Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Styling -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Site Navigation Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="CloudStudy Beranda">
+        <div class="brand-badge" aria-hidden="true">C</div>
+        <div>
+          <span class="brand-text">CloudStudy</span>
+          <span class="brand-sub">UTS Hub</span>
+        </div>
+      </a>
+
+      <nav aria-label="Navigasi Utama">
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">&larr; Beranda</a></li>
+          <li><a href="kisi_kisi.html" class="nav-link">Kisi-Kisi</a></li>
+          <li><a href="soal_tahun_lalu.html" class="nav-link" style="color: var(--accent-coral-text); font-weight: 700;">Soal Tahun Lalu</a></li>
+          <li><a href="#kuis" class="nav-cta">Latihan Kuis</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Module Header -->
+  <div class="container">
+    <div class="module-header">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="index.html">Beranda</a>
+        <span aria-hidden="true">&rsaquo;</span>
+        <a href="index.html#kurikulum">Materi UTS</a>
+        <span aria-hidden="true">&rsaquo;</span>
+        <span style="color: var(--text-main); font-weight: 600;">Pekan 1</span>
+      </nav>
+
+      <h1 class="module-title">Pekan 1: Introduction to Distributed Systems</h1>
+      
+      <div class="module-meta">
+        <span class="meta-pill">
+          <strong>Topik:</strong> Konsep Dasar, Design Goals, Klasifikasi & Pitfalls
+        </span>
+        <span class="meta-pill">
+          <strong>Format:</strong> Rangkuman Teori + Flashcard + 5 Soal Kuis
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Layout (Sticky Nav + Content) -->
+  <div class="container module-layout">
+    
+    <!-- Sticky Table of Contents -->
+    <aside class="sticky-nav" aria-label="Daftar Isi Modul">
+      <p class="nav-title">Daftar Isi Materi</p>
+      <ul class="toc-list">
+        <li><a href="#fondasi" class="toc-link">1. Fondasi & Perspektif</a></li>
+        <li><a href="#tujuan-desain" class="toc-link">2. 6 Tujuan Desain</a></li>
+        <li><a href="#klasifikasi" class="toc-link">3. Klasifikasi Sistem</a></li>
+        <li><a href="#pitfalls" class="toc-link">4. 8 Asumsi Keliru (Pitfalls)</a></li>
+        <li><a href="#cheat-sheet" class="toc-link">5. Tabel Komparasi Ujian</a></li>
+        <li><a href="#flashcards" class="toc-link">6. Flashcard Uji Ingatan</a></li>
+        <li><a href="#kuis" class="toc-link">7. Kuis Pemahaman Mandiri</a></li>
+      </ul>
+    </aside>
+
+    <!-- Content Sections -->
+    <main class="content-area">
+      
+      <!-- Section 1: Fondasi & Perspektif -->
+      <section id="fondasi" class="content-section" aria-labelledby="heading-fondasi">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-blue-bg); color: var(--accent-blue-text);">Bagian 1</span>
+          <h2 id="heading-fondasi" class="section-title">Fondasi Sistem Terdistribusi</h2>
+          <p class="section-desc">Peralihan dari komputasi terpusat menuju sistem jaringan terdistribusi dan perspektif arsitekturalnya.</p>
+        </div>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin-bottom: 12px;">Tiga Model Pengelolaan Sistem</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">
+          Dalam komputasi modern, pengelolaan proses dan resource dibagi ke dalam tiga spektrum utama:
+        </p>
+
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-tag">Model 1</div>
+            <h4 class="concept-name">Centralized System</h4>
+            <p class="concept-body">
+              Sistem di mana pengelolaan proses dan seluruh sumber daya berpusat pada satu titik atau satu entitas utama (server tunggal).
+            </p>
+          </div>
+
+          <div class="concept-card">
+            <div class="concept-tag">Model 2</div>
+            <h4 class="concept-name">Decentralized System</h4>
+            <p class="concept-body">
+              Sistem komputer berbasis jaringan di mana proses dan sumber dayanya <strong>harus tersebar</strong> di beberapa komputer secara fisik.
+            </p>
+          </div>
+
+          <div class="concept-card highlight">
+            <div class="concept-tag">Model 3 (Inti Kuliah)</div>
+            <h4 class="concept-name">Distributed System</h4>
+            <p class="concept-body">
+              Sistem komputer berbasis jaringan di mana proses dan sumber daya tersebar secara memadai sehingga <strong>membentuk satu kesatuan sistem utuh</strong> (single coherent system) bagi pengguna.
+            </p>
+          </div>
+        </div>
+
+        <div class="callout callout-blue">
+          <div class="callout-title">Sudut Pandang Realisasi (Two Views)</div>
+          <p class="callout-text">
+            <strong>1. Integrative View:</strong> Menghubungkan beberapa sistem komputer berbasis jaringan yang sudah ada menjadi satu sistem baru yang lebih besar.<br>
+            <strong>2. Expansive View:</strong> Mengembangkan sistem jaringan yang sudah berjalan dengan menambahkan komputer-komputer baru ke dalamnya.
+          </p>
+        </div>
+
+        <div class="callout callout-amber">
+          <div class="callout-title">Penting Diingat: Miskonsepsi Sistem Terpusat</div>
+          <p class="callout-text">
+            Sering diasumsikan bahwa sistem terpusat pasti tidak bisa diskalakan dan selalu memiliki single point of failure. Anggapan ini keliru: harus dibedakan antara <strong>logical centralization</strong> dan <strong>physical centralization</strong>. Contohnya adalah Root DNS: secara logis terpusat, namun secara fisik terdistribusi dan dikelola tangguh oleh banyak organisasi di seluruh dunia.
+          </p>
+        </div>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.3rem; margin: 28px 0 14px 0;">8 Perspektif Sistem Terdistribusi</h3>
+        <p style="color: var(--text-muted); font-size: 0.94rem; margin-bottom: 16px;">
+          Ketika menganalisis sebuah sistem terdistribusi, ada 8 sudut pandang teknis yang saling melengkapi:
+        </p>
+
+        <ul style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; list-style: none;">
+          <li style="background: var(--bg-primary); padding: 12px 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-light); font-size: 0.92rem;">
+            <strong>1. Architecture:</strong> Organisasi dan struktur komponen sistem.
+          </li>
+          <li style="background: var(--bg-primary); padding: 12px 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-light); font-size: 0.92rem;">
+            <strong>2. Process:</strong> Jenis proses yang berjalan dan hubungan antarproses.
+          </li>
+          <li style="background: var(--bg-primary); padding: 12px 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-light); font-size: 0.92rem;">
+            <strong>3. Communication:</strong> Mekanisme pertukaran data antarkomponen.
+          </li>
+          <li style="background: var(--bg-primary); padding: 12px 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-light); font-size: 0.92rem;">
+            <strong>4. Coordination:</strong> Algoritma untuk mengatur koordinasi antarkomponen.
+          </li>
+          <li style="background: var(--bg-primary); padding: 12px 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-light); font-size: 0.92rem;">
+            <strong>5. Naming:</strong> Mekanisme identifikasi dan pencarian resource.
+          </li>
+          <li style="background: var(--bg-primary); padding: 12px 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-light); font-size: 0.92rem;">
+            <strong>6. Consistency & Replication:</strong> Menjaga kesamaan data salinan.
+          </li>
+          <li style="background: var(--bg-primary); padding: 12px 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-light); font-size: 0.92rem;">
+            <strong>7. Fault Tolerance:</strong> Menjaga sistem tetap beroperasi saat ada komponen gagal.
+          </li>
+          <li style="background: var(--bg-primary); padding: 12px 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-light); font-size: 0.92rem;">
+            <strong>8. Security:</strong> Melindungi resource agar hanya diakses pihak sah.
+          </li>
+        </ul>
+      </section>
+
+      <!-- Section 2: 6 Design Goals -->
+      <section id="tujuan-desain" class="content-section" aria-labelledby="heading-tujuan">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-green-bg); color: var(--accent-green-text);">Bagian 2</span>
+          <h2 id="heading-tujuan" class="section-title">6 Tujuan Desain Utama (Design Goals)</h2>
+          <p class="section-desc">Pilar utama yang menentukan keberhasilan arsitektur sistem terdistribusi.</p>
+        </div>
+
+        <!-- Interactive Tabs for Design Goals -->
+        <div class="tabs-nav" aria-label="Pilih Tujuan Desain">
+          <button class="tab-btn active" data-tab-group="goals" data-tab-target="goal-transparency">1. Transparansi Distribusi</button>
+          <button class="tab-btn" data-tab-group="goals" data-tab-target="goal-dependability">2. Dependability (Keandalan)</button>
+          <button class="tab-btn" data-tab-group="goals" data-tab-target="goal-scalability">3. Skalabilitas</button>
+          <button class="tab-btn" data-tab-group="goals" data-tab-target="goal-openness">4. Keterbukaan (Openness)</button>
+          <button class="tab-btn" data-tab-group="goals" data-tab-target="goal-security">5. Keamanan</button>
+          <button class="tab-btn" data-tab-group="goals" data-tab-target="goal-sharing">6. Resource Sharing</button>
+        </div>
+
+        <!-- Tab 1: Transparency -->
+        <div id="goal-transparency" class="tab-content active" data-tab-group="goals">
+          <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin-bottom: 12px;">Distribution Transparency via Middleware</h3>
+          <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">
+            Kemampuan sistem untuk menyembunyikan kenyataan bahwa proses dan sumber daya di dalamnya tersebar secara fisik di beberapa komputer. Lapisan perantara yang mewujudkannya disebut <strong>Middleware</strong>.
+          </p>
+
+          <h4 style="font-size: 1.05rem; margin-bottom: 12px; font-weight: 700;">7 Jenis Transparansi Distribusi (Hafalan Wajib):</h4>
+          <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px;">
+            <div style="padding: 12px 16px; background: var(--bg-primary); border-radius: var(--radius-sm); border-left: 3px solid var(--accent-blue-text);">
+              <strong>1. Access Transparency:</strong> Menyembunyikan perbedaan representasi data dan cara mengakses objek.
+            </div>
+            <div style="padding: 12px 16px; background: var(--bg-primary); border-radius: var(--radius-sm); border-left: 3px solid var(--accent-blue-text);">
+              <strong>2. Location Transparency:</strong> Menyembunyikan lokasi fisik suatu objek atau resource di jaringan.
+            </div>
+            <div style="padding: 12px 16px; background: var(--bg-primary); border-radius: var(--radius-sm); border-left: 3px solid var(--accent-blue-text);">
+              <strong>3. Relocation Transparency:</strong> Menyembunyikan perpindahan objek ke lokasi lain saat objek sedang aktif digunakan.
+            </div>
+            <div style="padding: 12px 16px; background: var(--bg-primary); border-radius: var(--radius-sm); border-left: 3px solid var(--accent-blue-text);">
+              <strong>4. Migration Transparency:</strong> Menyembunyikan perpindahan objek ke lokasi lain (umum).
+            </div>
+            <div style="padding: 12px 16px; background: var(--bg-primary); border-radius: var(--radius-sm); border-left: 3px solid var(--accent-blue-text);">
+              <strong>5. Replication Transparency:</strong> Menyembunyikan fakta bahwa suatu objek memiliki beberapa salinan data.
+            </div>
+            <div style="padding: 12px 16px; background: var(--bg-primary); border-radius: var(--radius-sm); border-left: 3px solid var(--accent-blue-text);">
+              <strong>6. Concurrency Transparency:</strong> Menyembunyikan fakta bahwa objek digunakan secara bersamaan oleh banyak pengguna mandiri.
+            </div>
+            <div style="padding: 12px 16px; background: var(--bg-primary); border-radius: var(--radius-sm); border-left: 3px solid var(--accent-blue-text);">
+              <strong>7. Failure Transparency:</strong> Menyembunyikan kegagalan dan proses pemulihan (recovery) suatu objek.
+            </div>
+          </div>
+
+          <div class="callout callout-coral">
+            <div class="callout-title">Derajat Transparansi (Degree of Transparency)</div>
+            <p class="callout-text">
+              Transparansi penuh 100% <strong>tidak selalu mungkin dan tidak selalu menguntungkan</strong> karena: latensi jaringan tidak bisa disembunyikan sepenuhnya, node gagal sulit dibedakan dengan node yang lambat, dan sinkronisasi penuh menurunkan performa sistem secara drastis.<br>
+              Bahkan terkadang sebaran fisik sengaja diperlihatkan (*exposing distribution*), misalnya pada layanan berbasis lokasi (*location-based services*) dan penanganan zona waktu pelanggan.
+            </p>
+          </div>
+        </div>
+
+        <!-- Tab 2: Dependability -->
+        <div id="goal-dependability" class="tab-content" data-tab-group="goals">
+          <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin-bottom: 12px;">Dependability (Kemampuan Diandalkan)</h3>
+          <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">
+            Kemampuan sistem untuk memberikan layanan secara benar dan dapat diandalkan secara terus menerus.
+          </p>
+
+          <div class="concept-grid">
+            <div class="concept-card">
+              <div class="concept-tag">Pilar 1</div>
+              <h4 class="concept-name">Availability</h4>
+              <p class="concept-body">Mengukur tingkat <strong>kesiapan</strong> sistem atau komponen untuk digunakan pada saat tertentu.</p>
+            </div>
+            <div class="concept-card">
+              <div class="concept-tag">Pilar 2</div>
+              <h4 class="concept-name">Reliability</h4>
+              <p class="concept-body">Kemampuan sistem memberikan layanan secara <strong>berkelanjutan tanpa henti</strong> dan benar dalam interval waktu tertentu.</p>
+            </div>
+            <div class="concept-card">
+              <div class="concept-tag">Pilar 3 & 4</div>
+              <h4 class="concept-name">Safety & Maintainability</h4>
+              <p class="concept-body"><strong>Safety:</strong> Risiko dampak bencana sangat rendah. <strong>Maintainability:</strong> Kemudahan perbaikan komponen pasca kegagalan.</p>
+            </div>
+          </div>
+
+          <div class="callout callout-blue">
+            <div class="callout-title">Metrik Tradisional: MTBF = MTTF + MTTR</div>
+            <p class="callout-text">
+              <strong>MTTF (Mean Time To Failure):</strong> Rata-rata waktu hingga komponen mengalami kegagalan.<br>
+              <strong>MTTR (Mean Time To Repair):</strong> Rata-rata waktu yang dibutuhkan untuk memperbaiki komponen yang gagal.<br>
+              <strong>MTBF (Mean Time Between Failures):</strong> Total rata-rata waktu antara kegagalan.
+            </p>
+          </div>
+
+          <div class="callout callout-coral">
+            <div class="callout-title">Rantai Anomali: Fault &rarr; Error &rarr; Failure</div>
+            <p class="callout-text">
+              <strong>1. Fault (Penyebab):</strong> Akar kesalahan, misal programmer salah ketik kode.<br>
+              <strong>2. Error (Kondisi Salah):</strong> Keadaan internal yang salah akibat fault, misal pointer bernilai null.<br>
+              <strong>3. Failure (Kegagalan):</strong> Sistem crash atau tidak memenuhi spesifikasi layanan yang seharusnya diberikan.<br>
+              <em>Teknik penanganan: Fault Prevention (mencegah), Fault Tolerance (mentolerir saat terjadi), Fault Removal (menghilangkan), dan Fault Forecasting (memprediksi).</em>
+            </p>
+          </div>
+        </div>
+
+        <!-- Tab 3: Scalability -->
+        <div id="goal-scalability" class="tab-content" data-tab-group="goals">
+          <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin-bottom: 12px;">Skalabilitas Sistem Terdistribusi</h3>
+          <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">
+            Kemampuan sistem mempertahankan kinerja ketika ukuran, cakupan geografis, atau domain administratif meningkat.
+          </p>
+
+          <div class="concept-grid">
+            <div class="concept-card">
+              <div class="concept-tag">Dimensi 1</div>
+              <h4 class="concept-name">Size Scalability</h4>
+              <p class="concept-body">Kemampuan menangani pertambahan jumlah pengguna atau proses komputasi yang datang.</p>
+            </div>
+            <div class="concept-card">
+              <div class="concept-tag">Dimensi 2</div>
+              <h4 class="concept-name">Geographical Scalability</h4>
+              <p class="concept-body">Kemampuan menangani pertambahan jarak fisik antarnode (misal dari LAN lokal ke WAN global dengan kendala latensi tinggi).</p>
+            </div>
+            <div class="concept-card">
+              <div class="concept-tag">Dimensi 3</div>
+              <h4 class="concept-name">Administrative Scalability</h4>
+              <p class="concept-body">Kemampuan sistem beroperasi di berbagai domain administratif dengan kebijakan keamanan dan pembayaran yang berbeda.</p>
+            </div>
+          </div>
+
+          <div class="callout callout-amber">
+            <div class="callout-title">Analisis Formal Antrean (Queuing System)</div>
+            <p class="callout-text">
+              Layanan terpusat dimodelkan dengan laju kedatangan request (&lambda;) dan kapasitas proses (&mu;). Utilisasi dihitung dengan U = &lambda; / &mu;. Jika utilisasi mendekati 1 (100%), antrean akan memanjang tanpa batas dan response time melonjak sangat drastis. Salah satu solusi utamanya adalah memperkecil service time atau membagi proses.
+            </p>
+          </div>
+
+          <h4 style="font-size: 1.05rem; margin-bottom: 12px; font-weight: 700;">5 Teknik Penskalaan (Techniques for Scaling):</h4>
+          <ol style="margin-left: 20px; line-height: 1.7; color: var(--text-muted); font-size: 0.94rem;">
+            <li><strong>Hide Communication Latencies:</strong> Gunakan komunikasi asinkron agar klien tidak menunggu server.</li>
+            <li><strong>Move Computations to Clients:</strong> Pindahkan komputasi sebagian (misal validasi formulir) ke perangkat klien.</li>
+            <li><strong>Partition Data and Computations:</strong> Membagi data dan beban komputasi ke beberapa mesin secara paralel.</li>
+            <li><strong>Decentralized Services:</strong> Memecah layanan terpusat (contoh: DNS hierarkis).</li>
+            <li><strong>Replication and Caching:</strong> Menempatkan salinan data di dekat klien (Web cache, CDN). Catatan: Replikasi memunculkan masalah inkonsistensi data dan butuh sinkronisasi global.</li>
+          </ol>
+        </div>
+
+        <!-- Tab 4: Openness -->
+        <div id="goal-openness" class="tab-content" data-tab-group="goals">
+          <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin-bottom: 12px;">Openness & Pemisahan Policy dan Mechanism</h3>
+          <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">
+            Open Distributed System adalah sistem yang menyediakan komponen sehingga dapat diintegrasikan dengan mudah ke sistem lain berkat antarmuka yang terdefinisi jelas (well-defined interfaces).
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 24px;">
+            <div style="background: var(--bg-primary); padding: 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
+              <strong>Interoperability:</strong> Berbagai sistem dapat saling bekerja sama meski beda teknologi.
+            </div>
+            <div style="background: var(--bg-primary); padding: 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
+              <strong>Portability:</strong> Aplikasi dapat dipindahkan dan dijalankan pada lingkungan sistem lain tanpa modifikasi besar.
+            </div>
+            <div style="background: var(--bg-primary); padding: 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
+              <strong>Extensibility:</strong> Sistem mudah diperluas dengan menambahkan modul atau fitur baru.
+            </div>
+          </div>
+
+          <div class="callout callout-green">
+            <div class="callout-title">Prinsip: Policy vs Mechanism</div>
+            <p class="callout-text">
+              <strong>Policy:</strong> Aturan atau keputusan mengenai <em>apa yang harus dilakukan</em> oleh sistem (contoh: menentukan tingkat konsistensi cache).<br>
+              <strong>Mechanism:</strong> Cara atau fasilitas teknis yang dipakai untuk <em>menerapkan policy tersebut</em> (contoh: dynamic caching algorithm).<br>
+              Pemisahan yang baik memberi fleksibilitas tinggi, namun jika terlalu ketat akan memperumit konfigurasi sistem.
+            </p>
+          </div>
+        </div>
+
+        <!-- Tab 5: Security -->
+        <div id="goal-security" class="tab-content" data-tab-group="goals">
+          <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin-bottom: 12px;">Keamanan Sistem Terdistribusi</h3>
+          <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">
+            Sistem yang tidak aman tidak dapat dianggap sebagai sistem yang dapat diandalkan (dependable).
+          </p>
+
+          <div class="concept-grid">
+            <div class="concept-card">
+              <div class="concept-tag">Konsep 1</div>
+              <h4 class="concept-name">Authentication</h4>
+              <p class="concept-body">Memverifikasi kebenaran identitas entitas pengakses: <em>"Siapa kamu?"</em></p>
+            </div>
+            <div class="concept-card">
+              <div class="concept-tag">Konsep 2</div>
+              <h4 class="concept-name">Authorization</h4>
+              <p class="concept-body">Menentukan hak akses entitas yang sudah teridentifikasi: <em>"Apa yang boleh kamu lakukan?"</em></p>
+            </div>
+            <div class="concept-card">
+              <div class="concept-tag">Konsep 3</div>
+              <h4 class="concept-name">Trust</h4>
+              <p class="concept-body">Keyakinan bahwa entitas lain akan berperilaku sesuai ekspektasi: <em>"Apakah saya bisa mengandalkan tindakanmu?"</em></p>
+            </div>
+          </div>
+
+          <div class="callout callout-blue">
+            <div class="callout-title">4 Mekanisme Keamanan Utama</div>
+            <p class="callout-text">
+              1. <strong>Symmetric Cryptosystem:</strong> Satu kunci rahasia yang sama untuk enkripsi dan dekripsi.<br>
+              2. <strong>Asymmetric Cryptosystem:</strong> Sepasang kunci berbeda (Public Key untuk enkripsi/verifikasi, Private Key rahasia untuk dekripsi/tanda tangan).<br>
+              3. <strong>Secure Hashing:</strong> Fungsi satu arah (one-way) menghasilkan nilai panjang tetap yang peka terhadap perubahan satu bit sekalipun.<br>
+              4. <strong>Digital Signature:</strong> Menggunakan private key pengirim untuk membuktikan keaslian dan integritas pesan.
+            </p>
+          </div>
+        </div>
+
+        <!-- Tab 6: Resource Sharing -->
+        <div id="goal-sharing" class="tab-content" data-tab-group="goals">
+          <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin-bottom: 12px;">Resource Sharing</h3>
+          <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">
+            Kemampuan sistem untuk memungkinkan pengguna atau aplikasi saling berbagi sumber daya (data, file, CPU, printer, kapasitas penyimpanan) melalui jaringan secara ekonomis dan teratur.
+          </p>
+          <div class="callout callout-blue">
+            <div class="callout-title">Semboyan John Gage: "The Network is the Computer"</div>
+            <p class="callout-text">
+              Jaringan bukan lagi sekadar kabel penghubung, melainkan komputer itu sendiri. Contoh penerapan nyatanya mencakup: penyimpanan awan (cloud storage), CDN (Content Delivery Network) untuk streaming video cepat, layanan email terdistribusi, serta peer-to-peer file sharing.
+            </p>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Section 3: Klasifikasi Sistem Terdistribusi -->
+      <section id="klasifikasi" class="content-section" aria-labelledby="heading-klasifikasi">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-coral-bg); color: var(--accent-coral-text);">Bagian 3</span>
+          <h2 id="heading-klasifikasi" class="section-title">Klasifikasi Sistem Terdistribusi</h2>
+          <p class="section-desc">Tiga rumpun besar arsitektur sistem terdistribusi dalam dunia industri dan komputasi.</p>
+        </div>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin-bottom: 14px;">1. High-Performance Distributed Computing (HPDC)</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+          Sistem terdistribusi yang memanfaatkan banyak node atau prosesor untuk menyelesaikan beban komputasi masif dengan performa tinggi.
+        </p>
+
+        <div class="table-responsive">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th scope="col">Karakteristik</th>
+                <th scope="col">Cluster Computing</th>
+                <th scope="col">Grid Computing</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Homogenitas Mesin</strong></td>
+                <td>Homogen (OS dan perangkat keras nyaris identik).</td>
+                <td>Heterogen (perangkat keras, arsitektur, dan OS beragam).</td>
+              </tr>
+              <tr>
+                <td><strong>Jangkauan Jaringan</strong></td>
+                <td>Lokal (Local Area Network / LAN berkecepatan tinggi).</td>
+                <td>Geografis Luas (Wide Area Network / WAN).</td>
+              </tr>
+              <tr>
+                <td><strong>Otoritas & Organisasi</strong></td>
+                <td>Satu organisasi (manajemen node terikat erat).</td>
+                <td>Multi-organisasi (melalui konsep <em>Virtual Organization</em>).</td>
+              </tr>
+              <tr>
+                <td><strong>Arsitektur Lapisan</strong></td>
+                <td>Node master mengendalikan node worker langsung.</td>
+                <td>5 Layer: Fabric &rarr; Connectivity &rarr; Resource &rarr; Collective &rarr; Application.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin: 32px 0 14px 0;">2. Distributed Information Systems</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+          Berfokus pada integrasi berbagai aplikasi bisnis internal organisasi (*Enterprise Application Integration* / EAI) dan transaksi data terdistribusi.
+        </p>
+
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-tag">Prinsip Transaksi</div>
+            <h4 class="concept-name">Properti ACID</h4>
+            <p class="concept-body">
+              <strong>A (Atomicity):</strong> Terjadi utuh atau batal sama sekali (all-or-nothing).<br>
+              <strong>C (Consistency):</strong> Tidak melanggar invarian sistem.<br>
+              <strong>I (Isolation):</strong> Transaksi konkuren tidak saling mencampuri.<br>
+              <strong>D (Durability):</strong> Perubahan permanen setelah commit.
+            </p>
+          </div>
+
+          <div class="concept-card">
+            <div class="concept-tag">Mekanisme Integrasi</div>
+            <h4 class="concept-name">RPC vs Messaging</h4>
+            <p class="concept-body">
+              <strong>RPC:</strong> Sinkron, caller dan callee harus sama-sama aktif saat panggilan terjadi.<br>
+              <strong>Messaging (MOM):</strong> Asinkron, publisher dan subscriber tidak perlu aktif bersamaan (decoupling in time & space).
+            </p>
+          </div>
+        </div>
+
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin: 32px 0 14px 0;">3. Distributed Pervasive Systems</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+          Sistem terdistribusi yang menyatu alami dengan lingkungan fisik pengguna:
+        </p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
+          <div style="background: var(--bg-primary); padding: 18px; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+            <h4 style="font-family: var(--font-serif); font-size: 1.15rem; margin-bottom: 8px;">Ubiquitous Computing</h4>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">
+              Komputasi hadir terus-menerus, tidak mengganggu (*unobtrusive*), memiliki kesadaran konteks (*context awareness*), dan beroperasi otonom.
+            </p>
+          </div>
+          <div style="background: var(--bg-primary); padding: 18px; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+            <h4 style="font-family: var(--font-serif); font-size: 1.15rem; margin-bottom: 8px;">Mobile Computing</h4>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">
+              Perangkat memiliki mobilitas tinggi, lokasi selalu berubah, dan umumnya bertindak sebagai klien yang terhubung ke *cloud-based server*.
+            </p>
+          </div>
+          <div style="background: var(--bg-primary); padding: 18px; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+            <h4 style="font-family: var(--font-serif); font-size: 1.15rem; margin-bottom: 8px;">Sensor & Actuator Networks</h4>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">
+              Ribuan perangkat node kecil sederhana dengan batasan daya (baterai) yang bertugas memantau dan bertindak atas lingkungan secara terpadu.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: 8 Pitfalls / False Assumptions -->
+      <section id="pitfalls" class="content-section" aria-labelledby="heading-pitfalls">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-amber-bg); color: var(--accent-amber-text);">Bagian 4</span>
+          <h2 id="heading-pitfalls" class="section-title">8 Asumsi Keliru (Pitfalls) dalam Sistem Terdistribusi</h2>
+          <p class="section-desc">Delapan jebakan asumsi yang sering dibuat programmer pemula dan menjadi penyebab utama kegagalan sistem di dunia nyata.</p>
+        </div>
+
+        <div class="accordion-group">
+          
+          <div class="accordion-item">
+            <button class="accordion-header" aria-expanded="false">
+              <span>1. The Network is Reliable (Jaringan selalu dapat diandalkan)</span>
+              <span class="accordion-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="accordion-body">
+              <strong>Faktanya:</strong> Paket data dapat hilang, koneksi fisik bisa terputus, atau router mengalami kegagalan kapan saja. Sistem terdistribusi wajib mengimplementasikan mekanisme timeout, retry, dan acknowledgment.
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-header" aria-expanded="false">
+              <span>2. The Network is Secure (Jaringan selalu aman)</span>
+              <span class="accordion-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="accordion-body">
+              <strong>Faktanya:</strong> Lalu lintas data di jaringan publik dapat disadap (eavesdropping), dipalsukan, atau diserang. Komunikasi harus selalu diamankan dengan enkripsi dan autentikasi.
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-header" aria-expanded="false">
+              <span>3. The Network is Homogeneous (Jaringan bersifat homogen)</span>
+              <span class="accordion-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="accordion-body">
+              <strong>Faktanya:</strong> Perangkat keras, sistem operasi, format data endian, dan protokol pada tiap node seringkali berbeda-beda. Dibutuhkan standar protokol terbuka dan middleware.
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-header" aria-expanded="false">
+              <span>4. The Topology Does Not Change (Topologi jaringan tidak berubah)</span>
+              <span class="accordion-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="accordion-body">
+              <strong>Faktanya:</strong> Node dapat bergabung, keluar, crash, atau berpindah lokasi kapan saja. Sistem tidak boleh mengandalkan konfigurasi alamat IP statis secara kaku.
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-header" aria-expanded="false">
+              <span>5. Latency is Zero (Latensi adalah nol)</span>
+              <span class="accordion-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="accordion-body">
+              <strong>Faktanya:</strong> Pengiriman pesan membutuhkan waktu tempuh fisik. Komunikasi synchronous yang terlalu sering melintasi WAN akan membuat performa aplikasi terpuruk.
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-header" aria-expanded="false">
+              <span>6. Bandwidth is Infinite (Bandwidth tidak terbatas)</span>
+              <span class="accordion-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="accordion-body">
+              <strong>Faktanya:</strong> Kapasitas kanal transfer data memiliki batas fisik. Mengirimkan data berukuran raksasa tanpa kompresi atau caching akan membebani jaringan.
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-header" aria-expanded="false">
+              <span>7. Transport Cost is Zero (Biaya transportasi data adalah nol)</span>
+              <span class="accordion-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="accordion-body">
+              <strong>Faktanya:</strong> Setiap pengiriman paket data membutuhkan konsumsi daya CPU, memori penyangga (buffer), dan kuota bandwidth finansial pada layanan cloud.
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-header" aria-expanded="false">
+              <span>8. There is One Administrator (Hanya ada satu administrator)</span>
+              <span class="accordion-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="accordion-body">
+              <strong>Faktanya:</strong> Sistem terdistribusi melintasi berbagai domain administratif dengan kebijakan keamanan, aturan privasi, dan otoritas pengelolaan yang berbeda.
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Section 5: Cheat Sheet / Tabel Komparasi Ujian -->
+      <section id="cheat-sheet" class="content-section" aria-labelledby="heading-cheat">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-purple-bg); color: var(--accent-purple-text);">Bagian 5</span>
+          <h2 id="heading-cheat" class="section-title">Lembar Rangkuman Cepat (Exam Cheat Sheet)</h2>
+          <p class="section-desc">Pembeda utama konsep-konsep krusial yang paling sering ditanyakan dalam soal ujian.</p>
+        </div>
+
+        <div class="table-responsive">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th scope="col">Pasangan Konsep</th>
+                <th scope="col">Perbedaan Esensial</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Decentralized vs Distributed</strong></td>
+                <td>Harus tersebar di beberapa komputer vs Tersebar secara memadai membentuk satu kesatuan sistem utuh bagi pemakai.</td>
+              </tr>
+              <tr>
+                <td><strong>Logical vs Physical Centralization</strong></td>
+                <td>Terpusat dari cara pandang struktur nama/kendali (Root DNS) vs Terpusat di satu server/mesin fisik tunggal.</td>
+              </tr>
+              <tr>
+                <td><strong>Access vs Location Transparency</strong></td>
+                <td>Menyembunyikan cara dan format akses data vs Menyembunyikan lokasi fisik penyimpanan data di jaringan.</td>
+              </tr>
+              <tr>
+                <td><strong>Relocation vs Migration Transparency</strong></td>
+                <td>Menyembunyikan perpindahan resource <em>saat sedang aktif digunakan</em> vs Perpindahan resource secara umum.</td>
+              </tr>
+              <tr>
+                <td><strong>Availability vs Reliability</strong></td>
+                <td>Kesiapan sistem saat akan dipakai pada waktu tertentu vs Kontinuitas layanan berjalan benar tanpa henti selama durasi waktu t.</td>
+              </tr>
+              <tr>
+                <td><strong>Fault vs Error vs Failure</strong></td>
+                <td>Akar penyebab masalah (bug/cacat) &rarr; Kondisi internal salah (state error) &rarr; Layanan gagal memenuhi fungsi spesifikasinya.</td>
+              </tr>
+              <tr>
+                <td><strong>Authentication vs Authorization</strong></td>
+                <td>Memverifikasi siapa identitas pengakses vs Menentukan batasan izin operasi yang boleh dilakukan pengakses tersebut.</td>
+              </tr>
+              <tr>
+                <td><strong>Cluster vs Grid Computing</strong></td>
+                <td>Homogen, di jaringan LAN, satu otoritas vs Heterogen, lintas organisasi di jaringan WAN (Virtual Organization).</td>
+              </tr>
+              <tr>
+                <td><strong>RPC vs Messaging (MOM)</strong></td>
+                <td>Komunikasi langsung sinkron (kedua pihak harus aktif) vs Pengiriman pesan asinkron melalui antrean (decoupling in time & space).</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section 6: Flashcards -->
+      <section id="flashcards" class="content-section" aria-labelledby="heading-flashcards">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-blue-bg); color: var(--accent-blue-text);">Bagian 6</span>
+          <h2 id="heading-flashcards" class="section-title">Flashcard Uji Ingatan Mandiri</h2>
+          <p class="section-desc">Klik kartu untuk menguji pemahaman Anda sebelum melihat definisi resminya.</p>
+        </div>
+
+        <div class="flashcard-deck">
+          
+          <div class="flashcard" role="button" tabindex="0" aria-label="Flashcard 1">
+            <p class="flashcard-tip">Klik untuk melihat jawaban & kata kunci</p>
+            <h3 class="flashcard-prompt">Apa itu Middleware?</h3>
+            <div class="flashcard-answer">
+              Lapisan perangkat lunak (software layer) yang berada di antara aplikasi dan sistem operasi. Fungsinya menyembunyikan heterogenitas serta memberikan transparansi distribusi melalui antarmuka konsisten.
+            </div>
+          </div>
+
+          <div class="flashcard" role="button" tabindex="0" aria-label="Flashcard 2">
+            <p class="flashcard-tip">Klik untuk melihat jawaban & kata kunci</p>
+            <h3 class="flashcard-prompt">Rumus MTBF</h3>
+            <div class="flashcard-answer">
+              <strong>MTBF = MTTF + MTTR</strong><br>
+              Mean Time Between Failures = Mean Time To Failure (waktu operasional sampai rusak) + Mean Time To Repair (waktu perbaikan sampai menyala kembali).
+            </div>
+          </div>
+
+          <div class="flashcard" role="button" tabindex="0" aria-label="Flashcard 3">
+            <p class="flashcard-tip">Klik untuk melihat jawaban & kata kunci</p>
+            <h3 class="flashcard-prompt">Mengapa Transparansi 100% Tidak Disarankan?</h3>
+            <div class="flashcard-answer">
+              Karena latensi jaringan fisik tidak bisa dihilangkan, kegagalan node sulit dibedakan dari server lambat, dan sinkronisasi replika secara terus menerus membebani performa jaringan.
+            </div>
+          </div>
+
+          <div class="flashcard" role="button" tabindex="0" aria-label="Flashcard 4">
+            <p class="flashcard-tip">Klik untuk melihat jawaban & kata kunci</p>
+            <h3 class="flashcard-prompt">Apa itu Virtual Organization pada Grid?</h3>
+            <div class="flashcard-answer">
+              Pengelompokan pengguna dan resource dari berbagai institusi atau organisasi mandiri yang berkolaborasi bersama, dengan aturan otorisasi terpusat untuk alokasi resource komputasi.
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Section 7: Interactive Quiz -->
+      <section id="kuis" class="content-section" aria-labelledby="heading-kuis">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-green-bg); color: var(--accent-green-text);">Bagian 7</span>
+          <h2 id="heading-kuis" class="section-title">Kuis Pemahaman Mandiri Pekan 1</h2>
+          <p class="section-desc">Uji pemahaman Anda dengan 5 soal berbasis studi kasus ujian. Dapatkan umpan balik penjelasan seketika setelah memilih.</p>
+        </div>
+
+        <!-- Quiz Container (Driven by js/app.js) -->
+        <div id="pekan1-quiz" class="quiz-box"></div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p><strong>CloudStudy</strong>: Media Belajar Interaktif Sistem Terdistribusi & Cloud Computing</p>
+      <p>Pekan 1 telah siap dipelajari. Lanjutkan ke pekan berikutnya saat Anda sudah siap!</p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
+

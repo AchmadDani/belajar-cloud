@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Latihan Soal & Simulasi Ujian UTS | CloudStudy</title>
+  
+  <!-- Typography: Modern Ultra-Legible Sans-Serif (Plus Jakarta Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Styling -->
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Specific styles for Exam Simulation */
+    .exam-nav-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+      gap: 8px;
+      margin: 16px 0;
+    }
+    .exam-num-btn {
+      width: 100%;
+      height: 40px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-strong);
+      background: var(--bg-surface);
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+    }
+    .exam-num-btn:hover {
+      background: var(--bg-secondary);
+      border-color: var(--text-main);
+    }
+    .exam-num-btn.active {
+      background: var(--text-main);
+      color: #FFFFFF;
+      border-color: var(--text-main);
+    }
+    .exam-num-btn.answered {
+      background: var(--accent-blue-bg);
+      border-color: var(--accent-blue-text);
+      color: var(--accent-blue-text);
+    }
+    .essay-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-subtle);
+    }
+    .essay-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .essay-badge {
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      background: var(--accent-amber-bg);
+      color: var(--accent-amber-text);
+      border: 1px solid var(--accent-amber-border);
+    }
+    .essay-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 10px;
+    }
+    .essay-question {
+      font-size: 0.96rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin-bottom: 18px;
+    }
+    .rubric-box {
+      background: var(--bg-primary);
+      border-left: 4px solid var(--accent-green-text);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      padding: 16px 20px;
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: var(--text-main);
+      display: none;
+    }
+    .rubric-box.show {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Site Navigation Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="CloudStudy Beranda">
+        <div class="brand-badge" aria-hidden="true">C</div>
+        <div>
+          <span class="brand-text">CloudStudy</span>
+          <span class="brand-sub">UTS Hub</span>
+        </div>
+      </a>
+
+      <nav aria-label="Navigasi Utama">
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">&larr; Kembali ke Beranda</a></li>
+          <li><a href="kisi_kisi.html" class="nav-link">Kisi-Kisi UTS</a></li>
+          <li><a href="soal_tahun_lalu.html" class="nav-link" style="color: var(--accent-coral-text); font-weight: 700;">Soal Tahun Lalu</a></li>
+          <li><a href="pekan1.html" class="nav-link">Materi (Pekan 1-7)</a></li>
+          <li><a href="#simulasi" class="nav-cta">Simulasi Ujian UTS</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Module Header -->
+  <div class="container">
+    <div class="module-header">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="index.html">Beranda</a>
+        <span aria-hidden="true">&rsaquo;</span>
+        <span style="color: var(--text-main); font-weight: 600;">Latihan Soal & Simulasi Ujian UTS</span>
+      </nav>
+
+      <h1 class="module-title">Bank Soal & Simulasi Ujian Tengah Semester</h1>
+      
+      <div class="module-meta">
+        <span class="meta-pill">
+          <strong>Cakupan:</strong> Pekan 1 hingga Pekan 7 (Komprehensif)
+        </span>
+        <span class="meta-pill">
+          <strong>Mode:</strong> 20 Soal Pilihan Ganda + 5 Studi Kasus Soal Esai
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Layout -->
+  <div class="container module-layout">
+    
+    <!-- Sticky Table of Contents -->
+    <aside class="sticky-nav" aria-label="Navigasi Latihan Soal">
+      <p class="nav-title">Menu Latihan Ujian</p>
+      <ul class="toc-list">
+        <li><a href="#simulasi" class="toc-link">1. Simulasi 20 Soal UTS</a></li>
+        <li><a href="#esai" class="toc-link">2. Bank Soal Esai & Studi Kasus</a></li>
+        <li><a href="#tips-ujian" class="toc-link">3. Strategi Menjawab Soal UTS</a></li>
+      </ul>
+    </aside>
+
+    <!-- Content Sections -->
+    <main class="content-area">
+      
+      <!-- Section 1: Simulasi 20 Soal Pilihan Ganda -->
+      <section id="simulasi" class="content-section" aria-labelledby="heading-simulasi">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-blue-bg); color: var(--accent-blue-text);">Bagian 1</span>
+          <h2 id="heading-simulasi" class="section-title">Simulasi Komprehensif Ujian UTS (20 Soal)</h2>
+          <p class="section-desc">Kompilasi 20 soal pilihan ganda representatif yang mencakup materi Pekan 1 hingga Pekan 7. Uji kesiapan akhir Anda!</p>
+        </div>
+
+        <!-- Comprehensive Exam Runner Container -->
+        <div id="full-exam-container" class="quiz-box"></div>
+      </section>
+
+      <!-- Section 2: Bank Soal Esai & Analisis Kasus -->
+      <section id="esai" class="content-section" aria-labelledby="heading-esai">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-coral-bg); color: var(--accent-coral-text);">Bagian 2</span>
+          <h2 id="heading-esai" class="section-title">Bank Soal Esai & Analisis Kasus Arsitektur</h2>
+          <p class="section-desc">Tipe soal esai dan skenario teknis yang paling sering diujikan oleh dosen. Klik tombol pada masing-masing soal untuk melihat kata kunci jawaban dan rubrik penilaian.</p>
+        </div>
+
+        <!-- Essay Question 1 -->
+        <article class="essay-card">
+          <div class="essay-header">
+            <span class="essay-badge">Pekan 1 & 3: Arsitektur Server</span>
+            <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted);">Bobot: 20 Poin</span>
+          </div>
+          <h3 class="essay-title">Soal Esai 1: Mencegah Bottleneck pada Cluster Server 3-Tier</h3>
+          <p class="essay-question">
+            Sebuah platform e-commerce besar menggunakan arsitektur cluster server tiga tingkat (Tier 1: Switch/Load Balancer, Tier 2: Application Compute Servers, Tier 3: Database). Menjelang periode flash sale, traffic meningkat 10 kali lipat. Jelaskan mengapa Tier 1 berisiko menjadi titik kegagalan utama (bottleneck) jika seluruh komunikasi request dan reply melewatinya, serta jelaskan bagaimana mekanisme <strong>TCP Handoff</strong> dapat menyelesaikan masalah tersebut secara teknis!
+          </p>
+          <button class="btn-secondary toggle-rubric-btn" style="min-height: 40px; padding: 8px 16px; font-size: 0.88rem;" data-target="rubric-1">
+            Tampilkan Kunci Jawaban & Rubrik Penilaian
+          </button>
+          <div id="rubric-1" class="rubric-box" style="margin-top: 16px;">
+            <p><strong>Poin Kunci Jawaban Ujian:</strong></p>
+            <ol style="margin-left: 20px; margin-top: 6px; line-height: 1.65;">
+              <li><strong>Penyebab Bottleneck di Tier 1:</strong> Pada model konvensional, switch tier-1 harus memproses dua arah: menerima request klien dan menyalurkan kembali seluruh paket respons berukuran besar dari tier-2 ke klien. Bandwidth dan CPU switch akan habis melayani aliran data balik (*asymmetry bandwidth* di mana reply jauh lebih besar dari request).</li>
+              <li><strong>Solusi dengan TCP Handoff:</strong> Klien menginisiasi koneksi TCP ke switch tier-1. Begitu switch mengidentifikasi server aplikasi tier-2 yang paling luang, koneksi soket TCP dialihkan (*handoff*) ke server tier-2 tersebut.</li>
+              <li><strong>Hasil Akhir:</strong> Server tier-2 langsung mengirimkan paket respons reply ke klien menggunakan IP switch sebagai source address. Switch tier-1 tidak lagi terbebani data respons dan bebas menerima request baru lainnya.</li>
+            </ol>
+          </div>
+        </article>
+
+        <!-- Essay Question 2 -->
+        <article class="essay-card">
+          <div class="essay-header">
+            <span class="essay-badge">Pekan 5: Kausalitas & Jam Logis</span>
+            <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted);">Bobot: 20 Poin</span>
+          </div>
+          <h3 class="essay-title">Soal Esai 2: Analisis Kausalitas: Lamport vs Vector Clocks</h3>
+          <p class="essay-question">
+            Dalam sistem terdistribusi terdapat tiga proses (P1, P2, P3). Mengapa nilai timestamp Lamport <code>C(a) &lt; C(b)</code> tidak cukup untuk membuktikan bahwa event <code>a</code> terjadi sebelum event <code>b</code> secara kausal? Berikan penjelasan logis mengapa Vector Clocks mampu memberikan jaminan dua arah (<code>a &rarr; b &hArr; V(a) &lt; V(b)</code>) dan bagaimana cara kerjanya mendeteksi kejadian konkuren!
+          </p>
+          <button class="btn-secondary toggle-rubric-btn" style="min-height: 40px; padding: 8px 16px; font-size: 0.88rem;" data-target="rubric-2">
+            Tampilkan Kunci Jawaban & Rubrik Penilaian
+          </button>
+          <div id="rubric-2" class="rubric-box" style="margin-top: 16px;">
+            <p><strong>Poin Kunci Jawaban Ujian:</strong></p>
+            <ol style="margin-left: 20px; margin-top: 6px; line-height: 1.65;">
+              <li><strong>Kelemahan Lamport:</strong> Lamport Clock hanya menjamin relasi implikasi satu arah: jika <code>a &rarr; b</code> maka <code>C(a) &lt; C(b)</code>. Namun jika dua proses independen menaikkan jam lokalnya tanpa pernah bertukar pesan, bisa saja <code>C(a) &lt; C(b)</code> padahal kedua event tersebut konkuren (*tidak ada hubungan sebab-akibat*).</li>
+              <li><strong>Keunggulan Vector Clocks:</strong> Setiap proses memegang array vektor yang mencatat jumlah kejadian yang diketahuinya pada seluruh proses lain. <code>V(a) &lt; V(b)</code> hanya benar jika setiap elemen <code>V(a)[k] &le; V(b)[k]</code> dan terdapat minimal satu elemen yang lebih kecil secara ketat.</li>
+              <li><strong>Deteksi Konkuren:</strong> Jika ada komponen vektor di mana <code>V(a)[i] &gt; V(b)[i]</code> namun untuk indeks lain <code>V(a)[j] &lt; V(b)[j]</code>, sistem dapat secara definitif menyimpulkan bahwa event <code>a</code> dan <code>b</code> terjadi secara konkuren (tidak saling memengaruhi).</li>
+            </ol>
+          </div>
+        </article>
+
+        <!-- Essay Question 3 -->
+        <article class="essay-card">
+          <div class="essay-header">
+            <span class="essay-badge">Pekan 7: Konsistensi & Gifford's Quorum</span>
+            <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted);">Bobot: 20 Poin</span>
+          </div>
+          <h3 class="essay-title">Soal Esai 3: Perhitungan Gifford's Quorum & Trade-Off</h3>
+          <p class="essay-question">
+            Sebuah sistem basis data terdistribusi memiliki total <code>N = 9</code> replika. Tim pengembang mengusulkan dua skenario konfigurasi kuorum:<br>
+            - Skenario A: <code>N_R = 3</code>, <code>N_W = 7</code><br>
+            - Skenario B: <code>N_R = 5</code>, <code>N_W = 4</code><br>
+            Ujilah apakah kedua skenario tersebut memenuhi dua syarat mutlak aturan Gifford's Quorum! Jelaskan pula beban kerja seperti apa yang paling diuntungkan oleh Skenario A!
+          </p>
+          <button class="btn-secondary toggle-rubric-btn" style="min-height: 40px; padding: 8px 16px; font-size: 0.88rem;" data-target="rubric-3">
+            Tampilkan Kunci Jawaban & Rubrik Penilaian
+          </button>
+          <div id="rubric-3" class="rubric-box" style="margin-top: 16px;">
+            <p><strong>Poin Kunci Jawaban Ujian:</strong></p>
+            <ol style="margin-left: 20px; margin-top: 6px; line-height: 1.65;">
+              <li><strong>Uji Skenario A (NR = 3, NW = 7, N = 9):</strong><br>
+                - Syarat 1: <code>NR + NW = 3 + 7 = 10 &gt; 9</code> (MEMENUHI). Tidak ada Read-Write conflict.<br>
+                - Syarat 2: <code>NW = 7 &gt; 9/2 (4.5)</code> (MEMENUHI). Tidak ada Write-Write conflict.<br>
+                <strong>Kesimpulan Skenario A VALID.</strong>
+              </li>
+              <li><strong>Uji Skenario B (NR = 5, NW = 4, N = 9):</strong><br>
+                - Syarat 1: <code>NR + NW = 5 + 4 = 9</code> (GAGAL, karena tidak lebih besar dari 9, tidak ada jaminan overlap!).<br>
+                - Syarat 2: <code>NW = 4 &lt; 4.5</code> (GAGAL, tidak mencapai mayoritas mutlak).<br>
+                <strong>Kesimpulan Skenario B INVALID</strong> (dapat menyebabkan data usang terbaca dan inkonsistensi benturan tulis).
+              </li>
+              <li><strong>Aplikasi Skenario A:</strong> Sangat ideal untuk beban kerja dengan <strong>rasio pembacaan tinggi (Read-Heavy workload)</strong> karena klien hanya butuh mengontak 3 server untuk membaca data mutakhir secara kilat.</li>
+            </ol>
+          </div>
+        </article>
+
+        <!-- Essay Question 4 -->
+        <article class="essay-card">
+          <div class="essay-header">
+            <span class="essay-badge">Pekan 2 & 4: Komunikasi & Kopling</span>
+            <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted);">Bobot: 20 Poin</span>
+          </div>
+          <h3 class="essay-title">Soal Esai 4: Perbandingan Arsitektur RPC vs Message-Oriented Middleware</h3>
+          <p class="essay-question">
+            Bandingkan pendekatan Remote Procedure Call (RPC) dengan Message-Oriented Middleware (MOM) berdasarkan dimensi: (a) Temporal Coupling, (b) Referential Coupling, (c) Penanganan kegagalan jaringan saat server tujuan sedang mati, dan (d) Contoh skenario sistem di mana MOM mutlak lebih unggul dibandingkan RPC!
+          </p>
+          <button class="btn-secondary toggle-rubric-btn" style="min-height: 40px; padding: 8px 16px; font-size: 0.88rem;" data-target="rubric-4">
+            Tampilkan Kunci Jawaban & Rubrik Penilaian
+          </button>
+          <div id="rubric-4" class="rubric-box" style="margin-top: 16px;">
+            <p><strong>Poin Kunci Jawaban Ujian:</strong></p>
+            <ol style="margin-left: 20px; margin-top: 6px; line-height: 1.65;">
+              <li><strong>Temporal Coupling:</strong> RPC bersifat *temporal coupled* (caller dan callee harus sama-sama aktif saat panggilan berlangsung). MOM bersifat *temporal decoupled* (pengirim dan penerima tidak perlu aktif bersamaan).</li>
+              <li><strong>Referential Coupling:</strong> RPC umumnya *coupled* (klien harus mengetahui endpoint spesifik server). MOM bersifat *decoupled* (klien hanya mengirim pesan ke antrean/topic tanpa tahu siapa pemrosesnya).</li>
+              <li><strong>Penanganan Kegagalan:</strong> Pada RPC, jika server mati, pemanggilan gagal seketika (*fail/exception*). Pada MOM, pesan tersimpan aman di antrean persisten (*message queue*) dan akan diproses saat server menyala kembali.</li>
+              <li><strong>Skenario Keunggulan MOM:</strong> Pemrosesan transaksi checkout e-commerce (pembuatan invoice, notifikasi email, pengurangan stok gudang di sistem terpisah). Klien tidak boleh menunggu seluruh subsistem selesai bekerja.</li>
+            </ol>
+          </div>
+        </article>
+
+        <!-- Essay Question 5 -->
+        <article class="essay-card">
+          <div class="essay-header">
+            <span class="essay-badge">Pekan 6: Resolusi Nama</span>
+            <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted);">Bobot: 20 Poin</span>
+          </div>
+          <h3 class="essay-title">Soal Esai 5: Alur Resolusi DNS Iteratif vs Rekursif</h3>
+          <p class="essay-question">
+            Seorang mahasiswa mengakses <code>informatika.ugm.ac.id</code> melalui komputernya. Jelaskan perbedaan alur transmisi pesan jika DNS resolver menggunakan pendekatan <strong>Iterative Resolution</strong> dibandingkan dengan <strong>Recursive Resolution</strong>! Mengapa server DNS Global (Root & TLD) di internet publik umumnya menolak permintaan rekursif dan hanya melayani permintaan iteratif?
+          </p>
+          <button class="btn-secondary toggle-rubric-btn" style="min-height: 40px; padding: 8px 16px; font-size: 0.88rem;" data-target="rubric-5">
+            Tampilkan Kunci Jawaban & Rubrik Penilaian
+          </button>
+          <div id="rubric-5" class="rubric-box" style="margin-top: 16px;">
+            <p><strong>Poin Kunci Jawaban Ujian:</strong></p>
+            <ol style="margin-left: 20px; margin-top: 6px; line-height: 1.65;">
+              <li><strong>Iterative:</strong> Klien resolver menghubungi server Root DNS. Root menjawab "saya tidak tahu, tapi ini alamat TLD .id". Klien lalu menghubungi server .id, yang menjawab "ini alamat server ac.id", demikian seterusnya sampai klien sendiri menemukan server otoritatif <code>ugm.ac.id</code>.</li>
+              <li><strong>Recursive:</strong> Klien resolver meminta ke server DNS lokal, dan server DNS lokal tersebut yang secara estafet menghubungi Root, TLD, hingga server otoritatif atas nama klien, lalu mengembalikan jawaban akhir ke klien.</li>
+              <li><strong>Alasan Root & TLD Menolak Rekursif:</strong> Skalabilitas dan keamanan (*resource exhaustion*). Jika miliaran komputer di seluruh dunia meminta Root DNS untuk melakukan pencarian rekursif, memori dan soket koneksi Root DNS akan langsung habis dalam hitungan detik. Dengan hanya melayani iteratif (langsung mengembalikan alamat server berikutnya), beban kerja Root DNS sangat ringan dan dapat diskalakan secara global.</li>
+            </ol>
+          </div>
+        </article>
+
+      </section>
+
+      <!-- Section 3: Strategi Menjawab Soal UTS -->
+      <section id="tips-ujian" class="content-section" aria-labelledby="heading-tips">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-green-bg); color: var(--accent-green-text);">Bagian 3</span>
+          <h2 id="heading-tips" class="section-title">Strategi Menjawab Soal UTS Sistem Terdistribusi</h2>
+          <p class="section-desc">Pola penilaian dosen dan kata kunci wajib yang harus muncul saat menjawab soal esai.</p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div style="background: var(--bg-primary); padding: 18px; border-radius: var(--radius-md); border-left: 4px solid var(--accent-blue-text);">
+            <strong>1. Selalu Sebutkan Asumsi Jaringan (Fallacies):</strong> Jika soal menanyakan kegagalan sistem atau alasan dibutuhkannya timeout/retry, sebutkan bahwa "jaringan tidak pernah 100% reliable, latensi tidak pernah nol, dan topologi selalu berubah".
+          </div>
+          <div style="background: var(--bg-primary); padding: 18px; border-radius: var(--radius-md); border-left: 4px solid var(--accent-green-text);">
+            <strong>2. Gunakan Rumus Matematis:</strong> Pada soal keandalan sebutkan <code>MTBF = MTTF + MTTR</code>; pada soal antrean sebutkan utilisasi <code>U = &lambda; / &mu;</code>; pada soal kuorum sebutkan <code>N_R + N_W &gt; N</code> dan <code>N_W &gt; N / 2</code>. Dosen selalu mencari rumus ini dalam lembar jawaban.
+          </div>
+          <div style="background: var(--bg-primary); padding: 18px; border-radius: var(--radius-md); border-left: 4px solid var(--accent-coral-text);">
+            <strong>3. Bedakan Istilah Kritis:</strong> Jangan sampai tertukar antara <em>Fault vs Error vs Failure</em>, <em>Precision vs Accuracy</em>, atau <em>Decentralized vs Distributed</em>. Gunakan definisi baku yang ada di cheat sheet modul.
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p><strong>CloudStudy</strong>: Media Belajar Interaktif Sistem Terdistribusi & Cloud Computing</p>
+      <p>Persiapkan diri sebaik mungkin. Semoga sukses meraih nilai A pada UTS!</p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script>
+    // Toggle rubric visibility
+    document.querySelectorAll('.toggle-rubric-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetId = btn.getAttribute('data-target');
+        const box = document.getElementById(targetId);
+        if (box) {
+          box.classList.toggle('show');
+          if (box.classList.contains('show')) {
+            btn.textContent = 'Sembunyikan Kunci Jawaban';
+          } else {
+            btn.textContent = 'Tampilkan Kunci Jawaban & Rubrik Penilaian';
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+

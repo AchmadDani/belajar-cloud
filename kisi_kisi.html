@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fokus Kisi-Kisi UTS Cloud Computing & Sistem Terdistribusi | CloudStudy</title>
+  
+  <!-- Typography: Modern Ultra-Legible Sans-Serif (Plus Jakarta Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Styling -->
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Styling khusus Kisi-Kisi */
+    .kisi-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .kisi-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      box-shadow: var(--shadow-card);
+      scroll-margin-top: 100px;
+    }
+    .kisi-card.priority {
+      border-top: 5px solid var(--accent-blue-text);
+    }
+    .subtopic-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin: 20px 0 10px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .subtopic-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent-blue-text);
+      display: inline-block;
+    }
+    .exam-must-know {
+      background: var(--bg-primary);
+      border-left: 4px solid var(--accent-amber-text);
+      padding: 16px 20px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin: 16px 0;
+      font-size: 0.94rem;
+      line-height: 1.6;
+    }
+    .checklist-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--bg-primary);
+      padding: 12px 18px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-light);
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+    .check-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent-green-text);
+    }
+    @media (max-width: 600px) {
+      .kisi-card {
+        padding: 20px 16px;
+      }
+      .check-item {
+        padding: 10px 14px;
+        font-size: 0.88rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Site Navigation Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="CloudStudy Beranda">
+        <div class="brand-badge" aria-hidden="true">C</div>
+        <div>
+          <span class="brand-text">CloudStudy</span>
+          <span class="brand-sub">UTS Hub</span>
+        </div>
+      </a>
+
+      <nav aria-label="Navigasi Utama">
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">&larr; Beranda</a></li>
+          <li><a href="pekan1.html" class="nav-link">Materi Pekan 1-7</a></li>
+          <li><a href="soal_tahun_lalu.html" class="nav-link" style="color: var(--accent-coral-text); font-weight: 700;">Soal Tahun Lalu</a></li>
+          <li><a href="#kuis-kisi" class="nav-cta">Kuis Kisi-Kisi</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Module Header -->
+  <div class="container">
+    <div class="module-header">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="index.html">Beranda</a>
+        <span aria-hidden="true">&rsaquo;</span>
+        <span style="color: var(--text-main); font-weight: 600;">Fokus Kisi-Kisi UTS</span>
+      </nav>
+
+      <h1 class="module-title">Fokus Kisi-Kisi Resmi Dosen: Ujian Tengah Semester</h1>
+      
+      <div class="module-meta">
+        <span class="meta-pill">
+          <strong>Kurasi:</strong> 7 Poin Inti Kisi-Kisi Dosen (Pekan 1 - 7)
+        </span>
+        <span class="meta-pill">
+          <strong>Tujuan:</strong> Belajar Cepat & Tepat Sasaran Sebelum Masuk Ruang Ujian
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Layout (Sticky Nav + Content) -->
+  <div class="container module-layout">
+    
+    <!-- Sticky Table of Contents -->
+    <aside class="sticky-nav" aria-label="Navigasi Kisi-Kisi">
+      <p class="nav-title">Menu Kisi-Kisi Dosen</p>
+      <ul class="toc-list">
+        <li><a href="#kisi1" class="toc-link">1. Pekan 1: Model, Skalabilitas, Transparansi</a></li>
+        <li><a href="#kisi2" class="toc-link">2. Pekan 2: RESTful & Pub-Sub</a></li>
+        <li><a href="#kisi3" class="toc-link">3. Pekan 3: Proses/Thread & Container</a></li>
+        <li><a href="#kisi4" class="toc-link">4. Pekan 4: Komunikasi & RPC</a></li>
+        <li><a href="#kisi5" class="toc-link">5. Pekan 5: Logical & Vector Clock</a></li>
+        <li><a href="#kisi6" class="toc-link">6. Pekan 6: Naming & Chord</a></li>
+        <li><a href="#kisi7" class="toc-link">7. Pekan 7: Sequential & Causal</a></li>
+        <li><a href="#kuis-kisi" class="toc-link">8. Kuis Kilat 7 Poin Kisi-Kisi</a></li>
+      </ul>
+    </aside>
+
+    <!-- Content Sections -->
+    <main class="content-area">
+      
+      <!-- Intro Callout -->
+      <div class="callout callout-blue" style="margin-top: 0;">
+        <div class="callout-title">Halaman Ini Dikhususkan untuk Kisi-Kisi Ujian Anda</div>
+        <p class="callout-text">
+          Halaman ini merangkum secara tajam dan padat hanya topik yang <strong>secara eksplisit tercantum dalam kisi-kisi dosen Anda</strong>. Tidak ada narasi yang berbelit-belit, fokus pada definisi baku, rumus penting, dan kata kunci penilaian ujian.
+        </p>
+      </div>
+
+      <!-- KISI-KISI 1: PEKAN 1 -->
+      <section id="kisi1" class="kisi-card priority" aria-labelledby="heading-kisi1">
+        <div class="section-head">
+          <span class="kisi-badge" style="background: var(--accent-blue-bg); color: var(--accent-blue-text);">Kisi-Kisi 1 &bull; Pekan 1</span>
+          <h2 id="heading-kisi1" class="section-title">Teori Dasar, Skalabilitas & Transparansi</h2>
+        </div>
+
+        <h3 class="subtopic-title"><span class="subtopic-dot"></span> 1. Teori Dasar: Centralized vs Decentralized vs Distributed</h3>
+        <div class="table-responsive">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th scope="col">Model Sistem</th>
+                <th scope="col">Karakteristik Kunci (Kata Kunci Jawaban Ujian)</th>
+                <th scope="col">Kelebihan & Tantangan</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Centralized System</strong></td>
+                <td>Pengelolaan proses dan seluruh sumber daya (resource) berpusat pada <strong>satu titik / entitas utama</strong>.</td>
+                <td>Pengelolaan mudah, namun rentan bottleneck dan single point of failure jika tidak dibuat redundan.</td>
+              </tr>
+              <tr>
+                <td><strong>Decentralized System</strong></td>
+                <td>Sistem jaringan di mana proses dan sumber daya <strong>harus tersebar secara fisik</strong> di beberapa komputer.</td>
+                <td>Tidak bergantung pada satu titik kendali, otonomi tinggi.</td>
+              </tr>
+              <tr>
+                <td><strong>Distributed System</strong></td>
+                <td>Proses dan sumber daya tersebar di beberapa komputer secara memadai sehingga <strong>membentuk satu kesatuan sistem utuh (single coherent system)</strong> bagi pengguna.</td>
+                <td>Pengguna tidak menyadari adanya sebaran fisik. Membutuhkan middleware untuk integrasi.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="subtopic-title"><span class="subtopic-dot"></span> 2. Skalabilitas (Scalability)</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 12px;">
+          Kemampuan sistem mempertahankan kinerjanya ketika ukuran beban bertambah.
+        </p>
+        <div class="exam-must-know">
+          <strong>3 Dimensi Skalabilitas yang Wajib Dihafal:</strong>
+          <ul style="margin-left: 20px; margin-top: 6px; line-height: 1.65;">
+            <li><strong>Size Scalability:</strong> Kemampuan menangani pertambahan jumlah pengguna atau proses komputasi yang datang.</li>
+            <li><strong>Geographical Scalability:</strong> Kemampuan menangani pertambahan jarak fisik antarnode (misal dari LAN lokal ke WAN global dengan kendala latensi tinggi).</li>
+            <li><strong>Administrative Scalability:</strong> Kemampuan sistem beroperasi melintasi berbagai domain administratif dengan kebijakan keamanan dan pengelolaan berbeda.</li>
+          </ul>
+          <p style="margin-top: 10px;">
+            <strong>5 Teknik Utama Penskalaan:</strong> (1) Sembunyikan latensi via komunikasi asinkron, (2) Pindahkan komputasi sebagian ke klien, (3) Partisi data dan beban proses, (4) Desentralisasi layanan (contoh: DNS), (5) Replikasi dan Caching (catatan: menimbulkan tantangan inkonsistensi data).
+          </p>
+        </div>
+
+        <h3 class="subtopic-title"><span class="subtopic-dot"></span> 3. Transparansi Distribusi (Distribution Transparency)</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 12px;">
+          Kemampuan sistem terdistribusi untuk menyembunyikan fakta bahwa proses dan resource tersebar secara fisik di beberapa komputer melalui perantara <strong>Middleware</strong>.
+        </p>
+        <div class="table-responsive">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th scope="col">Jenis Transparansi</th>
+                <th scope="col">Apa yang Disembunyikan? (Hafalan Cepat)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Access Transparency</strong></td><td>Menyembunyikan perbedaan representasi data dan cara mengakses objek.</td></tr>
+              <tr><td><strong>Location Transparency</strong></td><td>Menyembunyikan lokasi fisik tempat resource berada di jaringan.</td></tr>
+              <tr><td><strong>Relocation Transparency</strong></td><td>Menyembunyikan perpindahan resource <em>saat resource sedang aktif digunakan</em>.</td></tr>
+              <tr><td><strong>Migration Transparency</strong></td><td>Menyembunyikan perpindahan resource ke lokasi lain secara umum.</td></tr>
+              <tr><td><strong>Replication Transparency</strong></td><td>Menyembunyikan fakta bahwa ada beberapa salinan data (replika) yang identik.</td></tr>
+              <tr><td><strong>Concurrency Transparency</strong></td><td>Menyembunyikan fakta bahwa data digunakan bersamaan oleh banyak pengguna mandiri.</td></tr>
+              <tr><td><strong>Failure Transparency</strong></td><td>Menyembunyikan kegagalan dan proses pemulihan (recovery) suatu komponen.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout callout-amber">
+          <div class="callout-title">Catatan Kisi-Kisi: Mengapa 100% Transparansi Tidak Selalu Baik?</div>
+          <p class="callout-text">
+            Latensi komunikasi fisik tidak dapat dihilangkan sama sekali, komputer mati sulit dibedakan dari komputer yang lambat, dan sinkronisasi penuh menurunkan performa. Terkadang memperlihatkan sebaran (*exposing distribution*) justru menguntungkan, seperti pada layanan berbasis lokasi (*location-based service*) atau zona waktu.
+          </p>
+        </div>
+      </section>
+
+      <!-- KISI-KISI 2: PEKAN 2 -->
+      <section id="kisi2" class="kisi-card priority" aria-labelledby="heading-kisi2">
+        <div class="section-head">
+          <span class="kisi-badge" style="background: var(--accent-green-bg); color: var(--accent-green-text);">Kisi-Kisi 2 &bull; Pekan 2</span>
+          <h2 id="heading-kisi2" class="section-title">Teori Dasar Arsitektur, RESTful & Publish-Subscribe</h2>
+        </div>
+
+        <h3 class="subtopic-title"><span class="subtopic-dot"></span> 1. Teori Dasar: 4 Aspek Gaya Arsitektur</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 12px;">
+          Gaya arsitektur (*architectural style*) dirumuskan berdasarkan empat aspek inti:
+        </p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 20px;">
+          <div style="background: var(--bg-primary); padding: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
+            <strong>1. Components:</strong> Unit komputasi/data yang replaceable dengan interface jelas.
+          </div>
+          <div style="background: var(--bg-primary); padding: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
+            <strong>2. Connections:</strong> Cara komponen saling terhubung dan berkomunikasi.
+          </div>
+          <div style="background: var(--bg-primary); padding: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
+            <strong>3. Data Exchange:</strong> Data atau pesan yang dipertukarkan antarkomponen.
+          </div>
+          <div style="background: var(--bg-primary); padding: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
+            <strong>4. Configuration:</strong> Susunan komponen dan konektor membentuk satu sistem utuh.
+          </div>
+        </div>
+
+        <h3 class="subtopic-title"><span class="subtopic-dot"></span> 2. RESTful Architecture (Representational State Transfer)</h3>
+        <div class="exam-must-know">
+          <strong>4 Karakteristik Wajib RESTful:</strong>
+          <ol style="margin-left: 20px; margin-top: 6px; line-height: 1.65;">
+            <li><strong>Single Naming Scheme:</strong> Seluruh resource diidentifikasi secara unik menggunakan URI seragam (contoh: Amazon S3 <code>http://bucket.s3.amazonaws.com/object</code>).</li>
+            <li><strong>Uniform Interface:</strong> Menggunakan operasi HTTP standar yang sama:
+              <ul>
+                <li><code>PUT</code>: Membuat resource baru atau menimpa secara idempoten.</li>
+                <li><code>GET</code>: Mengambil representasi kondisi resource saat ini.</li>
+                <li><code>POST</code>: Memodifikasi atau menambahkan data ke resource.</li>
+                <li><code>DELETE</code>: Menghapus resource dari sistem.</li>
+              </ul>
+            </li>
+            <li><strong>Self-Descriptive Messages:</strong> Setiap pesan memuat metadata dan informasi lengkap untuk diproses tanpa kebergantungan luar.</li>
+            <li><strong>Stateless Interaction:</strong> Server tidak menyimpan status sesi klien setelah operasi selesai. Setiap request bersifat mandiri.</li>
+          </ol>
+        </div>
+
+        <h3 class="subtopic-title"><span class="subtopic-dot"></span> 3. Publish-Subscribe Architecture & Coupling</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 12px;">
+          Model komunikasi berbasis event di mana Publisher mengirim informasi tanpa tahu siapa Subscriber yang menerima (melalui perantara Event Bus).
+        </p>
+        <div class="table-responsive">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th scope="col">Temporal Coupling (Waktu)</th>
+                <th scope="col">Referential Coupling (Alamat/ID)</th>
+                <th scope="col">Bentuk Komunikasi</th>
+                <th scope="col">Penjelasan Ringkas</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Coupled</td><td>Coupled</td><td><strong>Direct</strong></td><td>Harus aktif bersamaan dan tahu alamat langsung (contoh: TCP socket, RPC).</td></tr>
+              <tr><td>Coupled</td><td>Decoupled</td><td><strong>Mailbox</strong></td><td>Kirim ke kotak pos tanpa tahu penerima, tapi proses terikat waktu.</td></tr>
+              <tr><td>Decoupled</td><td>Coupled</td><td><strong>Event-Based</strong></td><td>Tidak harus aktif bersamaan, tapi terikat alamat event spesifik.</td></tr>
+              <tr><td><strong>Decoupled</strong></td><td><strong>Decoupled</strong></td><td><strong>Shared Data Space</strong></td><td>Bebas waktu dan bebas alamat (contoh: Linda Tuple Space dengan operasi <code>out</code>, <code>in</code>, <code>rd</code>).</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- KISI-KISI 3: PEKAN 3 -->
+      <section id="kisi3" class="kisi-card priority" aria-labelledby="heading-kisi3">
+        <div class="section-head">
+          <span class="kisi-badge" style="background: var(--accent-amber-bg); color: var(--accent-amber-text);">Kisi-Kisi 3 &bull; Pekan 3</span>
+          <h2 id="heading-kisi3" class="section-title">Teori Dasar Proses & Kontainer</h2>
+        </div>
+
+        <h3 class="subtopic-title"><span class="subtopic-dot"></span> 1. Teori Dasar: Processor vs Thread vs Process</h3>
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-tag">Fisik</div>
+            <h4 class="concept-name">Processor</h4>
+            <p class="concept-body">Perangkat keras (CPU) yang mengeksekusi instruksi mesin secara otomatis.</p>
+          </div>
+          <div class="concept-card highlight">
+            <div class="concept-tag">Minimal Software</div>
+            <h4 class="concept-name">Thread</h4>
+            <p class="concept-body">Minimal software processor yang menjadi konteks eksekusi instruksi. Berbagi memori address space yang sama dengan thread lain dalam 1 proses.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-tag">Software Processor</div>
+            <h4 class="concept-name">Process</h4>
+            <p class="concept-body">Wadah tempat 1 atau lebih thread dijalankan. Memiliki tabel memori MMU dan address space terisolasi sendiri.</p>
+          </div>
+        </div>
+
+        <div class="exam-must-know">
+          <strong>Biaya Context Switch:</strong>
+          <ul style="margin-left: 20px; margin-top: 6px; line-height: 1.65;">
+            <li><strong>Direct Cost:</strong> Eksekusi kode pergantian register dan instruksi interrupt handler oleh kernel OS.</li>
+            <li><strong>Indirect Cost:</strong> Terganggunya <strong>cache memori</strong> prosesor (*cache thrashing*). Pergantian proses membuat isi cache terbuang sehingga terjadi rangkaian *cache miss* yang memperlambat CPU.</li>
+          </ul>
+        </div>
+
+        <h3 class="subtopic-title"><span class="subtopic-dot"></span> 2. Container Architecture (Linux Containers)</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 12px;">
+          Lingkungan terisolasi untuk menjalankan proses tanpa overhead hypervisor dan OS guest lengkap.
+        </p>
+        <div class="table-responsive">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th scope="col">Tiga Pilar Kontainer</th>
+                <th scope="col">Fungsi Utama (Wajib Tulis di Lembar Ujian)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>1. Namespaces</strong></td>
+                <td>Mengisolasi <strong>pandangan identifier sistem</strong> (Process ID, Network interfaces, Mount points, User IDs) sehingga proses di dalam kontainer merasa memiliki OS sendiri secara independen.</td>
+              </tr>
+              <tr>
+                <td><strong>2. Union File System (UnionFS)</strong></td>
+                <td>Menggabungkan beberapa lapisan image file system di mana hanya layer paling atas yang dapat ditulisi (*read-write layer*), menghemat ruang penyimpanan.</td>
+              </tr>
+              <tr>
+                <td><strong>3. Control Groups (cgroups)</strong></td>
+                <td>Membatasi dan mengukur <strong>kuota alokasi sumber daya fisik</strong> (batas kuota CPU, memori RAM, dan batas I/O bandwidth).</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- KISI-KISI 4: PEKAN 4 -->
+      <section id="kisi4" class="kisi-card priority" aria-labelledby="heading-kisi4">
+        <div class="section-head">
+          <span class="kisi-badge" style="background: var(--accent-coral-bg); color: var(--accent-coral-text);">Kisi-Kisi 4 &bull; Pekan 4</span>
+          <h2 id="heading-kisi4" class="section-title">Teori Dasar Komunikasi & RPC</h2>
+        </div>
+
+        <h3 class="subtopic-title"><span class="subtopic-dot"></span> 1. Teori Dasar: Dimensi Komunikasi</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 12px;">
+          - <strong>Transient:</strong> Pesan dibuang jika penerima sedang offline saat transmisi (contoh: TCP, UDP).<br>
+          - <strong>Persistent:</strong> Pesan disimpan oleh middleware pada buffer antrean persisten sampai berhasil diambil (contoh: RabbitMQ, Email).<br>
+          - <strong>Synchronous:</strong> Pengirim terblokir menunggu titik sinkronisasi respon server.<br>
+          - <strong>Asynchronous:</strong> Pengirim langsung lanjut bekerja setelah menyerahkan pesan ke buffer lokal.
+        </p>
+
+        <h3 class="subtopic-title"><span class="subtopic-dot"></span> 2. Remote Procedure Call (RPC)</h3>
+        <div class="exam-must-know">
+          <strong>Prinsip:</strong> Memanggil fungsi/prosedur pada mesin jarak jauh seolah-olah fungsi lokal.
+          <ul style="margin-left: 20px; margin-top: 8px; line-height: 1.65;">
+            <li><strong>Client Stub:</strong> Menyamar sebagai fungsi lokal di mesin klien, bertugas mengemas nama prosedur dan parameter menjadi paket pesan jaringan (<strong>Marshaling</strong>).</li>
+            <li><strong>Server Stub (Skeleton):</strong> Berada di mesin server, bertugas membongkar paket biner pesan jaringan (<strong>Unmarshaling</strong>), memanggil fungsi asli di server, lalu mengemas nilai balikan (*return value*) ke klien.</li>
+            <li><strong>Tantangan Pointer:</strong> Parameter pointer (*pass by reference*) merujuk memori lokal yang tidak valid di server. Solusinya: menyalin seluruh data memori (*deep copy*) atau menggunakan <em>Remote Object Reference</em>.</li>
+            <li><strong>Asynchronous RPC:</strong> Klien hanya menunggu pesan konfirmasi penerimaan (*Acknowledgment / ACK*) dari server, lalu langsung bebas melanjutkan eksekusinya tanpa menunggu hasil komputasi fungsi selesai.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- KISI-KISI 5: PEKAN 5 -->
+      <section id="kisi5" class="kisi-card priority" aria-labelledby="heading-kisi5">
+        <div class="section-head">
+          <span class="kisi-badge" style="background: var(--accent-purple-bg); color: var(--accent-purple-text);">Kisi-Kisi 5 &bull; Pekan 5</span>
+          <h2 id="heading-kisi5" class="section-title">Logical Clock & Vector Clock</h2>
+        </div>
+
+        <h3 class="subtopic-title"><span class="subtopic-dot"></span> 1. Lamport's Logical Clocks</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 12px;">
+          Digunakan untuk menjaga urutan kejadian (*happened-before relation* <code>a &rarr; b</code>) tanpa membutuhkan jam fisik global.
+        </p>
+        <div class="exam-must-know">
+          <strong>Aturan Pembaruan Lamport Clock:</strong>
+          <ol style="margin-left: 20px; margin-top: 6px; line-height: 1.65;">
+            <li>Sebelum proses mengeksekusi event lokal: <code>C_i = C_i + 1</code>.</li>
+            <li>Saat mengirim pesan <code>m</code>: sertakan timestamp <code>ts(m) = C_i</code>.</li>
+            <li>Saat proses penerima menerima pesan <code>m</code>: perbarui jam dengan nilai terbesar: <code>C_j = max(C_j, ts(m)) + 1</code>.</li>
+          </ol>
+          <p style="margin-top: 8px; color: var(--accent-coral-text); font-weight: 600;">
+            Kelemahan Fatal: Relasi satu arah. Jika a &rarr; b maka C(a) &lt; C(b). Namun jika C(a) &lt; C(b), TIDAK DAPAT disimpulkan apakah a mendahului b atau keduanya konkuren!
+          </p>
+        </div>
+
+        <h3 class="subtopic-title"><span class="subtopic-dot"></span> 2. Vector Clocks (Menyempurnakan Lamport)</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 12px;">
+          Setiap proses memegang array vektor jam <code>V_i[1..n]</code> yang mencatat pengetahuan jam tentang seluruh proses lain.
+        </p>
+        <div class="table-responsive">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th scope="col">Aspek Pembeda</th>
+                <th scope="col">Lamport Logical Clock</th>
+                <th scope="col">Vector Clock</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Struktur Jam</strong></td>
+                <td>Satu angka integer skalar per proses (<code>C_i</code>).</td>
+                <td>Array vektor integer berukuran n proses (<code>V_i[1..n]</code>).</td>
+              </tr>
+              <tr>
+                <td><strong>Deteksi Kausalitas</strong></td>
+                <td>Hanya satu arah (tidak bisa mendeteksi konkurensi).</td>
+                <td><strong>Dua arah sempurna:</strong> <code>a &rarr; b &hArr; V(a) &lt; V(b)</code>.</td>
+              </tr>
+              <tr>
+                <td><strong>Kondisi Konkuren</strong></td>
+                <td>Tidak dapat dipastikan dari nilai skalar jam.</td>
+                <td>Jika ada elemen <code>V(a)[i] &gt; V(b)[i]</code> dan elemen lain <code>V(a)[j] &lt; V(b)[j]</code>, maka dipastikan <code>a || b</code> (konkuren).</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- KISI-KISI 6: PEKAN 6 -->
+      <section id="kisi6" class="kisi-card priority" aria-labelledby="heading-kisi6">
+        <div class="section-head">
+          <span class="kisi-badge" style="background: var(--accent-blue-bg); color: var(--accent-blue-text);">Kisi-Kisi 6 &bull; Pekan 6</span>
+          <h2 id="heading-kisi6" class="section-title">Teori Dasar Naming & Chord Ring</h2>
+        </div>
+
+        <h3 class="subtopic-title"><span class="subtopic-dot"></span> 1. Teori Dasar: Name vs Identifier vs Address</h3>
+        <div class="exam-must-know">
+          <strong>Perbedaan Esensial:</strong>
+          <ul style="margin-left: 20px; margin-top: 6px; line-height: 1.65;">
+            <li><strong>Name:</strong> Label simbolik acuan manusia (contoh: <code>www.google.com</code>).</li>
+            <li><strong>Identifier:</strong> Pengenal unik yang memenuhi 3 sifat wajib: (1) merujuk max 1 entitas, (2) tiap entitas memiliki max 1 identifier, (3) tidak pernah didaur ulang/dipakai kembali.</li>
+            <li><strong>Address:</strong> Nama dari *access point* tempat entitas diakses di jaringan (contoh: IP Address dan Port).</li>
+            <li><strong>Location Independence:</strong> Nama entitas tidak bergantung pada lokasi fisik, sehingga entitas bebas pindah tanpa harus ganti nama.</li>
+          </ul>
+        </div>
+
+        <h3 class="subtopic-title"><span class="subtopic-dot"></span> 2. Chord (Structured Peer-to-Peer System)</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 12px;">
+          Distributed Hash Table (DHT) yang mengorganisasikan node dan key data ke dalam lingkaran logis berukuran $2^m$.
+        </p>
+        <div class="callout callout-green">
+          <div class="callout-title">Aturan Successor & Shortcut Links pada Chord</div>
+          <p class="callout-text" style="font-size: 0.96rem;">
+            1. <strong>Fungsi Hash:</strong> <code>key = hash(value)</code>.<br>
+            2. <strong>Aturan Penyimpanan (Successor Rule):</strong> Data dengan key <code>k</code> disimpan pada node yang memiliki identifier terkecil yang lebih besar atau sama dengan <code>k</code>: <strong>id &ge; k</strong>. Node ini disebut <strong>Successor dari key k</strong>.<br>
+            3. <strong>Shortcut Links (Finger Table):</strong> Setiap node menyimpan tabel rujukan ke node yang berjarak $2^{i-1}$ langkah di sekeliling ring, memungkinkan pencarian (*lookup*) sangat cepat dengan kompleksitas <strong>O(log N)</strong>.
+          </p>
+        </div>
+      </section>
+
+      <!-- KISI-KISI 7: PEKAN 7 -->
+      <section id="kisi7" class="kisi-card priority" aria-labelledby="heading-kisi7">
+        <div class="section-head">
+          <span class="kisi-badge" style="background: var(--accent-coral-bg); color: var(--accent-coral-text);">Kisi-Kisi 7 &bull; Pekan 7</span>
+          <h2 id="heading-kisi7" class="section-title">Teori Dasar Replikasi, Sequential & Causal Consistency</h2>
+        </div>
+
+        <h3 class="subtopic-title"><span class="subtopic-dot"></span> 1. Teori Dasar Replikasi</h3>
+        <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 12px;">
+          Replikasi dilakukan untuk <strong>Reliability</strong> (toleransi kegagalan tanpa henti sistem) dan <strong>Performance</strong> (skalabilitas kueri baca dan kedekatan jarak ke klien). Tantangannya adalah menyelesaikan *Read-Write* dan *Write-Write conflicts* tanpa sinkronisasi global yang mahal.
+        </p>
+
+        <h3 class="subtopic-title"><span class="subtopic-dot"></span> 2. Sequentially Consistent vs Causally Consistent</h3>
+        <div class="table-responsive">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th scope="col">Aspek Pembeda</th>
+                <th scope="col">Sequential Consistency</th>
+                <th scope="col">Causal Consistency</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Prinsip Utama</strong></td>
+                <td>Hasil eksekusi sama seperti jika seluruh operasi semua proses dijalankan dalam <strong>satu urutan sekuensial global yang sama</strong> di semua replika.</td>
+                <td>Hanya operasi yang memiliki <strong>hubungan kausalitas (sebab-akibat)</strong> yang harus dilihat dalam urutan yang sama oleh seluruh proses.</td>
+              </tr>
+              <tr>
+                <td><strong>Penanganan Operasi Konkuren</strong></td>
+                <td>Operasi konkuren tetap harus disepakati dalam <strong>satu urutan global tunggal</strong> yang seragam oleh semua replika.</td>
+                <td>Operasi tulis yang bersifat <strong>konkuren boleh dilihat dalam urutan berbeda</strong> oleh replika yang berbeda.</td>
+              </tr>
+              <tr>
+                <td><strong>Keterikatan Waktu Fisik</strong></td>
+                <td>Tidak peduli waktu fisik mutlak (jam nyata), yang penting urutan internal program tiap proses dipertahankan.</td>
+                <td>Berdasarkan pelacakan relasi kausal <em>happened-before</em> (sering didukung Vector Clocks).</td>
+              </tr>
+              <tr>
+                <td><strong>Tingkat Beban Sistem</strong></td>
+                <td>Lebih ketat dan membutuhkan koordinasi global untuk menyepakati urutan operasi konkuren.</td>
+                <td>Lebih longgar (*weaker*), memberikan performa dan ketersediaan (*availability*) yang lebih tinggi.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Interactive Checklist -->
+      <section class="kisi-card" aria-label="Checklist Kesiapan Ujian">
+        <div class="section-head">
+          <span class="kisi-badge" style="background: var(--accent-green-bg); color: var(--accent-green-text);">Evaluasi Mandiri</span>
+          <h2 class="section-title">Checklist Penguasaan 7 Topik Kisi-Kisi</h2>
+          <p class="section-desc">Centang topik di bawah ini begitu Anda merasa telah menguasai definisinya untuk memastikan tidak ada materi yang terlewat sebelum UTS.</p>
+        </div>
+
+        <div class="checklist-wrap">
+          <label class="check-item"><input type="checkbox"> Pekan 1: Beda Centralized, Decentralized & Distributed + 3 Dimensi Skalabilitas + 7 Jenis Transparansi</label>
+          <label class="check-item"><input type="checkbox"> Pekan 2: 4 Aspek Arsitektur + Karakteristik RESTful (PUT, GET, POST, DELETE) + Pub-Sub & Coupling</label>
+          <label class="check-item"><input type="checkbox"> Pekan 3: Thread Context vs Process Context + 3 Pilar Linux Container (Namespaces, UnionFS, cgroups)</label>
+          <label class="check-item"><input type="checkbox"> Pekan 4: Dimensi Komunikasi (Transient/Persistent, Sync/Async) + RPC Stubs & Marshaling</label>
+          <label class="check-item"><input type="checkbox"> Pekan 5: Aturan Update Jam Lamport + Deteksi Kausalitas Dua Arah pada Vector Clocks</label>
+          <label class="check-item"><input type="checkbox"> Pekan 6: 3 Sifat Identifier + Aturan Successor (id &ge; k) & Finger Table pada Chord Ring DHT</label>
+          <label class="check-item"><input type="checkbox"> Pekan 7: Sequential Consistency (urutan global seragam) vs Causal Consistency (konkuren boleh beda urutan)</label>
+        </div>
+      </section>
+
+      <!-- Mini Quiz Khusus Kisi-Kisi (7 Soal) -->
+      <section id="kuis-kisi" class="content-section" aria-labelledby="heading-kuis-kisi">
+        <div class="section-head">
+          <span class="section-badge" style="background: var(--accent-coral-bg); color: var(--accent-coral-text);">Uji Kilat Kisi-Kisi</span>
+          <h2 id="heading-kuis-kisi" class="section-title">Kuis Kilat 7 Poin Kisi-Kisi Dosen</h2>
+          <p class="section-desc">Tepat 1 soal untuk setiap poin kisi-kisi dosen. Uji refleks Anda sekarang!</p>
+        </div>
+
+        <div id="kisi-quiz-container" class="quiz-box"></div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p><strong>CloudStudy</strong>: Media Belajar Interaktif Sistem Terdistribusi & Cloud Computing</p>
+      <p>Rangkuman khusus kisi-kisi resmi dosen telah selesai dipelajari. Semoga sukses meraih nilai A pada UTS!</p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
+
